@@ -1,0 +1,7 @@
+.project-config.json
+.env
+.env.*
+node_modules
+dist
+.manus-logs
+.git
