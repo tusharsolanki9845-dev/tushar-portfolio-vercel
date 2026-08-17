@@ -1,5 +1,6 @@
 import { ArrowUpRight, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Moon, Phone, Sun, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { PwaInstall } from "../components/PwaInstall";
 
 /* Design: Reference-led dark build log with editorial data panels, amber status accents, and responsive reveal motion. */
 
@@ -229,6 +230,7 @@ export default function Home() {
           </nav>
           <div className="nav-actions">
             <span className="availability"><span className="status-dot" />Available for freelance work</span>
+            <PwaInstall />
             <button
               className="theme-toggle"
               type="button"
