@@ -10,6 +10,8 @@ describe("Pizza Connect portfolio entry", () => {
     expect(homeSource).toContain('statusLabel: "live"');
     expect(homeSource).toContain('link: "https://pizza-connect-pwa-crocksy.vercel.app"');
     expect(homeSource).toContain('linkLabel: "view live site"');
+    expect(homeSource).toContain('COD and UPI options');
+    expect(homeSource).toContain('offline support');
     expect(homeSource).not.toContain('linkLabel: "launching soon"');
   });
 });

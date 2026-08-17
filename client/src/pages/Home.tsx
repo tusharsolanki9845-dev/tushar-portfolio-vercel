@@ -76,9 +76,9 @@ const projects: Project[] = [
   },
   {
     name: "Pizza Connect",
-    tagline: "Live ordering PWA for a local pizzeria & bakery in Khurja",
-    description: "A public ordering PWA with a 54-item vegetarian menu, food photography, a persistent cart, COD and UPI selection, and WhatsApp order requests for outlet confirmation. Built for a mobile-first ordering experience and deployed on Vercel.",
-    stack: ["HTML/CSS/JS", "PWA", "WhatsApp Ordering", "Vercel"],
+    tagline: "Production ordering PWA for a local pizzeria & bakery in Khurja",
+    description: "A live, mobile-first ordering PWA with a 54-item vegetarian menu, food photography, persistent cart, COD and UPI options, and WhatsApp confirmation. The release includes offline support, install-ready PWA assets, responsive typography, and hardened production metadata.",
+    stack: ["HTML/CSS/JS", "PWA", "COD / UPI", "WhatsApp Ordering", "Vercel"],
     status: "live",
     statusLabel: "live",
     theme: "warm",
