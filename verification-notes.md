@@ -5,3 +5,15 @@
 The local portfolio preview confirms that the Pizza Connect project card now renders the three factual results: offline-ready storefront, clear WhatsApp handoff, and flexible payment intent. The details sit within the existing project-card hierarchy without obscuring the verified external link.
 
 Project-card hover motion is limited to hover-capable devices and reduced to near-instant behavior for visitors with motion-reduction preferences. The card layout remains single-column at the mobile breakpoint.
+
+## Public deployment review — 17 August 2026
+
+The public Vercel portfolio domain serves the refreshed Pizza Connect card with all three results statements and the working link to the Pizza Connect production site. The project section remains reachable from the main portfolio navigation.
+
+## Live hover verification — 17 August 2026
+
+The public Pizza Connect card was hovered directly in the browser. Its computed live state confirmed the intended **8-pixel lift**, accent border, and **1.018 mockup scale**. This verifies that the hover enhancement is active on the public deployment, while the stylesheet retains the separate reduced-motion override.
+
+## Theme-toggle review — 17 August 2026
+
+The portfolio toggle was activated in the local preview. It changed from the existing dark presentation to the light presentation, updated its accessible label to offer a return to dark mode, and preserved the light selection after a full reload. The light palette retains high-contrast text, accent actions, and the established project-card hierarchy.

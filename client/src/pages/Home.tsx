@@ -1,4 +1,4 @@
-import { ArrowUpRight, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
+import { ArrowUpRight, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Moon, Phone, Sun, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 /* Design: Reference-led dark build log with editorial data panels, amber status accents, and responsive reveal motion. */
@@ -155,6 +155,21 @@ export default function Home() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [roleText, setRoleText] = useState("");
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem("portfolio-theme");
+    const nextTheme = savedTheme === "light" ? "light" : "dark";
+    setTheme(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
+    window.localStorage.setItem("portfolio-theme", nextTheme);
+  };
 
   useEffect(() => {
     let timer: number | undefined;
@@ -214,6 +229,19 @@ export default function Home() {
           </nav>
           <div className="nav-actions">
             <span className="availability"><span className="status-dot" />Available for freelance work</span>
+            <button
+              className="theme-toggle"
+              type="button"
+              onClick={toggleTheme}
+              aria-pressed={theme === "light"}
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            >
+              <Sun className="theme-icon theme-icon-sun" size={15} aria-hidden="true" />
+              <span className="theme-track" aria-hidden="true"><span className="theme-thumb" /></span>
+              <Moon className="theme-icon theme-icon-moon" size={14} aria-hidden="true" />
+              <span className="sr-only">Current theme: {theme}. Toggle color theme.</span>
+            </button>
             <button className="menu-button" onClick={() => setMenuOpen((open) => !open)} aria-label="Toggle navigation">
               {menuOpen ? <X size={16} /> : <Menu size={16} />}
             </button>

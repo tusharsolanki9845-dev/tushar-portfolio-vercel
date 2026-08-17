@@ -19,6 +19,11 @@ describe("Pizza Connect portfolio entry", () => {
     expect(homeSource).toContain('Flexible payment intent');
     expect(cssSource).toContain('@media (hover: hover)');
     expect(cssSource).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(homeSource).toContain('portfolio-theme');
+    expect(homeSource).toContain('Switch to ${theme === "dark" ? "light" : "dark"} mode');
+    expect(homeSource).toContain('aria-pressed={theme === "light"}');
+    expect(cssSource).toContain(':root[data-theme="light"]');
+    expect(cssSource).toContain('.theme-toggle');
     expect(homeSource).not.toContain('linkLabel: "launching soon"');
   });
 });
