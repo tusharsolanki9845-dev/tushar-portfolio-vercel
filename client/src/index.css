@@ -43,6 +43,18 @@ body {
   overflow-x: hidden;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -540,6 +552,9 @@ a:focus-visible {
 }
 
 .project-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 40px;
@@ -547,13 +562,50 @@ a:focus-visible {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--panel);
-  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+  transition: transform 240ms cubic-bezier(0.23, 1, 0.32, 1), border-color 240ms ease, background 240ms ease, box-shadow 240ms ease;
 }
 
-.project-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(240, 177, 82, 0.7);
-  background: var(--panel-hover);
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at 18% 0%, rgba(240, 177, 82, 0.14), transparent 36%);
+  transition: opacity 240ms ease;
+}
+
+.project-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) {
+  .project-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(240, 177, 82, 0.72);
+    background: var(--panel-hover);
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.28);
+  }
+
+  .project-card:hover::after {
+    opacity: 1;
+  }
+
+  .project-card:hover .project-mockup {
+    transform: scale(1.018);
+  }
+
+  .project-card:hover .mockup-window {
+    transform: translateY(-5px);
+    border-color: rgba(240, 177, 82, 0.4);
+  }
+
+  .project-card:hover .project-link svg {
+    transform: translate(2px, -2px);
+  }
 }
 
 .project-mockup {
@@ -563,6 +615,7 @@ a:focus-visible {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: linear-gradient(135deg, #322618, #604629 45%, #1c202a);
+  transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .project-mockup.industrial {
@@ -593,6 +646,7 @@ a:focus-visible {
   border-radius: 6px;
   background: rgba(13, 16, 22, 0.76);
   box-shadow: 0 24px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), border-color 240ms ease;
 }
 
 .mockup-top {
@@ -707,6 +761,47 @@ a:focus-visible {
   line-height: 1.8;
 }
 
+.project-results {
+  margin: 0 0 22px;
+  padding: 16px;
+  border: 1px solid rgba(240, 177, 82, 0.2);
+  border-radius: 8px;
+  background: rgba(240, 177, 82, 0.045);
+}
+
+.project-results-label {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font: 600 10px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.project-result {
+  padding-left: 10px;
+  border-left: 2px solid rgba(240, 177, 82, 0.45);
+}
+
+.project-result h4 {
+  margin: 0 0 4px;
+  color: var(--text);
+  font: 600 12px var(--font-mono);
+  letter-spacing: -0.02em;
+}
+
+.project-result p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
 .project-stack {
   display: flex;
   flex-wrap: wrap;
@@ -723,6 +818,10 @@ a:focus-visible {
   font: 500 12.5px var(--font-mono);
   letter-spacing: 0.02em;
   transition: gap 180ms ease;
+}
+
+.project-link svg {
+  transition: transform 180ms ease;
 }
 
 .project-link:hover {
@@ -1068,6 +1167,11 @@ a:focus-visible {
 
   .project-card {
     padding: 20px;
+  }
+
+  .project-results-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .project-mockup {

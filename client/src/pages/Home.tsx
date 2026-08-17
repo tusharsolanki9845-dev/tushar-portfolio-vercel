@@ -8,6 +8,7 @@ type Project = {
   tagline: string;
   description: string;
   stack: string[];
+  results?: { title: string; detail: string }[];
   status: "live" | "shipped" | "wip";
   statusLabel: string;
   theme: "luxury" | "industrial" | "warm" | "civic";
@@ -79,6 +80,11 @@ const projects: Project[] = [
     tagline: "Production ordering PWA for a local pizzeria & bakery in Khurja",
     description: "A live, mobile-first ordering PWA with a 54-item vegetarian menu, food photography, persistent cart, COD and UPI options, and WhatsApp confirmation. The release includes offline support, install-ready PWA assets, responsive typography, and hardened production metadata.",
     stack: ["HTML/CSS/JS", "PWA", "COD / UPI", "WhatsApp Ordering", "Vercel"],
+    results: [
+      { title: "Offline-ready storefront", detail: "Install-ready assets and a resilient cache keep the core menu experience available when connectivity is intermittent." },
+      { title: "Clear WhatsApp handoff", detail: "The cart turns selected items and customer details into one order request for outlet confirmation before preparation." },
+      { title: "Flexible payment intent", detail: "COD and UPI choices are captured before the order request, making the intended payment method clear to the outlet." },
+    ],
     status: "live",
     statusLabel: "live",
     theme: "warm",
@@ -317,6 +323,19 @@ export default function Home() {
                     <h3 className="project-name">{project.name}</h3>
                     <p className="project-tagline">{project.tagline}</p>
                     <p className="project-description">{project.description}</p>
+                    {project.results && (
+                      <section className="project-results" aria-label={`${project.name} project results`}>
+                        <p className="project-results-label">Project results</p>
+                        <div className="project-results-grid">
+                          {project.results.map((result) => (
+                            <div className="project-result" key={result.title}>
+                              <h4>{result.title}</h4>
+                              <p>{result.detail}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+                    )}
                     <div className="project-stack">{project.stack.map((item) => <span className="chip" key={item}>{item}</span>)}</div>
                     {project.link ? <a className="project-link" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a> : <span className="project-link">{project.linkLabel}</span>}
                   </div>

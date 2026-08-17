@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 const homeSource = readFileSync(new URL("./Home.tsx", import.meta.url), "utf8");
+const cssSource = readFileSync(new URL("../index.css", import.meta.url), "utf8");
 
 describe("Pizza Connect portfolio entry", () => {
   it("shows the verified live ordering PWA rather than a pending launch", () => {
@@ -12,6 +13,12 @@ describe("Pizza Connect portfolio entry", () => {
     expect(homeSource).toContain('linkLabel: "view live site"');
     expect(homeSource).toContain('COD and UPI options');
     expect(homeSource).toContain('offline support');
+    expect(homeSource).toContain('Project results');
+    expect(homeSource).toContain('Offline-ready storefront');
+    expect(homeSource).toContain('Clear WhatsApp handoff');
+    expect(homeSource).toContain('Flexible payment intent');
+    expect(cssSource).toContain('@media (hover: hover)');
+    expect(cssSource).toContain('@media (prefers-reduced-motion: reduce)');
     expect(homeSource).not.toContain('linkLabel: "launching soon"');
   });
 });
