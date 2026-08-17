@@ -17,3 +17,7 @@ The public Pizza Connect card was hovered directly in the browser. Its computed 
 ## Theme-toggle review — 17 August 2026
 
 The portfolio toggle was activated in the local preview. It changed from the existing dark presentation to the light presentation, updated its accessible label to offer a return to dark mode, and preserved the light selection after a full reload. The light palette retains high-contrast text, accent actions, and the established project-card hierarchy.
+
+## Public theme-toggle review — 17 August 2026
+
+The live Vercel portfolio now exposes the accessible theme control. On the public page it starts in dark mode, announces its state, and switches successfully to the contrast-preserving light theme with an updated “Switch to dark mode” label.
