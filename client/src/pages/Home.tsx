@@ -1,12 +1,12 @@
 import { ArrowUpRight, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Moon, Phone, Sun, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { PwaInstall } from "../components/PwaInstall";
 
 /* Design: Reference-led dark build log with editorial data panels, amber status accents, and responsive reveal motion. */
 
 type Project = {
   name: string;
   tagline: string;
+  speciality: string;
   description: string;
   stack: string[];
   results?: { title: string; detail: string }[];
@@ -25,7 +25,7 @@ const roles = [
 ];
 
 const stats = [
-  { count: 7, label: "projects built" },
+  { count: 8, label: "projects built" },
   { count: 5, label: "Forage simulations" },
   { count: 2, label: "client builds shipped" },
   { count: 2029, label: "graduation year" },
@@ -57,6 +57,7 @@ const projects: Project[] = [
   {
     name: "Crocksy",
     tagline: "Full-stack luxury crockery e-commerce platform",
+    speciality: "Commerce operations — authentication, cart, wishlist, checkout, and admin control in one storefront.",
     description: "Personal flagship project — a deployed storefront with authentication, cart, wishlist, checkout, and a full admin dashboard, backed by Supabase/PostgreSQL.",
     stack: ["HTML/CSS/JS", "Supabase", "PostgreSQL", "Vercel"],
     status: "live",
@@ -68,6 +69,7 @@ const projects: Project[] = [
   {
     name: "IRONCLASP",
     tagline: "E-commerce store for a hardware manufacturer client",
+    speciality: "Secure payments & operations — Razorpay, UPI, admin protection, backups, and hardening.",
     description: "Full-stack build with Razorpay and UPI checkout, a password-protected admin panel, automated backups, and security hardening throughout.",
     stack: ["Vanilla JS", "Node.js", "Express", "Razorpay"],
     status: "shipped",
@@ -79,6 +81,7 @@ const projects: Project[] = [
   {
     name: "Pizza Connect",
     tagline: "Production ordering PWA for a local pizzeria & bakery in Khurja",
+    speciality: "WhatsApp-first ordering — a 54-item menu, cart, payment intent, and direct outlet confirmation.",
     description: "A live, mobile-first ordering PWA with a 54-item vegetarian menu, food photography, persistent cart, COD and UPI options, and WhatsApp confirmation. The release includes offline support, install-ready PWA assets, responsive typography, and hardened production metadata.",
     stack: ["HTML/CSS/JS", "PWA", "COD / UPI", "WhatsApp Ordering", "Vercel"],
     results: [
@@ -94,21 +97,34 @@ const projects: Project[] = [
   },
   {
     name: "Tehsil Sahayak",
-    tagline: "Civic-tech chatbot for Indian revenue-office services",
-    description: "Helps citizens navigate tehsil/revenue office processes, with bilingual support and fuzzy search — iterated through a backend AI integration before settling on a fast static front-end architecture.",
-    stack: ["JavaScript", "Fuzzy Search", "Bilingual UX"],
-    status: "wip",
-    statusLabel: "in progress",
+    tagline: "Bilingual civic-services guidance PWA for Uttar Pradesh residents",
+    speciality: "Civic navigation — plain-language service guides and verified official routes for certificates, land records, and grievances.",
+    description: "A live bilingual guidance PWA that helps residents identify the correct official service route before visiting a tehsil office. It keeps applications and sensitive data on the responsible government portals.",
+    stack: ["JavaScript", "Bilingual UX", "PWA", "Official Service Links"],
+    status: "live",
+    statusLabel: "live",
     theme: "civic",
-    link: null,
-    linkLabel: "write-up coming soon",
+    link: "https://tehsil-sahayak.vercel.app",
+    linkLabel: "view live site",
+  },
+  {
+    name: "NestNavi",
+    tagline: "Trust-first hostel, PG & co-living finder for students and working professionals",
+    speciality: "Transparent stay discovery — live filters, device-only shortlist, and an enquiry draft without fake bookings or data resale.",
+    description: "A live, browser-first finder that lets users compare clearly labelled sample stay profiles by type, budget, and amenities. It keeps a shortlist on the device and guides users to confirm availability, safety details, and final terms directly with the property.",
+    stack: ["JavaScript", "Responsive UX", "PWA", "Local-first Shortlist", "Vercel"],
+    status: "live",
+    statusLabel: "live",
+    theme: "civic",
+    link: "https://nestnavi-hostel-pg-finder-crocksy.vercel.app",
+    linkLabel: "view live site",
   },
 ];
 
 const moreProjects = [
-  { name: "WebClient Hunter AI", status: "shipped", description: "SaaS lead-gen platform for freelancers and agencies — full CRM pipeline with AI-powered site audits." },
-  { name: "Build Before You're Ready", status: "shipped", description: "Self-published ebook guiding beginner developers from first line of code to junior-ready." },
-  { name: "Birthday Surprise Site", status: "live", description: "A single-file interactive site built for my brother — animations, sound effects, and SVG art." },
+  { name: "WebClient Hunter AI", status: "shipped", speciality: "AI prospect intelligence", description: "SaaS lead-gen platform for freelancers and agencies — full CRM pipeline with AI-powered site audits." },
+  { name: "Build Before You're Ready", status: "shipped", speciality: "Beginner-first developer roadmap", description: "Self-published ebook guiding beginner developers from first line of code to junior-ready." },
+  { name: "Birthday Surprise Site", status: "live", speciality: "Emotional interaction design", description: "A single-file interactive site built for my brother — animations, sound effects, and SVG art." },
 ];
 
 function AnimatedStat({ count, label, active }: { count: number; label: string; active: boolean }) {
@@ -230,7 +246,6 @@ export default function Home() {
           </nav>
           <div className="nav-actions">
             <span className="availability"><span className="status-dot" />Available for freelance work</span>
-            <PwaInstall />
             <button
               className="theme-toggle"
               type="button"
@@ -352,6 +367,7 @@ export default function Home() {
                     <div className="project-topline"><span className={`project-status ${project.status}`}><span className="status-dot" />{project.statusLabel}</span><span className="project-status">{project.theme}</span></div>
                     <h3 className="project-name">{project.name}</h3>
                     <p className="project-tagline">{project.tagline}</p>
+                    <div className="project-speciality"><span>Speciality</span><p>{project.speciality}</p></div>
                     <p className="project-description">{project.description}</p>
                     {project.results && (
                       <section className="project-results" aria-label={`${project.name} project results`}>
@@ -377,6 +393,7 @@ export default function Home() {
                 <article className="more-card" key={project.name}>
                   <span className="more-status"><span className="status-dot" />{project.status}</span>
                   <h4>{project.name}</h4>
+                  <p className="more-speciality">Speciality: {project.speciality}</p>
                   <p>{project.description}</p>
                 </article>
               ))}

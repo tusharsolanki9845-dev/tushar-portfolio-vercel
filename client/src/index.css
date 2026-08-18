@@ -214,6 +214,22 @@ a:focus-visible {
   transform: scale(0.97);
 }
 
+.portfolio-install svg { vertical-align: -2px; margin-right: 5px; }
+.portfolio-install-overlay { position: fixed; z-index: 100; inset: 0; display: grid; place-items: end center; padding: 20px; background: rgba(5, 8, 14, 0.64); backdrop-filter: blur(6px); }
+.portfolio-install-dialog { position: relative; width: min(100%, 500px); padding: 28px; border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border)); border-radius: 16px; background: var(--panel); box-shadow: 0 28px 70px rgba(0, 0, 0, 0.42); animation: portfolio-install-in 240ms cubic-bezier(0.23, 1, 0.32, 1); }
+.portfolio-install-close { position: absolute; top: 14px; right: 14px; display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 50%; background: transparent; color: var(--text-muted); }
+.portfolio-install-kicker { margin: 0 0 8px; color: var(--accent); font: 600 10px var(--font-mono); letter-spacing: 0.13em; text-transform: uppercase; }
+.portfolio-install-dialog h2 { max-width: 390px; margin: 0; font-family: var(--font-display); font-size: 28px; line-height: 1.1; letter-spacing: -0.035em; }
+.portfolio-install-dialog > p:not(.portfolio-install-kicker) { margin: 12px 0 16px; color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+.portfolio-install-dialog ol { display: grid; gap: 10px; margin: 0 0 21px; padding: 0; list-style: none; }
+.portfolio-install-dialog li { display: flex; gap: 10px; align-items: flex-start; color: var(--text-muted); font-size: 13px; line-height: 1.5; }
+.portfolio-install-dialog li svg { flex: none; margin-top: 1px; color: var(--accent); }
+.portfolio-install-actions { display: flex; gap: 10px; align-items: center; }
+.portfolio-install-primary, .portfolio-install-later { border: 0; border-radius: 8px; padding: 11px 14px; font: 600 12px var(--font-mono); cursor: pointer; }
+.portfolio-install-primary { background: var(--accent); color: #12141b; }.portfolio-install-later { background: transparent; color: var(--text-muted); }
+.portfolio-install-primary:active, .portfolio-install-later:active { transform: scale(0.97); }
+@keyframes portfolio-install-in { from { opacity: 0; transform: translateY(18px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -882,6 +898,11 @@ a:focus-visible {
   letter-spacing: 0.01em;
 }
 
+.project-speciality { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start; margin: 18px 0 0; padding: 11px 12px; border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border)); border-radius: 8px; background: var(--accent-soft); transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), border-color 180ms ease; }
+.project-speciality > span, .more-speciality { color: var(--accent); font: 600 10px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.project-speciality p { margin: 0; color: var(--text); font-size: 12.5px; line-height: 1.55; }
+.project-card:hover .project-speciality { transform: translateX(4px); border-color: color-mix(in srgb, var(--accent) 70%, var(--border)); }
+
 .project-description {
   max-width: 54ch;
   margin: 22px 0;
@@ -985,6 +1006,8 @@ a:focus-visible {
   font-size: 14px;
   line-height: 1.75;
 }
+
+.more-card .more-speciality { margin: 0 0 9px; }
 
 .more-status {
   display: inline-flex;
@@ -1252,6 +1275,10 @@ a:focus-visible {
   .nav-actions {
     gap: 8px;
   }
+
+  .portfolio-install { padding: 7px 9px; font-size: 10px; }
+  .portfolio-install-dialog { padding: 24px 20px; }
+  .portfolio-install-dialog h2 { font-size: 24px; }
 
   .theme-toggle {
     min-height: 34px;
