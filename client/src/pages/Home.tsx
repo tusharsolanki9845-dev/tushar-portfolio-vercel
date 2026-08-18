@@ -412,7 +412,7 @@ export default function Home() {
                 </div>
                 <p className="resume-summary">B.Tech CSE (AI & ML) student, AKTU, expected 2029 — building and shipping client and personal web projects throughout.</p>
                 <ul className="resume-highlights">
-                  <li>7 shipped projects, from solo builds to client-facing e-commerce stores</li>
+                  <li>8 shipped projects, from solo builds to client-facing e-commerce stores</li>
                   <li>Completed 5 professional simulations via Forage: EY, AIG, Tata, Mastercard, and Siemens</li>
                   <li>Comfortable owning a build end-to-end: frontend, backend, payments, and deployment</li>
                 </ul>
