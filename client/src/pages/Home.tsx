@@ -1,5 +1,8 @@
-import { ArrowUpRight, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Moon, Phone, Sun, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ArrowUpRight, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Moon, Phone, Send, Sun, X } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
+import { track } from "@vercel/analytics";
+import { useEffect, useState, type FormEvent } from "react";
+import { buildContactEmailUrl, type ContactFormPayload } from "@/lib/contact";
 
 /* Design: Reference-led dark build log with editorial data panels, amber status accents, and responsive reveal motion. */
 
@@ -173,6 +176,9 @@ export default function Home() {
   const [roleText, setRoleText] = useState("");
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [contactForm, setContactForm] = useState<ContactFormPayload>({ name: "", email: "", topic: "freelance", message: "" });
+  const [contactStarted, setContactStarted] = useState(false);
+  const [contactStatus, setContactStatus] = useState("");
 
   useEffect(() => {
     const savedTheme = window.localStorage.getItem("portfolio-theme");
@@ -228,8 +234,22 @@ export default function Home() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const trackContactStart = () => {
+    if (contactStarted) return;
+    setContactStarted(true);
+    track("contact_form_started", { placement: "portfolio" });
+  };
+
+  const submitContactForm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    track("contact_form_submitted", { placement: "portfolio", topic: contactForm.topic, handoff: "email_draft" });
+    setContactStatus("Opening your email draft. Your message is not stored on this website.");
+    window.location.href = buildContactEmailUrl(contactForm);
+  };
+
   return (
     <div className="site-shell">
+      <Analytics />
       <header className="site-nav">
         <div className="wrap nav-inner">
           <a className="brand" href="#top" onClick={closeMenu}>tushar<span className="brand-accent">.dev</span></a>
@@ -431,12 +451,22 @@ export default function Home() {
         <section className="section" id="contact" data-reveal>
           <div className="wrap">
             <div className="contact-panel">
-              <div>
+              <div className="contact-intro">
                 <p className="eyebrow">Contact</p>
                 <h2 className="contact-title">Let's build something.</h2>
                 <p className="contact-subtitle">Open to freelance projects, internships, and anything interesting in between.</p>
+                <p className="contact-privacy">Use the form to prepare an email in your own mail app. This site does not store your contact details or message.</p>
               </div>
-              <div className="contact-actions">
+              <form className="contact-form" onSubmit={submitContactForm} onFocus={trackContactStart}>
+                <div className="contact-form-grid">
+                  <label>Your name<input required maxLength={80} autoComplete="name" value={contactForm.name} onChange={(event) => setContactForm((form) => ({ ...form, name: event.target.value }))} placeholder="Your name" /></label>
+                  <label>Email address<input required type="email" maxLength={120} autoComplete="email" value={contactForm.email} onChange={(event) => setContactForm((form) => ({ ...form, email: event.target.value }))} placeholder="you@example.com" /></label>
+                  <label className="contact-form-full">I'm reaching out about<select value={contactForm.topic} onChange={(event) => setContactForm((form) => ({ ...form, topic: event.target.value as ContactFormPayload["topic"] }))}><option value="freelance">A freelance project</option><option value="internship">An internship opportunity</option><option value="collaboration">A collaboration</option><option value="other">Something else</option></select></label>
+                  <label className="contact-form-full">Message<textarea required maxLength={1000} rows={5} value={contactForm.message} onChange={(event) => setContactForm((form) => ({ ...form, message: event.target.value }))} placeholder="A few details about what you have in mind." /></label>
+                </div>
+                <div className="contact-form-footer"><button className="btn btn-primary" type="submit">Create email draft <Send size={15} /></button><p className="contact-status" aria-live="polite">{contactStatus}</p></div>
+              </form>
+              <div className="contact-actions" aria-label="Other ways to contact Tushar">
                 <a className="contact-action" href="mailto:tusharsolanki9845@gmail.com"><span><Mail size={14} /> &nbsp;Email me</span><span>↗</span></a>
                 <a className="contact-action" href="https://wa.me/916396015608?text=Hi%20Tushar%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noreferrer"><span><MessageCircle size={14} /> &nbsp;Chat on WhatsApp</span><span>usually replies within a day ↗</span></a>
                 <a className="contact-action" href="tel:+916396015608"><span><Phone size={14} /> &nbsp;+91 63960 15608</span><span>↗</span></a>
