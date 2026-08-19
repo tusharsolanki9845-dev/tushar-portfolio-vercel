@@ -71,8 +71,8 @@ const projects: Project[] = [
     status: "shipped",
     statusLabel: "managed deployment",
     theme: "civic",
-    link: null,
-    linkLabel: "managed deployment ready",
+    link: "https://iecattend-ay6ur7my.manus.space",
+    linkLabel: "view live app",
   },
   {
     name: "Crocksy",
