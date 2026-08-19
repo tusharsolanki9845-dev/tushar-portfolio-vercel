@@ -28,7 +28,7 @@ const roles = [
 ];
 
 const stats = [
-  { count: 8, label: "projects built" },
+  { count: 9, label: "projects built" },
   { count: 5, label: "Forage simulations" },
   { count: 2, label: "client builds shipped" },
   { count: 2029, label: "graduation year" },
@@ -57,6 +57,23 @@ const skillGroups = [
 ];
 
 const projects: Project[] = [
+  {
+    name: "CampusTrack",
+    tagline: "Attendance management platform for IEC College",
+    speciality: "Campus operations — role-based attendance, secure QR/geofence check-in, reporting, and classroom-ready workflows.",
+    description: "A full-stack attendance workspace for IEC College in Greater Noida. Students, teachers, and administrators get tailored workflows for class records, secure check-in, monthly reports, attendance analytics, reminders, and exportable CSV/Excel data.",
+    stack: ["React", "Node.js", "tRPC", "MySQL", "PWA"],
+    results: [
+      { title: "Secure attendance flow", detail: "Short-lived QR sessions and geofence validation help teachers record attendance with enrolment and duplicate safeguards." },
+      { title: "Role-specific reporting", detail: "Students, teachers, and administrators can review monthly attendance with CSV/Excel exports and department or semester comparisons." },
+      { title: "Classroom-ready UX", detail: "Light mode, personalized reminders, installable PWA support, and teacher keyboard shortcuts keep routine attendance work quick and clear." },
+    ],
+    status: "shipped",
+    statusLabel: "managed deployment",
+    theme: "civic",
+    link: null,
+    linkLabel: "managed deployment ready",
+  },
   {
     name: "Crocksy",
     tagline: "Full-stack luxury crockery e-commerce platform",
@@ -432,7 +449,7 @@ export default function Home() {
                 </div>
                 <p className="resume-summary">B.Tech CSE (AI & ML) student, AKTU, expected 2029 — building and shipping client and personal web projects throughout.</p>
                 <ul className="resume-highlights">
-                  <li>8 shipped projects, from solo builds to client-facing e-commerce stores</li>
+                  <li>9 shipped projects, from solo builds to client-facing e-commerce stores</li>
                   <li>Completed 5 professional simulations via Forage: EY, AIG, Tata, Mastercard, and Siemens</li>
                   <li>Comfortable owning a build end-to-end: frontend, backend, payments, and deployment</li>
                 </ul>
