@@ -175,6 +175,12 @@ const moreProjects = [
   { name: "Birthday Surprise Site", status: "live", speciality: "Emotional interaction design", description: "A single-file interactive site built for my brother — animations, sound effects, and SVG art." },
 ];
 
+const releaseSnapshot = [
+  { state: "verified live", title: "Public releases", detail: "Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, the portfolio, and the WebClient Hunter frontend are available through their published public URLs." },
+  { state: "source + frontend verified", title: "Protected route boundary", detail: "WebClient Hunter’s PageSpeed route is reviewed in source and its evidence-first frontend is live. The separately hosted protected API still needs an authenticated production check." },
+  { state: "owner data / account test required", title: "Deliberate follow-up", detail: "NestNavi needs a genuine owner-authorised listing before a public contact link can be exercised. Crocksy’s remaining Google and checkout journey checks require a separate customer account and test-provider session." },
+];
+
 function AnimatedStat({ count, label, active }: { count: number; label: string; active: boolean }) {
   const [value, setValue] = useState(0);
 
@@ -467,6 +473,22 @@ export default function Home() {
                 </article>
               ))}
             </div>
+            <section className="section" aria-labelledby="release-snapshot-title">
+              <div className="section-heading">
+                <p className="eyebrow">Release snapshot · August 2026</p>
+                <h3 className="section-title" id="release-snapshot-title">What is live, and what still needs a real-world check</h3>
+                <p className="section-sub">This snapshot separates verified public releases from source-verified work and tasks that legitimately require owner data, a separate customer account, or a provider test session.</p>
+              </div>
+              <div className="more-grid">
+                {releaseSnapshot.map((item) => (
+                  <article className="more-card" key={item.title}>
+                    <span className="more-status"><span className="status-dot" />{item.state}</span>
+                    <h4>{item.title}</h4>
+                    <p>{item.detail}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
           </div>
         </section>
 

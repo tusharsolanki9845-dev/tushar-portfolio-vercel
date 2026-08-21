@@ -28,3 +28,17 @@ describe("WebClient Hunter portfolio evidence", () => {
     expect(source).not.toContain("full CRM pipeline with AI-powered site audits");
   });
 });
+
+describe("cross-project release snapshot", () => {
+  it("separates verified public releases from source-only and account-bound verification", async () => {
+    const source = await readFile(new URL("./Home.tsx", import.meta.url), "utf8");
+
+    expect(source).toContain("What is live, and what still needs a real-world check");
+    expect(source).toContain("verified live");
+    expect(source).toContain("source + frontend verified");
+    expect(source).toContain("owner data / account test required");
+    expect(source).toContain("separately hosted protected API still needs an authenticated production check");
+    expect(source).toContain("genuine owner-authorised listing");
+    expect(source).not.toContain("all projects are fully verified");
+  });
+});
