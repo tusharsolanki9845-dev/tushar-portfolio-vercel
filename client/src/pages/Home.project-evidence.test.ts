@@ -14,3 +14,17 @@ describe("NestNavi portfolio evidence", () => {
     expect(source).not.toContain("sample stay profiles");
   });
 });
+
+describe("WebClient Hunter portfolio evidence", () => {
+  it("describes the verified evidence-first release without an unsupported AI or backend-production claim", async () => {
+    const source = await readFile(new URL("./Home.tsx", import.meta.url), "utf8");
+
+    expect(source).toContain('name: "WebClient Hunter"');
+    expect(source).toContain("Evidence-first prospect research");
+    expect(source).toContain("bounded OpenStreetMap discovery");
+    expect(source).toContain("separate heuristic website checks");
+    expect(source).toContain("separately hosted production route remains under verification");
+    expect(source).not.toContain("AI prospect intelligence");
+    expect(source).not.toContain("full CRM pipeline with AI-powered site audits");
+  });
+});

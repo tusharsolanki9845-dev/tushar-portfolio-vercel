@@ -170,7 +170,7 @@ const projects: Project[] = [
 ];
 
 const moreProjects = [
-  { name: "WebClient Hunter AI", status: "shipped", speciality: "AI prospect intelligence", description: "SaaS lead-gen platform for freelancers and agencies — full CRM pipeline with AI-powered site audits." },
+  { name: "WebClient Hunter", status: "shipped", speciality: "Evidence-first prospect research", description: "A source-labelled prospect-research workspace with bounded OpenStreetMap discovery, separate heuristic website checks, and a clearly marked sample-data demo. The protected PageSpeed API source is released; its separately hosted production route remains under verification." },
   { name: "Build Before You're Ready", status: "shipped", speciality: "Beginner-first developer roadmap", description: "Self-published ebook guiding beginner developers from first line of code to junior-ready." },
   { name: "Birthday Surprise Site", status: "live", speciality: "Emotional interaction design", description: "A single-file interactive site built for my brother — animations, sound effects, and SVG art." },
 ];
