@@ -27,3 +27,23 @@ describe("Pizza Connect portfolio entry", () => {
     expect(homeSource).not.toContain('linkLabel: "launching soon"');
   });
 });
+
+describe("recruiter-facing portfolio evidence", () => {
+  it("puts verified original work and live demos ahead of unsupported score or API claims", () => {
+    const webClient = homeSource.indexOf('name: "WebClient Hunter"');
+    const ironclasp = homeSource.indexOf('name: "IRONCLASP"');
+    const pizza = homeSource.indexOf('name: "Pizza Connect"');
+    const tehsil = homeSource.indexOf('name: "Tehsil Sahayak"');
+    expect(webClient).toBeGreaterThan(-1);
+    expect(webClient).toBeLessThan(ironclasp);
+    expect(ironclasp).toBeLessThan(pizza);
+    expect(pizza).toBeLessThan(tehsil);
+    expect(homeSource).toContain('Integration experience');
+    expect(homeSource).toContain('OpenStreetMap');
+    expect(homeSource).toContain('Nominatim');
+    expect(homeSource).toContain('project-link project-link-primary');
+    expect(homeSource).not.toContain('95+ Lighthouse');
+    expect(homeSource).not.toContain('MAANG-level Portfolio');
+    expect(cssSource).toContain('.project-link-primary');
+  });
+});

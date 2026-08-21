@@ -60,6 +60,24 @@ const skillGroups = [
 
 const projects: Project[] = [
   {
+    name: "WebClient Hunter",
+    tagline: "Evidence-first web prospect research for freelancers and local businesses",
+    speciality: "Research boundaries — source-labelled OpenStreetMap discovery, explicit heuristic checks, and a protected performance-audit route.",
+    description: "I built a SaaS-style prospect-research workspace that keeps discovery evidence separate from website heuristics and labels sample dashboard content as sample-only rather than presenting it as customer activity.",
+    contribution: "I designed the evidence-first interface, public discovery boundaries, protected PageSpeed route, production health checks, and truthful demo disclosures.",
+    stack: ["JavaScript", "OpenStreetMap", "Nominatim", "Protected PageSpeed Route", "Vercel"],
+    results: [
+      { title: "Evidence-labelled discovery", detail: "Public discovery and website signals are presented as separate, bounded checks rather than invented lead intelligence." },
+      { title: "Protected audit boundary", detail: "The live backend health endpoint responds, while the protected PageSpeed route returns 401 before an unauthenticated request can process a URL." },
+      { title: "Honest demo state", detail: "Sample dashboard records are visibly labelled so visitors do not mistake them for customer activity or measured outcomes." },
+    ],
+    status: "live",
+    statusLabel: "frontend live · protected route verified",
+    theme: "civic",
+    link: "https://webclient-hunter-ai.vercel.app",
+    linkLabel: "view live demo",
+  },
+  {
     name: "CampusTrack",
     tagline: "Attendance management platform for IEC College",
     speciality: "Campus operations — role-based attendance, secure QR/geofence check-in, reporting, and classroom-ready workflows.",
@@ -83,7 +101,7 @@ const projects: Project[] = [
     speciality: "Commerce operations — authentication, cart, wishlist, checkout, and admin control in one storefront.",
     description: "I built and deployed a responsive e-commerce platform with authentication, cart, wishlist, checkout, and an owner administration flow, then moved its customer data path to Firebase.",
     contribution: "I owned the storefront UX, account flows, cart state, protected data migration, and production fixes.",
-    stack: ["HTML/CSS/JS", "Supabase", "PostgreSQL", "Vercel"],
+    stack: ["HTML/CSS/JS", "Firebase Auth", "Firestore", "Vercel"],
     results: [
       { title: "Customer account flow", detail: "Email/password and Google entry points, with mobile-sized password controls tested for clear touch targets." },
       { title: "Commerce workflow", detail: "Catalog, account-scoped cart and wishlist behavior, COD/manual UPI handoff, and protected checkout validation." },
@@ -173,6 +191,14 @@ const moreProjects = [
   { name: "WebClient Hunter", status: "shipped", speciality: "Evidence-first prospect research", description: "A source-labelled prospect-research workspace with bounded OpenStreetMap discovery, separate heuristic website checks, and a clearly marked sample-data demo. The protected PageSpeed API source is released; its separately hosted production route remains under verification." },
   { name: "Build Before You're Ready", status: "shipped", speciality: "Beginner-first developer roadmap", description: "Self-published ebook guiding beginner developers from first line of code to junior-ready." },
   { name: "Birthday Surprise Site", status: "live", speciality: "Emotional interaction design", description: "A single-file interactive site built for my brother — animations, sound effects, and SVG art." },
+];
+
+const integrationExperience = [
+  { name: "OpenStreetMap", detail: "Source-labelled public discovery and location-map foundations." },
+  { name: "Nominatim", detail: "Policy-aware fixed-address geocoding and place-search handoffs." },
+  { name: "Firebase", detail: "Authentication, Firestore access rules, and protected administrator workflows." },
+  { name: "PageSpeed route", detail: "A server-protected audit boundary that rejects unauthenticated requests before analysis." },
+  { name: "WhatsApp handoff", detail: "Human-confirmed local ordering and enquiry workflows without claiming automatic acceptance." },
 ];
 
 const releaseSnapshot = [
@@ -423,6 +449,19 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="section" id="integrations" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">Integration experience</p>
+              <h2 className="section-title">Practical data and service boundaries</h2>
+              <p className="section-sub">I use public data and third-party services with visible source, privacy, and verification boundaries rather than treating every integration as an unqualified API claim.</p>
+            </div>
+            <div className="integration-grid">
+              {integrationExperience.map((item) => <article className="integration-card" key={item.name}><h3>{item.name}</h3><p>{item.detail}</p></article>)}
+            </div>
+          </div>
+        </section>
+
         <section className="section" id="projects" data-reveal>
           <div className="wrap">
             <div className="section-heading">
@@ -456,7 +495,7 @@ export default function Home() {
                     )}
                     <div className="project-stack">{project.stack.map((item) => <span className="chip" key={item}>{item}</span>)}</div>
                     <div className="project-evidence-links">
-                      {project.link ? <a className="project-link" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a> : <span className="project-link">{project.linkLabel}</span>}
+                      {project.link ? <a className="project-link project-link-primary" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a> : <span className="project-link">{project.linkLabel}</span>}
                       {project.github && <a className="project-link project-github" href={project.github} target="_blank" rel="noreferrer"><Github size={14} /> view source</a>}
                     </div>
                   </div>
