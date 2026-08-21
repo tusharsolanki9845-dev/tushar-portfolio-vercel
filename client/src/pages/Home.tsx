@@ -110,7 +110,7 @@ const projects: Project[] = [
     status: "live",
     statusLabel: "live · Firestore-backed",
     theme: "industrial",
-    link: "https://ironclasp-store-live-ai6olfm91-crocksy.vercel.app",
+    link: "https://ironclasp-store-live.vercel.app",
     linkLabel: "view live site",
   },
   {
