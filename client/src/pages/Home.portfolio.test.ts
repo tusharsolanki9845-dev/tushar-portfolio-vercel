@@ -30,14 +30,8 @@ describe("Pizza Connect portfolio entry", () => {
 
 describe("recruiter-facing portfolio evidence", () => {
   it("puts verified original work and live demos ahead of unsupported score or API claims", () => {
-    const webClient = homeSource.indexOf('name: "WebClient Hunter"');
-    const ironclasp = homeSource.indexOf('name: "IRONCLASP"');
-    const pizza = homeSource.indexOf('name: "Pizza Connect"');
-    const tehsil = homeSource.indexOf('name: "Tehsil Sahayak"');
-    expect(webClient).toBeGreaterThan(-1);
-    expect(webClient).toBeLessThan(ironclasp);
-    expect(ironclasp).toBeLessThan(pizza);
-    expect(pizza).toBeLessThan(tehsil);
+    expect(homeSource).toContain('const featuredProjectOrder = ["WebClient Hunter", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"]');
+    expect(homeSource).toContain('portfolioProjects.map((project)');
     expect(homeSource).toContain('Integration experience');
     expect(homeSource).toContain('OpenStreetMap');
     expect(homeSource).toContain('Nominatim');

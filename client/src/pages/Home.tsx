@@ -201,6 +201,14 @@ const integrationExperience = [
   { name: "WhatsApp handoff", detail: "Human-confirmed local ordering and enquiry workflows without claiming automatic acceptance." },
 ];
 
+const featuredProjectOrder = ["WebClient Hunter", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
+
+const portfolioProjects = [...projects].sort((left, right) => {
+  const leftPosition = featuredProjectOrder.indexOf(left.name);
+  const rightPosition = featuredProjectOrder.indexOf(right.name);
+  return (leftPosition === -1 ? 999 : leftPosition) - (rightPosition === -1 ? 999 : rightPosition);
+});
+
 const releaseSnapshot = [
   { state: "verified live", title: "Public releases", detail: "Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, the portfolio, and the WebClient Hunter frontend are available through their published public URLs." },
   { state: "source + frontend verified", title: "Protected route boundary", detail: "WebClient Hunter’s PageSpeed route is reviewed in source and its evidence-first frontend is live. The separately hosted protected API still needs an authenticated production check." },
@@ -470,7 +478,7 @@ export default function Home() {
               <p className="section-sub">A running log of what I've shipped — client work and personal builds alike.</p>
             </div>
             <div className="project-list">
-              {projects.map((project) => (
+              {portfolioProjects.map((project) => (
                 <article className="project-card" key={project.name}>
                   <ProjectMockup theme={project.theme} name={project.name} />
                   <div className="project-info">
