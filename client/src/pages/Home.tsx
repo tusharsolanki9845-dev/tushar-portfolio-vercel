@@ -1,4 +1,4 @@
-import { ArrowUpRight, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Moon, Phone, Send, Sun, X } from "lucide-react";
+import { ArrowUpRight, Download, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Moon, Phone, Send, Sun, X } from "lucide-react";
 import { Analytics } from "@vercel/analytics/react";
 import { track } from "@vercel/analytics";
 import { useEffect, useState, type FormEvent } from "react";
@@ -11,6 +11,7 @@ type Project = {
   tagline: string;
   speciality: string;
   description: string;
+  contribution: string;
   stack: string[];
   results?: { title: string; detail: string }[];
   status: "live" | "shipped" | "wip";
@@ -18,6 +19,7 @@ type Project = {
   theme: "luxury" | "industrial" | "warm" | "civic";
   link: string | null;
   linkLabel: string;
+  github?: string;
 };
 
 const roles = [
@@ -61,7 +63,8 @@ const projects: Project[] = [
     name: "CampusTrack",
     tagline: "Attendance management platform for IEC College",
     speciality: "Campus operations — role-based attendance, secure QR/geofence check-in, reporting, and classroom-ready workflows.",
-    description: "A full-stack attendance workspace for IEC College in Greater Noida. Students, teachers, and administrators get tailored workflows for class records, secure check-in, monthly reports, attendance analytics, reminders, and exportable CSV/Excel data.",
+    description: "I built a full-stack attendance workspace for IEC College with student, teacher, and administrator workflows for check-in, monthly reporting, reminders, and CSV/Excel exports.",
+    contribution: "I designed the role-based flows, attendance safeguards, reporting views, and installable experience end to end.",
     stack: ["React", "Node.js", "tRPC", "MySQL", "PWA"],
     results: [
       { title: "Secure attendance flow", detail: "Short-lived QR sessions and geofence validation help teachers record attendance with enrolment and duplicate safeguards." },
@@ -78,8 +81,14 @@ const projects: Project[] = [
     name: "Crocksy",
     tagline: "Full-stack luxury crockery e-commerce platform",
     speciality: "Commerce operations — authentication, cart, wishlist, checkout, and admin control in one storefront.",
-    description: "Personal flagship project — a deployed storefront with authentication, cart, wishlist, checkout, and a full admin dashboard, backed by Supabase/PostgreSQL.",
+    description: "I built and deployed a responsive e-commerce platform with authentication, cart, wishlist, checkout, and an owner administration flow, then moved its customer data path to Firebase.",
+    contribution: "I owned the storefront UX, account flows, cart state, protected data migration, and production fixes.",
     stack: ["HTML/CSS/JS", "Supabase", "PostgreSQL", "Vercel"],
+    results: [
+      { title: "Customer account flow", detail: "Email/password and Google entry points, with mobile-sized password controls tested for clear touch targets." },
+      { title: "Commerce workflow", detail: "Catalog, account-scoped cart and wishlist behavior, COD/manual UPI handoff, and protected checkout validation." },
+      { title: "Trust-first storefront", detail: "Public ratings and testimonials were removed rather than invented; customer data stays behind Firebase controls." },
+    ],
     status: "live",
     statusLabel: "live",
     theme: "luxury",
@@ -89,20 +98,27 @@ const projects: Project[] = [
   {
     name: "IRONCLASP",
     tagline: "E-commerce store for a hardware manufacturer client",
-    speciality: "Payment-state clarity & durable operations — verified Razorpay/UPI flows, private order records, protected admin access, and persistent-storage safeguards.",
-    description: "A private, deployment-ready full-stack release with Razorpay and manual UPI checkout, a hardened administrator panel, browser-private confirmations, PWA support, local backups, and a production guard that requires persistent storage before launch.",
-    stack: ["Vanilla JS", "Node.js", "Express", "Razorpay", "PWA"],
-    status: "shipped",
-    statusLabel: "deployment-ready source",
+    speciality: "Hardware commerce operations — Firestore-backed catalog and orders, protected admin access, accurate payment states, and free-tier deployment design.",
+    description: "I migrated this hardware-store product from local files to Firestore, then deployed its Node/Express storefront on a no-cost Vercel runtime with server-only Firebase credentials.",
+    contribution: "I rebuilt persistence, protected admin and order routes, disabled unsafe free-tier uploads, and verified the deployed health and catalog endpoints.",
+    stack: ["Vanilla JS", "Node.js", "Express", "Firestore", "Razorpay", "PWA", "Vercel"],
+    results: [
+      { title: "Firestore-backed state", detail: "Products, orders, stock changes, and backup metadata moved from local JSON into transactional Firestore operations." },
+      { title: "Protected operations", detail: "Admin sessions are signed; unauthenticated order-record access is rejected by the deployed service." },
+      { title: "Free-host ready", detail: "The production build uses host-managed secrets and approved image references instead of a paid disk or binary upload path." },
+    ],
+    status: "live",
+    statusLabel: "live · Firestore-backed",
     theme: "industrial",
-    link: null,
-    linkLabel: "private source · public deployment pending",
+    link: "https://ironclasp-store-live-ai6olfm91-crocksy.vercel.app",
+    linkLabel: "view live site",
   },
   {
     name: "Pizza Connect",
     tagline: "Production ordering PWA for a local pizzeria & bakery in Khurja",
     speciality: "WhatsApp-first ordering — a 54-item menu, cart, payment intent, and direct outlet confirmation.",
-    description: "A live, mobile-first ordering PWA with a 54-item vegetarian menu, food photography, persistent cart, COD and UPI options, and WhatsApp confirmation. The release includes offline support, install-ready PWA assets, responsive typography, and hardened production metadata.",
+    description: "I built a mobile-first ordering PWA for a Khurja outlet with a 54-item vegetarian menu, persistent cart, COD and UPI options, a WhatsApp confirmation handoff, and offline support.",
+    contribution: "I implemented the menu experience, cart and payment-intent flow, offline-ready PWA support, and production typography refinements.",
     stack: ["HTML/CSS/JS", "PWA", "COD / UPI", "WhatsApp Ordering", "Vercel"],
     results: [
       { title: "Offline-ready storefront", detail: "Install-ready assets and a resilient cache keep the core menu experience available when connectivity is intermittent." },
@@ -119,7 +135,8 @@ const projects: Project[] = [
     name: "Tehsil Sahayak",
     tagline: "Bilingual civic-services guidance PWA for Uttar Pradesh residents",
     speciality: "Civic navigation — plain-language service guides and verified official routes for certificates, land records, and grievances.",
-    description: "A live bilingual guidance PWA that helps residents identify the correct official service route before visiting a tehsil office. It keeps applications and sensitive data on the responsible government portals.",
+    description: "I built a bilingual guidance PWA that helps Uttar Pradesh residents identify the correct official route for certificates, land records, and grievances before visiting a tehsil office.",
+    contribution: "I structured the plain-language service flows, bilingual navigation, responsive PWA shell, and official-link handoffs.",
     stack: ["JavaScript", "Bilingual UX", "PWA", "Official Service Links"],
     status: "live",
     statusLabel: "live",
@@ -131,7 +148,8 @@ const projects: Project[] = [
     name: "NestNavi",
     tagline: "Trust-first hostel, PG & co-living finder for students and working professionals",
     speciality: "Transparent stay discovery — live filters, device-only shortlist, and an enquiry draft without fake bookings or data resale.",
-    description: "A live, browser-first finder that lets users compare clearly labelled sample stay profiles by type, budget, and amenities. It keeps a shortlist on the device and guides users to confirm availability, safety details, and final terms directly with the property.",
+    description: "I built a browser-first hostel and PG finder with filters for type, budget, and amenities, a device-only shortlist, and an enquiry draft that avoids misleading booking claims.",
+    contribution: "I designed the transparent discovery and shortlist flows, responsive PWA behavior, and owner-onboarding review handoff.",
     stack: ["JavaScript", "Responsive UX", "PWA", "Local-first Shortlist", "Vercel"],
     status: "live",
     statusLabel: "live",
@@ -308,12 +326,12 @@ export default function Home() {
           <div className="wrap hero-grid">
             <div className="reveal is-visible">
               <p className="eyebrow">Currently building · Khurja, UP, India</p>
-              <h1>I ship things<br /><em>people actually use.</em></h1>
+              <h1>Tushar Solanki builds<br /><em>web products that work.</em></h1>
               <div className="rotating-line" aria-live="polite">{roleText}<span aria-hidden="true">_</span></div>
-              <p className="hero-lede">I'm a B.Tech Computer Science (AI & ML) student who builds real, working products for real clients — e-commerce stores, civic-tech tools, and lean SaaS side projects — usually on a zero-budget stack with a clear path to scale.</p>
+              <p className="hero-lede">Early-career Computer Science student and web developer building practical e-commerce, civic-tech, and SaaS products with <b>JavaScript, React, Node.js, Firebase, and responsive PWA patterns.</b></p>
               <div className="hero-actions">
                 <a className="btn btn-primary" href="#projects">View projects <ArrowUpRight className="btn-icon" size={15} /></a>
-                <a className="btn" href="#resume">Download résumé ↓</a>
+                <a className="btn" href="/Tushar_Solanki_Resume.pdf" download>Download résumé <Download className="btn-icon" size={15} /></a>
                 <a className="btn" href="#contact">Say hello</a>
               </div>
             </div>
@@ -327,7 +345,7 @@ export default function Home() {
                   ["Institute", "IEC College (AKTU)"],
                   ["Grad Year", "2029"],
                   ["Based In", "Khurja, UP, India"],
-                  ["Stack", "JS · Node · Supabase"],
+                  ["Stack", "JS · React · Node · Firebase"],
                   ["Status", "Open To Work"],
                 ].map(([label, value]) => (
                   <div className="spec-row" key={label}>
@@ -406,6 +424,7 @@ export default function Home() {
                     <p className="project-tagline">{project.tagline}</p>
                     <div className="project-speciality"><span>Speciality</span><p>{project.speciality}</p></div>
                     <p className="project-description">{project.description}</p>
+                    <p className="project-contribution"><b>My contribution:</b> {project.contribution}</p>
                     {project.results && (
                       <section className="project-results" aria-label={`${project.name} project results`}>
                         <p className="project-results-label">Project results</p>
@@ -420,7 +439,10 @@ export default function Home() {
                       </section>
                     )}
                     <div className="project-stack">{project.stack.map((item) => <span className="chip" key={item}>{item}</span>)}</div>
-                    {project.link ? <a className="project-link" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a> : <span className="project-link">{project.linkLabel}</span>}
+                    <div className="project-evidence-links">
+                      {project.link ? <a className="project-link" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a> : <span className="project-link">{project.linkLabel}</span>}
+                      {project.github && <a className="project-link project-github" href={project.github} target="_blank" rel="noreferrer"><Github size={14} /> view source</a>}
+                    </div>
                   </div>
                 </article>
               ))}
