@@ -57,3 +57,14 @@ describe("CampusTrack portfolio evidence", () => {
     expect(source).not.toContain("automatic email delivery verified");
   });
 });
+
+describe("IRONCLASP payment-path evidence", () => {
+  it("describes the verified WhatsApp confirmation flow without implying a public Razorpay selector", async () => {
+    const source = await readFile(new URL("./Home.tsx", import.meta.url), "utf8");
+
+    expect(source).toContain('name: "IRONCLASP"');
+    expect(source).toContain("manual phone-confirmation handoff");
+    expect(source).toContain("does not show a live card or UPI payment selector");
+    expect(source).toContain("WhatsApp Confirmation");
+  });
+});
