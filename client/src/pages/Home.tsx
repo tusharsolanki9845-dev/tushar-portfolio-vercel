@@ -4,7 +4,7 @@ import { track } from "@vercel/analytics";
 import { useEffect, useState, type FormEvent } from "react";
 import { buildContactEmailUrl, type ContactFormPayload } from "@/lib/contact";
 
-/* Design: Reference-led dark build log with editorial data panels, amber status accents, and responsive reveal motion. */
+/* Design: Reference-led dark build log with editorial data panels, amber status accents, and responsive reveal motion. Campus Signal follows this evidence-first portfolio language. */
 
 type Project = {
   name: string;
@@ -30,7 +30,7 @@ const roles = [
 ];
 
 const stats = [
-  { count: 9, label: "projects built" },
+  { count: 10, label: "projects built" },
   { count: 5, label: "Forage simulations" },
   { count: 2, label: "client builds shipped" },
   { count: 2029, label: "graduation year" },
@@ -95,6 +95,25 @@ const projects: Project[] = [
     link: "https://campustrack-iec.vercel.app",
     linkLabel: "view live app",
     github: "https://github.com/tusharsolanki9845-dev/campustrack-iec",
+  },
+  {
+    name: "Campus Signal by IEC",
+    tagline: "College event management for discovery, registration, coordination, and student follow-through",
+    speciality: "Event operations — Firebase-ready student and coordinator workflows, final certificate approval gates, and clear preview boundaries when institutional data is not connected.",
+    description: "I built a responsive event-management platform for IEC Group of Institutions, Greater Noida. It brings together event discovery, search and filters, registration feedback, galleries, attendance-aware certificates, academic-calendar access, and Google Calendar handoffs in a single student-facing experience.",
+    contribution: "I created the Campus Signal design system, accessible system-theme support, student and coordinator workspaces, Firebase-ready data and media flows, certificate PDF generation, live-role safeguards, and deployment configuration for Vercel and Netlify.",
+    stack: ["React", "TypeScript", "Firebase", "Firestore", "Firebase Storage", "jsPDF", "Vite"],
+    results: [
+      { title: "Guarded coordinator workflow", detail: "Live coordinator access requires a trusted Firebase custom admin claim, while the non-production coordinator path is explicitly labelled as a preview." },
+      { title: "Certificate-ready student journey", detail: "Attendance and final coordinator approval control certificate availability before the student can generate a personalised participation PDF." },
+      { title: "Connected operational handoffs", detail: "Gallery, feedback, calendar-document, and Google Calendar template flows are prepared for real Firebase records instead of presenting sample activity as institutional data." },
+    ],
+    status: "shipped",
+    statusLabel: "shipped · Firebase-ready preview",
+    theme: "civic",
+    link: "https://collegevent-w2jx3mec.manus.space",
+    linkLabel: "view managed preview",
+    github: "https://github.com/tusharsolanki9845-dev/campus-signal-iec",
   },
   {
     name: "Crocksy",
@@ -203,7 +222,7 @@ const integrationExperience = [
   { name: "WhatsApp handoff", detail: "Human-confirmed local ordering and enquiry workflows without claiming automatic acceptance." },
 ];
 
-const featuredProjectOrder = ["WebClient Hunter", "CampusTrack", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
+const featuredProjectOrder = ["WebClient Hunter", "CampusTrack", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
 
 const portfolioProjects = [...projects].sort((left, right) => {
   const leftPosition = featuredProjectOrder.indexOf(left.name);
@@ -212,7 +231,7 @@ const portfolioProjects = [...projects].sort((left, right) => {
 });
 
 const releaseSnapshot = [
-  { state: "verified live", title: "Public releases", detail: "CampusTrack, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs." },
+  { state: "verified live", title: "Public releases", detail: "CampusTrack, Campus Signal’s managed preview, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs." },
   { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
   { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },
 ];
