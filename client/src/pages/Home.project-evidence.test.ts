@@ -30,15 +30,14 @@ describe("WebClient Hunter portfolio evidence", () => {
 });
 
 describe("cross-project release snapshot", () => {
-  it("separates verified public releases from source-only and account-bound verification", async () => {
+  it("separates public releases from intentional protected and human-confirmed boundaries", async () => {
     const source = await readFile(new URL("./Home.tsx", import.meta.url), "utf8");
 
-    expect(source).toContain("What is live, and what still needs a real-world check");
     expect(source).toContain("verified live");
-    expect(source).toContain("source + frontend verified");
-    expect(source).toContain("owner data / account test required");
-    expect(source).toContain("separately hosted protected API still needs an authenticated production check");
-    expect(source).toContain("genuine owner-authorised listing");
+    expect(source).toContain("protected by design");
+    expect(source).toContain("intentional human handoff");
+    expect(source).toContain("COD or manual UPI confirmation");
+    expect(source).toContain("authorised published listings");
     expect(source).not.toContain("all projects are fully verified");
   });
 });

@@ -54,7 +54,7 @@ const focusPoints = [
 const skillGroups = [
   { name: "Frontend", items: ["HTML5", "CSS3", "JavaScript", "Responsive Design", "Accessibility"] },
   { name: "Backend & Data", items: ["Node.js", "Express", "Supabase", "PostgreSQL", "SQLite"] },
-  { name: "Payments & Deploy", items: ["Razorpay", "UPI", "Vercel", "Netlify", "GitHub Pages"] },
+  { name: "Payments & Deploy", items: ["COD / UPI Handoff", "Vercel", "Netlify", "GitHub Pages"] },
   { name: "AI & Automation", items: ["Prompt Engineering", "GPT-4o-mini API", "Claude API", "Make.com"] },
 ];
 
@@ -105,7 +105,7 @@ const projects: Project[] = [
     stack: ["HTML/CSS/JS", "Firebase Auth", "Firestore", "Vercel"],
     results: [
       { title: "Customer account flow", detail: "Email/password and Google entry points, with mobile-sized password controls tested for clear touch targets." },
-      { title: "Commerce workflow", detail: "Catalog, account-scoped cart and wishlist behavior, COD/manual UPI handoff, and protected checkout validation." },
+      { title: "Commerce workflow", detail: "Catalog, account-scoped cart and wishlist behavior, plus COD or manual UPI confirmation through WhatsApp." },
       { title: "Trust-first storefront", detail: "Public ratings and testimonials were removed rather than invented; customer data stays behind Firebase controls." },
     ],
     status: "live",
@@ -212,9 +212,9 @@ const portfolioProjects = [...projects].sort((left, right) => {
 });
 
 const releaseSnapshot = [
-  { state: "verified live", title: "Public releases", detail: "CampusTrack, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, the portfolio, and the WebClient Hunter frontend are available through their published public URLs." },
-  { state: "source + frontend verified", title: "Protected route boundary", detail: "WebClient Hunter’s PageSpeed route is reviewed in source and its evidence-first frontend is live. The separately hosted protected API still needs an authenticated production check." },
-  { state: "owner data / account test required", title: "Deliberate follow-up", detail: "NestNavi needs a genuine owner-authorised listing before a public contact link can be exercised. Crocksy’s remaining Google and checkout journey checks require a separate customer account and test-provider session." },
+  { state: "verified live", title: "Public releases", detail: "CampusTrack, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs." },
+  { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
+  { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },
 ];
 
 function AnimatedStat({ count, label, active }: { count: number; label: string; active: boolean }) {
