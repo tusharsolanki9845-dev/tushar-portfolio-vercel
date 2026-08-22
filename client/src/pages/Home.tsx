@@ -22,6 +22,13 @@ type Project = {
   github?: string;
 };
 
+type Credential = {
+  title: string;
+  issuer: string;
+  completed: string;
+  focus: string;
+};
+
 const roles = [
   "Building web products that ship",
   "Studying AI & ML at IEC College, AKTU",
@@ -111,8 +118,8 @@ const projects: Project[] = [
     status: "shipped",
     statusLabel: "shipped · Firebase-ready preview",
     theme: "civic",
-    link: "https://collegevent-w2jx3mec.manus.space",
-    linkLabel: "view managed preview",
+    link: null,
+    linkLabel: "external release in configuration",
     github: "https://github.com/tusharsolanki9845-dev/campus-signal-iec",
   },
   {
@@ -222,6 +229,39 @@ const integrationExperience = [
   { name: "WhatsApp handoff", detail: "Human-confirmed local ordering and enquiry workflows without claiming automatic acceptance." },
 ];
 
+const credentials: Credential[] = [
+  {
+    title: "Shields Up: Cybersecurity Job Simulation",
+    issuer: "Forage",
+    completed: "Completed June 2026",
+    focus: "Practical work in zero-day vulnerability response and technical ransomware bypass.",
+  },
+  {
+    title: "Cybersecurity Analyst Job Simulation",
+    issuer: "Forage",
+    completed: "Completed June 2026",
+    focus: "Identity and access management fundamentals, strategy assessment, solution design, and platform integration.",
+  },
+  {
+    title: "Project Manager Job Simulation",
+    issuer: "Forage",
+    completed: "Completed June 2026",
+    focus: "Developing key performance indicators and managing project dashboards.",
+  },
+  {
+    title: "Cybersecurity Job Simulation",
+    issuer: "Forage",
+    completed: "Completed June 2026",
+    focus: "Designing phishing email simulations and interpreting simulation results.",
+  },
+  {
+    title: "EY Technology Risk Virtual Job Simulation",
+    issuer: "Forage",
+    completed: "Completed July 2026",
+    focus: "Technology-risk fundamentals, business interaction, probing questions, teamwork, and conclusion planning.",
+  },
+];
+
 const featuredProjectOrder = ["WebClient Hunter", "CampusTrack", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
 
 const portfolioProjects = [...projects].sort((left, right) => {
@@ -231,7 +271,7 @@ const portfolioProjects = [...projects].sort((left, right) => {
 });
 
 const releaseSnapshot = [
-  { state: "verified live", title: "Public releases", detail: "CampusTrack, Campus Signal’s managed preview, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs." },
+  { state: "verified live", title: "Public releases", detail: "CampusTrack, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal is documented here with its public source while its external release is configured." },
   { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
   { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },
 ];
@@ -363,6 +403,7 @@ export default function Home() {
             {[
               ["About Me", "#about"],
               ["Toolkit", "#skills"],
+              ["Credentials", "#credentials"],
               ["Build Log", "#projects"],
               ["Résumé", "#resume"],
               ["Let's Talk", "#contact"],
@@ -487,6 +528,26 @@ export default function Home() {
             </div>
             <div className="integration-grid">
               {integrationExperience.map((item) => <article className="integration-card" key={item.name}><h3>{item.name}</h3><p>{item.detail}</p></article>)}
+            </div>
+          </div>
+        </section>
+
+        <section className="section section-alt" id="credentials" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">Credentials</p>
+              <h2 className="section-title">Applied learning, documented</h2>
+              <p className="section-sub">Five completed virtual job simulations, presented with their issuer, completion period, and practical focus.</p>
+            </div>
+            <div className="more-grid">
+              {credentials.map((credential) => (
+                <article className="more-card" key={credential.title}>
+                  <span className="more-status"><span className="status-dot" />{credential.completed}</span>
+                  <h4>{credential.title}</h4>
+                  <p className="more-speciality">Issued by {credential.issuer}</p>
+                  <p>{credential.focus}</p>
+                </article>
+              ))}
             </div>
           </div>
         </section>
