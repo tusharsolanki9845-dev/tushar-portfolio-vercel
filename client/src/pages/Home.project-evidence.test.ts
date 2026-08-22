@@ -42,3 +42,18 @@ describe("cross-project release snapshot", () => {
     expect(source).not.toContain("all projects are fully verified");
   });
 });
+
+describe("CampusTrack portfolio evidence", () => {
+  it("describes the verified Firebase release without inventing institutional data or email delivery outcomes", async () => {
+    const source = await readFile(new URL("./Home.tsx", import.meta.url), "utf8");
+
+    expect(source).toContain('link: "https://campustrack-iec.vercel.app"');
+    expect(source).toContain('github: "https://github.com/tusharsolanki9845-dev/campustrack-iec"');
+    expect(source).toContain('statusLabel: "live · Firebase-backed"');
+    expect(source).toContain("Firebase Authentication and private-by-default Firestore rules");
+    expect(source).toContain("Teacher-issued QR sessions");
+    expect(source).toContain("owner-configured; no test delivery claim is made");
+    expect(source).not.toContain("iecattend-ay6ur7my.manus.space");
+    expect(source).not.toContain("automatic email delivery verified");
+  });
+});

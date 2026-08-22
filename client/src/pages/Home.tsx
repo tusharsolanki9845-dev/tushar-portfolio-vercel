@@ -79,21 +79,22 @@ const projects: Project[] = [
   },
   {
     name: "CampusTrack",
-    tagline: "Attendance management platform for IEC College",
-    speciality: "Campus operations — role-based attendance, secure QR/geofence check-in, reporting, and classroom-ready workflows.",
-    description: "I built a full-stack attendance workspace for IEC College with student, teacher, and administrator workflows for check-in, monthly reporting, reminders, and CSV/Excel exports.",
-    contribution: "I designed the role-based flows, attendance safeguards, reporting views, and installable experience end to end.",
-    stack: ["React", "Node.js", "tRPC", "MySQL", "PWA"],
+    tagline: "Firebase-backed college attendance and student-management ERP for IEC College",
+    speciality: "Campus operations — role-scoped Firebase access, QR attendance, attendance percentage, timetable export, leave decisions, and bounded email notices.",
+    description: "I built a role-based ERP for IEC College, Greater Noida. It uses Firebase Authentication and private-by-default Firestore rules for student, teacher, HOD, and administrator views, without seeding any student, timetable, leave, or attendance record.",
+    contribution: "I designed the Firebase migration, Firestore security model, QR attendance flow, HOD leave workflow, calendar export, verified Vercel release, and client-side EmailJS safeguards.",
+    stack: ["React", "Firebase Auth", "Firestore", "QR Attendance", "EmailJS", "PWA", "Vercel"],
     results: [
-      { title: "Secure attendance flow", detail: "Short-lived QR sessions and geofence validation help teachers record attendance with enrolment and duplicate safeguards." },
-      { title: "Role-specific reporting", detail: "Students, teachers, and administrators can review monthly attendance with CSV/Excel exports and department or semester comparisons." },
-      { title: "Classroom-ready UX", detail: "Light mode, personalized reminders, installable PWA support, and teacher keyboard shortcuts keep routine attendance work quick and clear." },
+      { title: "Private role model", detail: "Published Firestore rules keep records private by default and restrict attendance, class, timetable, and leave actions to the authenticated role and scope." },
+      { title: "Campus workflows", detail: "Teacher-issued QR sessions, student attendance percentages, `.ics` timetable export, and same-department HOD leave decisions are implemented around real authorised records only." },
+      { title: "Bounded email notices", detail: "A student can explicitly email a low-attendance summary to their verified Google address, while an HOD decision can make one best-effort leave notice. Email templates are owner-configured; no test delivery claim is made." },
     ],
-    status: "shipped",
-    statusLabel: "managed deployment",
+    status: "live",
+    statusLabel: "live · Firebase-backed",
     theme: "civic",
-    link: "https://iecattend-ay6ur7my.manus.space",
+    link: "https://campustrack-iec.vercel.app",
     linkLabel: "view live app",
+    github: "https://github.com/tusharsolanki9845-dev/campustrack-iec",
   },
   {
     name: "Crocksy",
@@ -197,11 +198,12 @@ const integrationExperience = [
   { name: "OpenStreetMap", detail: "Source-labelled public discovery and location-map foundations." },
   { name: "Nominatim", detail: "Policy-aware fixed-address geocoding and place-search handoffs." },
   { name: "Firebase", detail: "Authentication, Firestore access rules, and protected administrator workflows." },
+  { name: "EmailJS", detail: "Owner-configured, client-side email notices with explicit recipient validation and bounded resend behaviour." },
   { name: "PageSpeed route", detail: "A server-protected audit boundary that rejects unauthenticated requests before analysis." },
   { name: "WhatsApp handoff", detail: "Human-confirmed local ordering and enquiry workflows without claiming automatic acceptance." },
 ];
 
-const featuredProjectOrder = ["WebClient Hunter", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
+const featuredProjectOrder = ["WebClient Hunter", "CampusTrack", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
 
 const portfolioProjects = [...projects].sort((left, right) => {
   const leftPosition = featuredProjectOrder.indexOf(left.name);
@@ -210,7 +212,7 @@ const portfolioProjects = [...projects].sort((left, right) => {
 });
 
 const releaseSnapshot = [
-  { state: "verified live", title: "Public releases", detail: "Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, the portfolio, and the WebClient Hunter frontend are available through their published public URLs." },
+  { state: "verified live", title: "Public releases", detail: "CampusTrack, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, the portfolio, and the WebClient Hunter frontend are available through their published public URLs." },
   { state: "source + frontend verified", title: "Protected route boundary", detail: "WebClient Hunter’s PageSpeed route is reviewed in source and its evidence-first frontend is live. The separately hosted protected API still needs an authenticated production check." },
   { state: "owner data / account test required", title: "Deliberate follow-up", detail: "NestNavi needs a genuine owner-authorised listing before a public contact link can be exercised. Crocksy’s remaining Google and checkout journey checks require a separate customer account and test-provider session." },
 ];
