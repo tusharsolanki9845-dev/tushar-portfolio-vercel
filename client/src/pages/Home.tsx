@@ -1,10 +1,11 @@
 import { ArrowUpRight, Download, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Moon, Phone, Send, Sun, X } from "lucide-react";
-import { Analytics } from "@vercel/analytics/react";
 import { track } from "@vercel/analytics";
-import { useEffect, useState, type FormEvent } from "react";
+import { lazy, Suspense, useEffect, useState, type FormEvent } from "react";
 import { buildContactEmailUrl, type ContactFormPayload } from "@/lib/contact";
 
 /* Design: Reference-led dark build log with editorial data panels, amber status accents, and responsive reveal motion. Campus Signal follows this evidence-first portfolio language. */
+
+const Analytics = lazy(() => import("@vercel/analytics/react").then(({ Analytics: AnalyticsComponent }) => ({ default: AnalyticsComponent })));
 
 type Project = {
   name: string;
@@ -115,11 +116,11 @@ const projects: Project[] = [
       { title: "Certificate-ready student journey", detail: "Attendance and final coordinator approval control certificate availability before the student can generate a personalised participation PDF." },
       { title: "Connected operational handoffs", detail: "Gallery, feedback, calendar-document, and Google Calendar template flows are prepared for real Firebase records instead of presenting sample activity as institutional data." },
     ],
-    status: "shipped",
-    statusLabel: "shipped · Firebase-ready preview",
+    status: "live",
+    statusLabel: "live · access-gated Firebase",
     theme: "civic",
-    link: null,
-    linkLabel: "external release in configuration",
+    link: "https://campus-signal-iec.vercel.app",
+    linkLabel: "view live app",
     github: "https://github.com/tusharsolanki9845-dev/campus-signal-iec",
   },
   {
@@ -271,31 +272,15 @@ const portfolioProjects = [...projects].sort((left, right) => {
 });
 
 const releaseSnapshot = [
-  { state: "verified live", title: "Public releases", detail: "CampusTrack, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal is documented here with its public source while its external release is configured." },
+  { state: "verified live", title: "Public releases", detail: "CampusTrack, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
   { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
   { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },
 ];
 
-function AnimatedStat({ count, label, active }: { count: number; label: string; active: boolean }) {
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    if (!active) return;
-    const duration = count > 1000 ? 1000 : 700;
-    const started = performance.now();
-    let frame = 0;
-    const tick = (now: number) => {
-      const progress = Math.min((now - started) / duration, 1);
-      setValue(Math.floor(progress * count));
-      if (progress < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [active, count]);
-
+function AnimatedStat({ count, label }: { count: number; label: string }) {
   return (
     <div className="stat">
-      <div className="stat-number">{active ? value : 0}{count < 2029 ? "+" : ""}</div>
+      <div className="stat-number">{count}{count < 2029 ? "+" : ""}</div>
       <div className="stat-label">{label}</div>
     </div>
   );
@@ -395,7 +380,7 @@ export default function Home() {
 
   return (
     <div className="site-shell">
-      <Analytics />
+      <Suspense fallback={null}><Analytics /></Suspense>
       <header className="site-nav">
         <div className="wrap nav-inner">
           <a className="brand" href="#top" onClick={closeMenu}>tushar<span className="brand-accent">.dev</span></a>
@@ -472,7 +457,7 @@ export default function Home() {
 
         <section className="stats-strip" id="stats" data-reveal>
           <div className="wrap stats-grid">
-            {stats.map((stat) => <AnimatedStat key={stat.label} {...stat} active={visibleSections.has("stats")} />)}
+            {stats.map((stat) => <AnimatedStat key={stat.label} {...stat} />)}
           </div>
         </section>
 
@@ -632,7 +617,7 @@ export default function Home() {
                 </div>
                 <p className="resume-summary">B.Tech CSE (AI & ML) student, AKTU, expected 2029 — building and shipping client and personal web projects throughout.</p>
                 <ul className="resume-highlights">
-                  <li>9 shipped projects, from solo builds to client-facing e-commerce stores</li>
+                  <li>10 shipped projects, from solo builds to client-facing e-commerce stores</li>
                   <li>Completed 5 professional simulations via Forage: EY, AIG, Tata, Mastercard, and Siemens</li>
                   <li>Comfortable owning a build end-to-end: frontend, backend, payments, and deployment</li>
                 </ul>
