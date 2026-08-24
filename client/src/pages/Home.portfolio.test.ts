@@ -48,7 +48,9 @@ describe("recruiter-facing portfolio evidence", () => {
     expect(homeSource).toContain('{ count: 2029, label: "graduation year" }');
     expect(homeSource).toContain('12 projects built, from solo builds to client-facing e-commerce stores');
     expect(homeSource).toContain('name: "IEC College Campus Track"');
-    expect(homeSource).toContain('statusLabel: "build verified · release link pending"');
+    expect(homeSource).toContain('statusLabel: "live · verified public information"');
+    expect(homeSource).toContain('link: "https://campustrack-iec.vercel.app"');
+    expect(homeSource).toContain('linkLabel: "view live website"');
     expect(homeSource).toContain('statusLabel: "live · access-gated Firebase"');
     expect(homeSource).toContain('name: "Aeris"');
     expect(homeSource).toContain('link: "https://weathernow-zmvf3inw.manus.space"');

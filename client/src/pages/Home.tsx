@@ -115,11 +115,11 @@ const projects: Project[] = [
       { title: "Honest academic-data boundary", detail: "Schedules, attendance, and identity details are visibly demonstrative until IEC authorises a secure ERP or API connection." },
       { title: "Tested local experience", detail: "The fresh-user flow supports reset, saved public updates, preference changes, and cross-screen state reflection; TypeScript and deterministic attendance tests passed." },
     ],
-    status: "shipped",
-    statusLabel: "build verified · release link pending",
+    status: "live",
+    statusLabel: "live · verified public information",
     theme: "civic",
-    link: null,
-    linkLabel: "release link pending",
+    link: "https://campustrack-iec.vercel.app",
+    linkLabel: "view live website",
   },
   {
     name: "Campus Signal by IEC",
@@ -306,8 +306,8 @@ const portfolioProjects = [...projects].sort((left, right) => {
 });
 
 const releaseSnapshot = [
-  { state: "verified live", title: "Public releases", detail: "Aeris, CampusTrack, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
-  { state: "build verified", title: "Source-aware campus companion", detail: "IEC College Campus Track has passed its local interaction and fresh-user checks. Its public release link remains pending; official IEC public information is clearly separated from prototype-only academic data." },
+  { state: "verified live", title: "Public releases", detail: "Aeris, CampusTrack, IEC College Campus Track, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
+  { state: "verified live", title: "Source-aware campus companion", detail: "IEC College Campus Track is now live. Its public IEC information is clearly separated from prototype-only schedule, attendance, and identity data until an authorised academic-data connection is available." },
   { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
   { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },
 ];
