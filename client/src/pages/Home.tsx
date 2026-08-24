@@ -38,7 +38,7 @@ const roles = [
 ];
 
 const stats = [
-  { count: 10, label: "projects built" },
+  { count: 11, label: "projects built" },
   { count: 5, label: "Forage simulations" },
   { count: 2, label: "client builds shipped" },
   { count: 2029, label: "graduation year" },
@@ -211,6 +211,24 @@ const projects: Project[] = [
     link: "https://nestnavi-hostel-pg-finder.vercel.app",
     linkLabel: "view live site",
   },
+  {
+    name: "Aeris",
+    tagline: "Location-first live weather desk for everyday decisions",
+    speciality: "Weather at a glance — local forecast discovery, flexible units, and a calm, focused interface.",
+    description: "Aeris turns local weather into a clear daily view, helping people start with their current location or choose a city instead.",
+    contribution: "I shaped the location-first experience, live forecast presentation, unit switching, and calm weather-focused visual system.",
+    stack: ["Live Weather", "Location-first UX", "Open-Meteo"],
+    results: [
+      { title: "Start with place", detail: "Use device location for a local forecast or choose a city when you want a different view." },
+      { title: "Read it quickly", detail: "A focused interface keeps the weather signal clear without overwhelming the first visit." },
+      { title: "Choose your units", detail: "Switch between Celsius and Fahrenheit to match personal preference." },
+    ],
+    status: "live",
+    statusLabel: "live · Open-Meteo",
+    theme: "civic",
+    link: "https://weathernow-zmvf3inw.manus.space",
+    linkLabel: "view live site",
+  },
 ];
 
 const moreProjects = [
@@ -261,7 +279,7 @@ const credentials: Credential[] = [
   },
 ];
 
-const featuredProjectOrder = ["WebClient Hunter", "CampusTrack", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
+const featuredProjectOrder = ["WebClient Hunter", "Aeris", "CampusTrack", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
 
 const portfolioProjects = [...projects].sort((left, right) => {
   const leftPosition = featuredProjectOrder.indexOf(left.name);
@@ -270,7 +288,7 @@ const portfolioProjects = [...projects].sort((left, right) => {
 });
 
 const releaseSnapshot = [
-  { state: "verified live", title: "Public releases", detail: "CampusTrack, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
+  { state: "verified live", title: "Public releases", detail: "Aeris, CampusTrack, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
   { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
   { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },
 ];
@@ -615,7 +633,7 @@ export default function Home() {
                 </div>
                 <p className="resume-summary">B.Tech CSE (AI & ML) student, AKTU, expected 2029 — building and shipping client and personal web projects throughout.</p>
                 <ul className="resume-highlights">
-                  <li>10 shipped projects, from solo builds to client-facing e-commerce stores</li>
+                  <li>11 shipped projects, from solo builds to client-facing e-commerce stores</li>
                   <li>Completed 5 professional simulations via Forage: EY, AIG, Tata, Mastercard, and Siemens</li>
                   <li>Comfortable owning a build end-to-end: frontend, backend, payments, and deployment</li>
                 </ul>
