@@ -102,7 +102,6 @@ const projects: Project[] = [
     theme: "civic",
     link: "https://campustrack-iec.vercel.app",
     linkLabel: "view live app",
-    github: "https://github.com/tusharsolanki9845-dev/campustrack-iec",
   },
   {
     name: "Campus Signal by IEC",
@@ -121,7 +120,6 @@ const projects: Project[] = [
     theme: "civic",
     link: "https://campus-signal-iec.vercel.app",
     linkLabel: "view live app",
-    github: "https://github.com/tusharsolanki9845-dev/campus-signal-iec",
   },
   {
     name: "Crocksy",
@@ -288,7 +286,7 @@ function AnimatedStat({ count, label }: { count: number; label: string }) {
 
 function ProjectMockup({ theme, name }: { theme: Project["theme"]; name: string }) {
   return (
-    <div className={`project-mockup ${theme}`} aria-label={`${name} project preview`}>
+    <div className={`project-mockup ${theme}`} role="img" aria-label={`${name} project preview`}>
       <div className="mockup-window">
         <div className="mockup-top"><span /><span /><span /></div>
         <div className="mockup-content">
@@ -384,7 +382,7 @@ export default function Home() {
       <header className="site-nav">
         <div className="wrap nav-inner">
           <a className="brand" href="#top" onClick={closeMenu}>tushar<span className="brand-accent">.dev</span></a>
-          <nav className={`nav-links ${menuOpen ? "open" : ""}`} aria-label="Primary navigation">
+          <nav id="primary-navigation" className={`nav-links ${menuOpen ? "open" : ""}`} aria-label="Primary navigation">
             {[
               ["About Me", "#about"],
               ["Toolkit", "#skills"],
@@ -411,7 +409,7 @@ export default function Home() {
               <Moon className="theme-icon theme-icon-moon" size={14} aria-hidden="true" />
               <span className="sr-only">Current theme: {theme}. Toggle color theme.</span>
             </button>
-            <button className="menu-button" onClick={() => setMenuOpen((open) => !open)} aria-label="Toggle navigation">
+            <button className="menu-button" type="button" onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-controls="primary-navigation" aria-label="Toggle navigation">
               {menuOpen ? <X size={16} /> : <Menu size={16} />}
             </button>
           </div>
@@ -570,8 +568,8 @@ export default function Home() {
                     )}
                     <div className="project-stack">{project.stack.map((item) => <span className="chip" key={item}>{item}</span>)}</div>
                     <div className="project-evidence-links">
-                      {project.link ? <a className="project-link project-link-primary" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a> : <span className="project-link">{project.linkLabel}</span>}
-                      {project.github && <a className="project-link project-github" href={project.github} target="_blank" rel="noreferrer"><Github size={14} /> view source</a>}
+                      {project.link ? <a className="project-link project-link-primary" href={project.link} target="_blank" rel="noopener noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a> : <span className="project-link">{project.linkLabel}</span>}
+                      {project.github && <a className="project-link project-github" href={project.github} target="_blank" rel="noopener noreferrer"><Github size={14} /> view source</a>}
                     </div>
                   </div>
                 </article>
@@ -627,7 +625,7 @@ export default function Home() {
                 <div className="file-head"><span className="file-type"><FileText size={16} /> PDF</span><span className="file-size">24 KB</span></div>
                 <h3 className="file-name">Tushar_Solanki_Resume.pdf</h3>
                 <p className="file-meta">Updated Aug 2026</p>
-                <a className="project-link" href="/Tushar_Solanki_Resume.pdf" target="_blank" rel="noreferrer">Preview document <ArrowUpRight size={14} /></a>
+                <a className="project-link" href="/Tushar_Solanki_Resume.pdf" target="_blank" rel="noopener noreferrer">Preview document <ArrowUpRight size={14} /></a>
               </div>
             </div>
           </div>
@@ -653,10 +651,10 @@ export default function Home() {
               </form>
               <div className="contact-actions" aria-label="Other ways to contact Tushar">
                 <a className="contact-action" href="mailto:tusharsolanki9845@gmail.com"><span><Mail size={14} /> &nbsp;Email me</span><span>↗</span></a>
-                <a className="contact-action" href="https://wa.me/916396015608?text=Hi%20Tushar%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noreferrer"><span><MessageCircle size={14} /> &nbsp;Chat on WhatsApp</span><span>usually replies within a day ↗</span></a>
+                <a className="contact-action" href="https://wa.me/916396015608?text=Hi%20Tushar%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noopener noreferrer"><span><MessageCircle size={14} /> &nbsp;Chat on WhatsApp</span><span>usually replies within a day ↗</span></a>
                 <a className="contact-action" href="tel:+916396015608"><span><Phone size={14} /> &nbsp;+91 63960 15608</span><span>↗</span></a>
-                <a className="contact-action" href="https://github.com/tusharsolanki9845-dev" target="_blank" rel="noreferrer"><span><Github size={14} /> &nbsp;@tusharsolanki9845-dev</span><span>↗</span></a>
-                <a className="contact-action" href="https://www.linkedin.com/in/tushar-solanki-915048370" target="_blank" rel="noreferrer"><span><Linkedin size={14} /> &nbsp;/in/tushar-solanki-915048370</span><span>↗</span></a>
+                <a className="contact-action" href="https://github.com/tusharsolanki9845-dev" target="_blank" rel="noopener noreferrer"><span><Github size={14} /> &nbsp;@tusharsolanki9845-dev</span><span>↗</span></a>
+                <a className="contact-action" href="https://www.linkedin.com/in/tushar-solanki-915048370" target="_blank" rel="noopener noreferrer"><span><Linkedin size={14} /> &nbsp;/in/tushar-solanki-915048370</span><span>↗</span></a>
               </div>
             </div>
           </div>
