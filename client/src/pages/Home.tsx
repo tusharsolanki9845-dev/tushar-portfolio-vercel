@@ -38,7 +38,7 @@ const roles = [
 ];
 
 const stats = [
-  { count: 11, label: "projects built" },
+  { count: 12, label: "projects built" },
   { count: 5, label: "Forage simulations" },
   { count: 2, label: "client builds shipped" },
   { count: 2029, label: "graduation year" },
@@ -102,6 +102,24 @@ const projects: Project[] = [
     theme: "civic",
     link: "https://campustrack-iec.vercel.app",
     linkLabel: "view live app",
+  },
+  {
+    name: "IEC College Campus Track",
+    tagline: "Source-aware student companion for IEC College across web and Android-ready delivery",
+    speciality: "Responsible campus information — verified public notices, local-first student interactions, and explicit boundaries for records that require authorised academic access.",
+    description: "I built a responsive student companion for IEC College that keeps public college information distinct from demonstration-only attendance, schedule, and profile data. The product surfaces official orientation and academic-calendar information, lets students save public updates locally, and carries the same product experience across web and Android-ready interfaces.",
+    contribution: "I developed the original Campus Track identity, responsive Expo/React Native interface, local persistence layer, public-source links, fresh-user reset flow, animation system, deterministic attendance tests, and verification boundaries.",
+    stack: ["Expo", "React Native", "TypeScript", "Expo Router", "AsyncStorage", "Responsive Web"],
+    results: [
+      { title: "Verified public information", detail: "Official IEC public notices, campus details, programme examples, and helpline information are clearly identified and linked back to source pages for confirmation." },
+      { title: "Honest academic-data boundary", detail: "Schedules, attendance, and identity details are visibly demonstrative until IEC authorises a secure ERP or API connection." },
+      { title: "Tested local experience", detail: "The fresh-user flow supports reset, saved public updates, preference changes, and cross-screen state reflection; TypeScript and deterministic attendance tests passed." },
+    ],
+    status: "shipped",
+    statusLabel: "build verified · release link pending",
+    theme: "civic",
+    link: null,
+    linkLabel: "release link pending",
   },
   {
     name: "Campus Signal by IEC",
@@ -279,7 +297,7 @@ const credentials: Credential[] = [
   },
 ];
 
-const featuredProjectOrder = ["WebClient Hunter", "Aeris", "CampusTrack", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
+const featuredProjectOrder = ["WebClient Hunter", "Aeris", "CampusTrack", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
 
 const portfolioProjects = [...projects].sort((left, right) => {
   const leftPosition = featuredProjectOrder.indexOf(left.name);
@@ -289,6 +307,7 @@ const portfolioProjects = [...projects].sort((left, right) => {
 
 const releaseSnapshot = [
   { state: "verified live", title: "Public releases", detail: "Aeris, CampusTrack, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
+  { state: "build verified", title: "Source-aware campus companion", detail: "IEC College Campus Track has passed its local interaction and fresh-user checks. Its public release link remains pending; official IEC public information is clearly separated from prototype-only academic data." },
   { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
   { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },
 ];
@@ -633,7 +652,7 @@ export default function Home() {
                 </div>
                 <p className="resume-summary">B.Tech CSE (AI & ML) student, AKTU, expected 2029 — building and shipping client and personal web projects throughout.</p>
                 <ul className="resume-highlights">
-                  <li>11 shipped projects, from solo builds to client-facing e-commerce stores</li>
+                  <li>12 projects built, from solo builds to client-facing e-commerce stores</li>
                   <li>Completed 5 professional simulations via Forage: EY, AIG, Tata, Mastercard, and Siemens</li>
                   <li>Comfortable owning a build end-to-end: frontend, backend, payments, and deployment</li>
                 </ul>

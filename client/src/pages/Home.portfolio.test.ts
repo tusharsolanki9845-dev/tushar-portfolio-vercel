@@ -30,7 +30,7 @@ describe("Pizza Connect portfolio entry", () => {
 
 describe("recruiter-facing portfolio evidence", () => {
   it("puts verified original work and live demos ahead of unsupported score or API claims", () => {
-    expect(homeSource).toContain('const featuredProjectOrder = ["WebClient Hunter", "Aeris", "CampusTrack", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"]');
+    expect(homeSource).toContain('const featuredProjectOrder = ["WebClient Hunter", "Aeris", "CampusTrack", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"]');
     expect(homeSource).toContain('portfolioProjects.map((project)');
     expect(homeSource).toContain('Integration experience');
     expect(homeSource).toContain('OpenStreetMap');
@@ -42,11 +42,13 @@ describe("recruiter-facing portfolio evidence", () => {
   });
 
   it("keeps verified summary counters and the Campus Signal live entry accurate", () => {
-    expect(homeSource).toContain('{ count: 11, label: "projects built" }');
+    expect(homeSource).toContain('{ count: 12, label: "projects built" }');
     expect(homeSource).toContain('{ count: 5, label: "Forage simulations" }');
     expect(homeSource).toContain('{ count: 2, label: "client builds shipped" }');
     expect(homeSource).toContain('{ count: 2029, label: "graduation year" }');
-    expect(homeSource).toContain('11 shipped projects, from solo builds to client-facing e-commerce stores');
+    expect(homeSource).toContain('12 projects built, from solo builds to client-facing e-commerce stores');
+    expect(homeSource).toContain('name: "IEC College Campus Track"');
+    expect(homeSource).toContain('statusLabel: "build verified · release link pending"');
     expect(homeSource).toContain('statusLabel: "live · access-gated Firebase"');
     expect(homeSource).toContain('name: "Aeris"');
     expect(homeSource).toContain('link: "https://weathernow-zmvf3inw.manus.space"');
