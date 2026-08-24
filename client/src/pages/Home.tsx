@@ -38,7 +38,7 @@ const roles = [
 ];
 
 const stats = [
-  { count: 10, label: "projects built" },
+  { count: 11, label: "projects built" },
   { count: 5, label: "Forage simulations" },
   { count: 2, label: "client builds shipped" },
   { count: 2029, label: "graduation year" },
@@ -84,6 +84,24 @@ const projects: Project[] = [
     theme: "civic",
     link: "https://webclient-hunter-ai.vercel.app",
     linkLabel: "view live demo",
+  },
+  {
+    name: "Aeris",
+    tagline: "Location-first weather observatory with live forecasts and exposure-aware signals",
+    speciality: "Local weather intelligence — Open-Meteo forecasts, AQI and UV insight, saved places, and user-controlled browser alerts for selected severe-weather and high-UV conditions.",
+    description: "I built a responsive weather product that turns device location into a calm, animated weather desk. It combines live current and seven-day conditions with hourly outlooks, local air-quality and UV data, saved locations, manual city search, and persistent temperature and alert preferences.",
+    contribution: "I designed the full location-first experience, connected the weather and air-quality data flows, implemented accessible preference controls and browser-alert permission handling, and prepared the static release configuration.",
+    stack: ["React", "Open-Meteo", "Air Quality API", "Browser Notifications", "Vite", "Vercel-ready"],
+    results: [
+      { title: "Location-first weather flow", detail: "The product prioritizes a permission-based local forecast and gives visitors a manual city lookup fallback when location access is unavailable." },
+      { title: "Exposure-aware conditions", detail: "AQI, UV, precipitation, wind, and forecast-derived alert states complement the current, hourly, and seven-day weather views." },
+      { title: "Personalized monitoring", detail: "Saved places, temperature preferences, and selected alert signals persist locally in the browser without requiring an account." },
+    ],
+    status: "live",
+    statusLabel: "live · location-first weather",
+    theme: "civic",
+    link: "https://weathernow-zmvf3inw.manus.space",
+    linkLabel: "view live app",
   },
   {
     name: "CampusTrack",
@@ -263,7 +281,7 @@ const credentials: Credential[] = [
   },
 ];
 
-const featuredProjectOrder = ["WebClient Hunter", "CampusTrack", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
+const featuredProjectOrder = ["WebClient Hunter", "Aeris", "CampusTrack", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
 
 const portfolioProjects = [...projects].sort((left, right) => {
   const leftPosition = featuredProjectOrder.indexOf(left.name);
@@ -272,7 +290,7 @@ const portfolioProjects = [...projects].sort((left, right) => {
 });
 
 const releaseSnapshot = [
-  { state: "verified live", title: "Public releases", detail: "CampusTrack, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
+  { state: "verified live", title: "Public releases", detail: "Aeris, CampusTrack, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
   { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
   { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },
 ];
