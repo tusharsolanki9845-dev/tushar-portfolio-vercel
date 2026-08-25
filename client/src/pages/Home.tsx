@@ -86,24 +86,6 @@ const projects: Project[] = [
     linkLabel: "view live demo",
   },
   {
-    name: "CampusTrack",
-    tagline: "Firebase-backed college attendance and student-management ERP for IEC College",
-    speciality: "Campus operations — role-scoped Firebase access, QR attendance, attendance percentage, timetable export, leave decisions, and bounded email notices.",
-    description: "I built a role-based ERP for IEC College, Greater Noida. It uses Firebase Authentication and private-by-default Firestore rules for student, teacher, HOD, and administrator views, without seeding any student, timetable, leave, or attendance record.",
-    contribution: "I designed the Firebase migration, Firestore security model, QR attendance flow, HOD leave workflow, calendar export, verified Vercel release, and client-side EmailJS safeguards.",
-    stack: ["React", "Firebase Auth", "Firestore", "QR Attendance", "EmailJS", "PWA", "Vercel"],
-    results: [
-      { title: "Private role model", detail: "Published Firestore rules keep records private by default and restrict attendance, class, timetable, and leave actions to the authenticated role and scope." },
-      { title: "Campus workflows", detail: "Teacher-issued QR sessions, student attendance percentages, `.ics` timetable export, and same-department HOD leave decisions are implemented around real authorised records only." },
-      { title: "Bounded email notices", detail: "A student can explicitly email a low-attendance summary to their verified Google address, while an HOD decision can make one best-effort leave notice. Email templates are owner-configured; no test delivery claim is made." },
-    ],
-    status: "live",
-    statusLabel: "live · Firebase-backed",
-    theme: "civic",
-    link: "https://campustrack-iec.vercel.app",
-    linkLabel: "view live app",
-  },
-  {
     name: "IEC College Campus Track",
     tagline: "Source-aware student companion for IEC College across web and Android-ready delivery",
     speciality: "Responsible campus information — verified public notices, local-first student interactions, and explicit boundaries for records that require authorised academic access.",
@@ -297,7 +279,7 @@ const credentials: Credential[] = [
   },
 ];
 
-const featuredProjectOrder = ["WebClient Hunter", "Aeris", "CampusTrack", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
+const featuredProjectOrder = ["WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
 
 const portfolioProjects = [...projects].sort((left, right) => {
   const leftPosition = featuredProjectOrder.indexOf(left.name);
@@ -306,7 +288,7 @@ const portfolioProjects = [...projects].sort((left, right) => {
 });
 
 const releaseSnapshot = [
-  { state: "verified live", title: "Public releases", detail: "Aeris, CampusTrack, IEC College Campus Track, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
+  { state: "verified live", title: "Public releases", detail: "Aeris, IEC College Campus Track, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
   { state: "verified live", title: "Source-aware campus companion", detail: "IEC College Campus Track is now live. Its public IEC information is clearly separated from prototype-only schedule, attendance, and identity data until an authorised academic-data connection is available." },
   { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
   { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },

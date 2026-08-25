@@ -30,7 +30,8 @@ describe("Pizza Connect portfolio entry", () => {
 
 describe("recruiter-facing portfolio evidence", () => {
   it("puts verified original work and live demos ahead of unsupported score or API claims", () => {
-    expect(homeSource).toContain('const featuredProjectOrder = ["WebClient Hunter", "Aeris", "CampusTrack", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"]');
+    expect(homeSource).toContain('const featuredProjectOrder = ["WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"]');
+    expect(homeSource).not.toContain('name: "CampusTrack"');
     expect(homeSource).toContain('portfolioProjects.map((project)');
     expect(homeSource).toContain('Integration experience');
     expect(homeSource).toContain('OpenStreetMap');
