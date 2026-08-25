@@ -9,3 +9,4 @@
 - [x] Add reusable detail pages for individual portfolio projects.
 - [x] Add visible release-date badges to portfolio project cards.
 - [x] Add automated external-link checking to the portfolio validation workflow.
+- [x] Fix production routing for direct project-detail URLs.
