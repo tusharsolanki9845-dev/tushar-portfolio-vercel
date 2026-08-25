@@ -10,3 +10,4 @@
 - [x] Add visible release-date badges to portfolio project cards.
 - [x] Add automated external-link checking to the portfolio validation workflow.
 - [x] Fix production routing for direct project-detail URLs.
+- [x] Fix relative production asset paths for direct project-detail routes.
