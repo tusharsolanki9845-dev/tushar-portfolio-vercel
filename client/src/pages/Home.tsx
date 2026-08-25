@@ -10,6 +10,8 @@ const Analytics = lazy(() => import("@vercel/analytics/react").then(({ Analytics
 export type Project = {
   slug: string;
   releaseDate: string;
+  category: "web" | "campus" | "commerce" | "civic";
+  previewImage?: string;
   name: string;
   tagline: string;
   speciality: string;
@@ -72,6 +74,8 @@ export const projects: Project[] = [
   {
     slug: "webclient-hunter",
     releaseDate: "Aug 2026",
+    category: "web",
+    previewImage: "/previews/webclient-hunter.webp",
     name: "WebClient Hunter",
     tagline: "Evidence-first web prospect research for freelancers and local businesses",
     speciality: "Research boundaries — source-labelled OpenStreetMap discovery, explicit heuristic checks, and a protected performance-audit route.",
@@ -88,10 +92,13 @@ export const projects: Project[] = [
     theme: "civic",
     link: "https://webclient-hunter-ai.vercel.app",
     linkLabel: "view live demo",
+    github: "https://github.com/tusharsolanki9845-dev/Webclient-hunter-ai",
   },
   {
     slug: "iec-college-campus-track",
     releaseDate: "Aug 2026",
+    category: "campus",
+    previewImage: "/previews/iec-campus-track.webp",
     name: "IEC College Campus Track",
     tagline: "Source-aware student companion for IEC College across web and Android-ready delivery",
     speciality: "Responsible campus information — verified public notices, local-first student interactions, and explicit boundaries for records that require authorised academic access.",
@@ -112,6 +119,8 @@ export const projects: Project[] = [
   {
     slug: "campus-signal-iec",
     releaseDate: "Aug 2026",
+    category: "campus",
+    previewImage: "/previews/campus-signal.webp",
     name: "Campus Signal by IEC",
     tagline: "College event management for discovery, registration, coordination, and student follow-through",
     speciality: "Event operations — Firebase-ready student and coordinator workflows, final certificate approval gates, and clear preview boundaries when institutional data is not connected.",
@@ -132,6 +141,7 @@ export const projects: Project[] = [
   {
     slug: "crocksy",
     releaseDate: "Aug 2026",
+    category: "commerce",
     name: "Crocksy",
     tagline: "Full-stack luxury crockery e-commerce platform",
     speciality: "Commerce operations — authentication, cart, wishlist, checkout, and admin control in one storefront.",
@@ -152,6 +162,7 @@ export const projects: Project[] = [
   {
     slug: "ironclasp",
     releaseDate: "Aug 2026",
+    category: "commerce",
     name: "IRONCLASP",
     tagline: "E-commerce store for a hardware manufacturer client",
     speciality: "Hardware commerce operations — Firestore-backed catalog and orders, protected admin access, manual phone-confirmation handoff, and free-tier deployment design.",
@@ -172,6 +183,7 @@ export const projects: Project[] = [
   {
     slug: "pizza-connect",
     releaseDate: "Aug 2026",
+    category: "commerce",
     name: "Pizza Connect",
     tagline: "Production ordering PWA for a local pizzeria & bakery in Khurja",
     speciality: "WhatsApp-first ordering — a 54-item menu, cart, payment intent, and direct outlet confirmation.",
@@ -192,6 +204,7 @@ export const projects: Project[] = [
   {
     slug: "tehsil-sahayak",
     releaseDate: "Aug 2026",
+    category: "civic",
     name: "Tehsil Sahayak",
     tagline: "Bilingual civic-services guidance PWA for Uttar Pradesh residents",
     speciality: "Civic navigation — 20,160 source-traceable Hindi/English search phrasings linked to official service routes for certificates, land records, and grievances.",
@@ -212,6 +225,7 @@ export const projects: Project[] = [
   {
     slug: "nestnavi",
     releaseDate: "Aug 2026",
+    category: "web",
     name: "NestNavi",
     tagline: "Trust-first hostel, PG & co-living finder for students and working professionals",
     speciality: "Verified listing operations — Firebase-backed public records, a device-only shortlist, and an authorised administrator workspace without fake bookings or sample properties.",
@@ -232,6 +246,8 @@ export const projects: Project[] = [
   {
     slug: "aeris",
     releaseDate: "Aug 2026",
+    category: "web",
+    previewImage: "/previews/aeris.webp",
     name: "Aeris",
     tagline: "Location-first live weather desk for everyday decisions",
     speciality: "Weather at a glance — local forecast discovery, flexible units, and a calm, focused interface.",
@@ -301,6 +317,14 @@ const credentials: Credential[] = [
 
 const featuredProjectOrder = ["WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
 
+const projectFilters = [
+  { id: "all", label: "All releases" },
+  { id: "web", label: "Web & SaaS" },
+  { id: "campus", label: "Campus" },
+  { id: "commerce", label: "Commerce" },
+  { id: "civic", label: "Civic" },
+] as const;
+
 const portfolioProjects = [...projects].sort((left, right) => {
   const leftPosition = featuredProjectOrder.indexOf(left.name);
   const rightPosition = featuredProjectOrder.indexOf(right.name);
@@ -323,7 +347,16 @@ function AnimatedStat({ count, label }: { count: number; label: string }) {
   );
 }
 
-function ProjectMockup({ theme, name }: { theme: Project["theme"]; name: string }) {
+function ProjectMockup({ theme, name, previewImage }: { theme: Project["theme"]; name: string; previewImage?: string }) {
+  if (previewImage) {
+    return (
+      <div className={`project-mockup project-preview ${theme}`} role="img" aria-label={`${name} live project preview`}>
+        <img src={previewImage} alt={`${name} live website preview`} loading="lazy" />
+        <span className="project-preview-label">live interface</span>
+      </div>
+    );
+  }
+
   return (
     <div className={`project-mockup ${theme}`} role="img" aria-label={`${name} project preview`}>
       <div className="mockup-window">
@@ -344,6 +377,7 @@ export default function Home() {
   const [roleText, setRoleText] = useState("");
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [activeProjectFilter, setActiveProjectFilter] = useState<(typeof projectFilters)[number]["id"]>("all");
   const [contactForm, setContactForm] = useState<ContactFormPayload>({ name: "", email: "", topic: "freelance", message: "" });
   const [contactStarted, setContactStarted] = useState(false);
   const [contactStatus, setContactStatus] = useState("");
@@ -401,6 +435,9 @@ export default function Home() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+  const visiblePortfolioProjects = activeProjectFilter === "all"
+    ? portfolioProjects
+    : portfolioProjects.filter((project) => project.category === activeProjectFilter);
 
   const trackContactStart = () => {
     if (contactStarted) return;
@@ -581,10 +618,16 @@ export default function Home() {
               <h2 className="section-title">Build log</h2>
               <p className="section-sub">A running log of what I've shipped — client work and personal builds alike.</p>
             </div>
+            <div className="project-filter-bar" role="group" aria-label="Filter projects by category">
+              <div className="project-filter-list">
+                {projectFilters.map((filter) => <button key={filter.id} type="button" className={`project-filter ${activeProjectFilter === filter.id ? "is-active" : ""}`} onClick={() => setActiveProjectFilter(filter.id)} aria-pressed={activeProjectFilter === filter.id}>{filter.label}</button>)}
+              </div>
+              <p className="project-filter-count" aria-live="polite">{visiblePortfolioProjects.length} published projects</p>
+            </div>
             <div className="project-list">
-              {portfolioProjects.map((project) => (
+              {visiblePortfolioProjects.map((project) => (
                 <article className="project-card" key={project.name}>
-                  <ProjectMockup theme={project.theme} name={project.name} />
+                  <ProjectMockup theme={project.theme} name={project.name} previewImage={project.previewImage} />
                   <div className="project-info">
                     <div className="project-topline"><span className={`project-status ${project.status}`}><span className="status-dot" />{project.statusLabel}</span><span className="project-meta"><span className="release-badge">release · {project.releaseDate}</span><span className="project-status">{project.theme}</span></span></div>
                     <h3 className="project-name">{project.name}</h3>

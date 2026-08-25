@@ -32,7 +32,7 @@ describe("recruiter-facing portfolio evidence", () => {
   it("puts verified original work and live demos ahead of unsupported score or API claims", () => {
     expect(homeSource).toContain('const featuredProjectOrder = ["WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"]');
     expect(homeSource).not.toContain('name: "CampusTrack"');
-    expect(homeSource).toContain('portfolioProjects.map((project)');
+    expect(homeSource).toContain('visiblePortfolioProjects.map((project)');
     expect(homeSource).toContain('Integration experience');
     expect(homeSource).toContain('OpenStreetMap');
     expect(homeSource).toContain('Nominatim');
@@ -54,6 +54,11 @@ describe("recruiter-facing portfolio evidence", () => {
     expect(homeSource).toContain('linkLabel: "view live website"');
     expect(homeSource).toContain('href={`/projects/${project.slug}`}');
     expect(homeSource).toContain('releaseDate: "Aug 2026"');
+    expect(homeSource).toContain('const projectFilters = [');
+    expect(homeSource).toContain('visiblePortfolioProjects.map((project)');
+    expect(homeSource).toContain('previewImage: "/previews/webclient-hunter.webp"');
+    expect(homeSource).toContain('github: "https://github.com/tusharsolanki9845-dev/Webclient-hunter-ai"');
+    expect(cssSource).toContain('.project-filter-bar');
     expect(homeSource).toContain('statusLabel: "live · access-gated Firebase"');
     expect(homeSource).toContain('name: "Aeris"');
     expect(homeSource).toContain('link: "https://weathernow-zmvf3inw.manus.space"');
