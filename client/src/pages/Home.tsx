@@ -454,6 +454,7 @@ export default function Home() {
 
   return (
     <div className="site-shell">
+      <a className="skip-link" href="#top">Skip to main content</a>
       <Suspense fallback={null}><Analytics /></Suspense>
       <header className="site-nav">
         <div className="wrap nav-inner">
@@ -492,7 +493,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main id="top">
+      <main id="top" tabIndex={-1}>
         <section className="hero">
           <div className="wrap hero-grid">
             <div className="reveal is-visible">
