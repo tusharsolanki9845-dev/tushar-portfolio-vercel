@@ -52,6 +52,8 @@ describe("recruiter-facing portfolio evidence", () => {
     expect(homeSource).toContain('statusLabel: "live · verified public information"');
     expect(homeSource).toContain('link: "https://campustrack-iec.vercel.app"');
     expect(homeSource).toContain('linkLabel: "view live website"');
+    expect(homeSource).toContain('href={`/projects/${project.slug}`}');
+    expect(homeSource).toContain('releaseDate: "Aug 2026"');
     expect(homeSource).toContain('statusLabel: "live · access-gated Firebase"');
     expect(homeSource).toContain('name: "Aeris"');
     expect(homeSource).toContain('link: "https://weathernow-zmvf3inw.manus.space"');

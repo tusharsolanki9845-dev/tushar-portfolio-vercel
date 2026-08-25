@@ -7,7 +7,9 @@ import { buildContactEmailUrl, type ContactFormPayload } from "@/lib/contact";
 
 const Analytics = lazy(() => import("@vercel/analytics/react").then(({ Analytics: AnalyticsComponent }) => ({ default: AnalyticsComponent })));
 
-type Project = {
+export type Project = {
+  slug: string;
+  releaseDate: string;
   name: string;
   tagline: string;
   speciality: string;
@@ -66,8 +68,10 @@ const skillGroups = [
   { name: "AI & Automation", items: ["Prompt Engineering", "GPT-4o-mini API", "Claude API", "Make.com"] },
 ];
 
-const projects: Project[] = [
+export const projects: Project[] = [
   {
+    slug: "webclient-hunter",
+    releaseDate: "Aug 2026",
     name: "WebClient Hunter",
     tagline: "Evidence-first web prospect research for freelancers and local businesses",
     speciality: "Research boundaries — source-labelled OpenStreetMap discovery, explicit heuristic checks, and a protected performance-audit route.",
@@ -86,6 +90,8 @@ const projects: Project[] = [
     linkLabel: "view live demo",
   },
   {
+    slug: "iec-college-campus-track",
+    releaseDate: "Aug 2026",
     name: "IEC College Campus Track",
     tagline: "Source-aware student companion for IEC College across web and Android-ready delivery",
     speciality: "Responsible campus information — verified public notices, local-first student interactions, and explicit boundaries for records that require authorised academic access.",
@@ -104,6 +110,8 @@ const projects: Project[] = [
     linkLabel: "view live website",
   },
   {
+    slug: "campus-signal-iec",
+    releaseDate: "Aug 2026",
     name: "Campus Signal by IEC",
     tagline: "College event management for discovery, registration, coordination, and student follow-through",
     speciality: "Event operations — Firebase-ready student and coordinator workflows, final certificate approval gates, and clear preview boundaries when institutional data is not connected.",
@@ -122,6 +130,8 @@ const projects: Project[] = [
     linkLabel: "view live app",
   },
   {
+    slug: "crocksy",
+    releaseDate: "Aug 2026",
     name: "Crocksy",
     tagline: "Full-stack luxury crockery e-commerce platform",
     speciality: "Commerce operations — authentication, cart, wishlist, checkout, and admin control in one storefront.",
@@ -140,6 +150,8 @@ const projects: Project[] = [
     linkLabel: "view project",
   },
   {
+    slug: "ironclasp",
+    releaseDate: "Aug 2026",
     name: "IRONCLASP",
     tagline: "E-commerce store for a hardware manufacturer client",
     speciality: "Hardware commerce operations — Firestore-backed catalog and orders, protected admin access, manual phone-confirmation handoff, and free-tier deployment design.",
@@ -158,6 +170,8 @@ const projects: Project[] = [
     linkLabel: "view live site",
   },
   {
+    slug: "pizza-connect",
+    releaseDate: "Aug 2026",
     name: "Pizza Connect",
     tagline: "Production ordering PWA for a local pizzeria & bakery in Khurja",
     speciality: "WhatsApp-first ordering — a 54-item menu, cart, payment intent, and direct outlet confirmation.",
@@ -176,6 +190,8 @@ const projects: Project[] = [
     linkLabel: "view live site",
   },
   {
+    slug: "tehsil-sahayak",
+    releaseDate: "Aug 2026",
     name: "Tehsil Sahayak",
     tagline: "Bilingual civic-services guidance PWA for Uttar Pradesh residents",
     speciality: "Civic navigation — 20,160 source-traceable Hindi/English search phrasings linked to official service routes for certificates, land records, and grievances.",
@@ -194,6 +210,8 @@ const projects: Project[] = [
     linkLabel: "view live site",
   },
   {
+    slug: "nestnavi",
+    releaseDate: "Aug 2026",
     name: "NestNavi",
     tagline: "Trust-first hostel, PG & co-living finder for students and working professionals",
     speciality: "Verified listing operations — Firebase-backed public records, a device-only shortlist, and an authorised administrator workspace without fake bookings or sample properties.",
@@ -212,6 +230,8 @@ const projects: Project[] = [
     linkLabel: "view live site",
   },
   {
+    slug: "aeris",
+    releaseDate: "Aug 2026",
     name: "Aeris",
     tagline: "Location-first live weather desk for everyday decisions",
     speciality: "Weather at a glance — local forecast discovery, flexible units, and a calm, focused interface.",
@@ -566,7 +586,7 @@ export default function Home() {
                 <article className="project-card" key={project.name}>
                   <ProjectMockup theme={project.theme} name={project.name} />
                   <div className="project-info">
-                    <div className="project-topline"><span className={`project-status ${project.status}`}><span className="status-dot" />{project.statusLabel}</span><span className="project-status">{project.theme}</span></div>
+                    <div className="project-topline"><span className={`project-status ${project.status}`}><span className="status-dot" />{project.statusLabel}</span><span className="project-meta"><span className="release-badge">release · {project.releaseDate}</span><span className="project-status">{project.theme}</span></span></div>
                     <h3 className="project-name">{project.name}</h3>
                     <p className="project-tagline">{project.tagline}</p>
                     <div className="project-speciality"><span>Speciality</span><p>{project.speciality}</p></div>
@@ -587,6 +607,7 @@ export default function Home() {
                     )}
                     <div className="project-stack">{project.stack.map((item) => <span className="chip" key={item}>{item}</span>)}</div>
                     <div className="project-evidence-links">
+                      <a className="project-link" href={`/projects/${project.slug}`}>view case study <ArrowUpRight size={14} /></a>
                       {project.link ? <a className="project-link project-link-primary" href={project.link} target="_blank" rel="noopener noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a> : <span className="project-link">{project.linkLabel}</span>}
                       {project.github && <a className="project-link project-github" href={project.github} target="_blank" rel="noopener noreferrer"><Github size={14} /> view source</a>}
                     </div>

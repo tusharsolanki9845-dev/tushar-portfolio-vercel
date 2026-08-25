@@ -5,4 +5,7 @@
 - [x] Publish and verify the portfolio release containing the CampusTrack entry.
 - [x] Reproduce and fix the reported live portfolio website error.
 - [x] Remove the legacy CampusTrack card that duplicates the new IEC College Campus Track release URL with mismatched product details.
-- [ ] Publish and verify the corrected portfolio release.
+- [x] Publish and verify the corrected portfolio release.
+- [x] Add reusable detail pages for individual portfolio projects.
+- [x] Add visible release-date badges to portfolio project cards.
+- [x] Add automated external-link checking to the portfolio validation workflow.
