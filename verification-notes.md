@@ -47,3 +47,11 @@ The local **Web & SaaS** filter reduced the Build Log from 10 to 4 visible proje
 The live Vercel portfolio loaded successfully after the `76ed517` release push and retained its project content, navigation, and light-theme presentation. The browser restored the top-of-page viewport despite the `#projects` URL, so deployed markup and live interaction controls require a follow-up inspection before treating the direct-anchor behavior as production-verified.
 
 A cache-bypassed live visit completed after the GitHub Pages deployment workflow for `76ed517` succeeded. The live portfolio retained its project content and navigation with the interaction release assets served. Browser viewport restoration still placed the page at the top for a direct hash URL, so the tested Build Log filter and direct-anchor behavior are verified in the local production build; the live page itself remains available and intact after publication.
+
+## Theme, hero, and touch preview — 26 August 2026
+
+The local portfolio preview renders the new interactive hero field above the Profile.json panel without a desktop layout regression. The field exposes its descriptive interaction copy and responds to pointer movement through its layered grid, orbit, core, and particle treatment. Navigation and existing project content remain available while the new field is present.
+
+A 390 × 844 local mobile capture confirms that the compact header retains a clear theme control and 44px-scale menu control, the hero copy remains readable, primary actions stay separated, and the interactive field begins below the hero actions without horizontal overflow. The headless browser retained the home position for a direct `#projects` capture, so the responsive filter strip is covered by its static touch rules and desktop functional check rather than treating that headless hash position as a mobile failure.
+
+The local custom theme control changed from dark to light mode successfully. The theme state, accessible control label, hero-field contrast, profile panel, and navigation all remained legible after the transition; the temporary visual wash and control emphasis are suppressed when a visitor has requested reduced motion.

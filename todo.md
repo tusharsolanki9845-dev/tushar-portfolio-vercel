@@ -23,3 +23,8 @@
 - [x] Enhance the portfolio with purposeful, accessible motion and stronger project-discovery interactions while preserving the evidence-first content hierarchy.
 - [x] Validate desktop and mobile motion behavior, reduced-motion fallbacks, tests, and production build after the enhancement.
 - [x] Publish and verify the live portfolio interaction enhancement.
+- [x] Add a custom dark/light theme transition that makes the current theme change feel deliberate while preserving accessible motion preferences.
+- [x] Build a lightweight interactive 3D-style hero field that responds to pointer and touch movement without requiring a WebGL dependency.
+- [x] Improve touch targets, horizontal project-filter ergonomics, and responsive hero/profile behavior for mobile visitors.
+- [x] Validate the visual, touch, reduced-motion, test, type-check, and production-build paths for the theme and hero enhancement.
+- [ ] Publish and verify the live theme, 3D hero, and mobile interaction release.

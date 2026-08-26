@@ -84,6 +84,19 @@ describe("recruiter-facing portfolio evidence", () => {
     expect(cssSource).toContain('@media (prefers-reduced-motion: reduce)');
   });
 
+  it("adds a touch-friendly 3D hero field and a deliberate custom theme transition", () => {
+    expect(homeSource).toContain('function HeroField()');
+    expect(homeSource).toContain('onPointerDown={(event) => {');
+    expect(homeSource).toContain('Pointer and touch responsive');
+    expect(homeSource).toContain('const [themeTransitioning, setThemeTransitioning] = useState(false)');
+    expect(homeSource).toContain('window.matchMedia("(prefers-reduced-motion: reduce)").matches');
+    expect(cssSource).toContain('.site-shell.theme-transitioning::after');
+    expect(cssSource).toContain('@keyframes theme-wash');
+    expect(cssSource).toContain('.hero-field');
+    expect(cssSource).toContain('touch-action: pan-y');
+    expect(cssSource).toContain('touch-action: pan-x');
+  });
+
   it("keeps analytics outside the critical rendering path", () => {
     expect(homeSource).toContain('lazy(() => import("@vercel/analytics/react")');
     expect(homeSource).toContain('<Suspense fallback={null}><Analytics /></Suspense>');

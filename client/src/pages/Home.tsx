@@ -1,6 +1,6 @@
 import { ArrowUpRight, Download, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Moon, Phone, Send, Sun, X } from "lucide-react";
 import { track } from "@vercel/analytics";
-import { lazy, Suspense, useEffect, useState, type FormEvent } from "react";
+import { lazy, Suspense, useEffect, useState, type CSSProperties, type FormEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { buildContactEmailUrl, type ContactFormPayload } from "@/lib/contact";
 
 /* Design: Reference-led dark build log with editorial data panels, amber status accents, and responsive reveal motion. Campus Signal follows this evidence-first portfolio language. */
@@ -392,6 +392,70 @@ function ProjectMockup({ theme, name, previewImage }: { theme: Project["theme"];
   );
 }
 
+function HeroField() {
+  const [field, setField] = useState({ x: 50, y: 50, pressed: false });
+
+  const updateField = (event: ReactPointerEvent<HTMLDivElement>, pressed = field.pressed) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    setField({
+      x: Math.max(0, Math.min(100, ((event.clientX - bounds.left) / bounds.width) * 100)),
+      y: Math.max(0, Math.min(100, ((event.clientY - bounds.top) / bounds.height) * 100)),
+      pressed,
+    });
+  };
+
+  return (
+    <div
+      className={`hero-field ${field.pressed ? "is-pressed" : ""}`}
+      style={{
+        "--hero-x": `${field.x}%`,
+        "--hero-y": `${field.y}%`,
+        "--hero-shift-x": `${(field.x - 50) * 0.16}px`,
+        "--hero-shift-y": `${(field.y - 50) * 0.16}px`,
+        "--hero-shift-x-reverse": `${(field.x - 50) * -0.1}px`,
+        "--hero-shift-y-reverse": `${(field.y - 50) * -0.1}px`,
+        "--hero-rotate-x": `${(field.y - 50) * -0.28}deg`,
+        "--hero-rotate-y": `${(field.x - 50) * 0.28}deg`,
+      } as CSSProperties}
+      onPointerMove={(event) => updateField(event, event.currentTarget.hasPointerCapture(event.pointerId))}
+      onPointerDown={(event) => {
+        event.currentTarget.setPointerCapture(event.pointerId);
+        updateField(event, true);
+      }}
+      onPointerUp={(event) => {
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+        updateField(event, false);
+      }}
+      onPointerCancel={() => setField({ x: 50, y: 50, pressed: false })}
+      onPointerLeave={() => setField({ x: 50, y: 50, pressed: false })}
+      aria-label="Interactive portfolio signal field. Move a pointer or drag to shift the visual layers."
+      role="img"
+    >
+      <div className="hero-field-grid" aria-hidden="true" />
+      <div className="hero-field-orbit hero-field-orbit-one" aria-hidden="true" />
+      <div className="hero-field-orbit hero-field-orbit-two" aria-hidden="true" />
+      <div className="hero-field-core" aria-hidden="true" />
+      <div className="hero-field-particles" aria-hidden="true">
+        {Array.from({ length: 14 }, (_, index) => (
+          <span
+            key={index}
+            style={{
+              "--particle-x": `${7 + ((index * 37) % 84)}%`,
+              "--particle-y": `${14 + ((index * 23) % 72)}%`,
+              "--particle-size": `${3 + ((index % 3) * 2)}px`,
+            } as CSSProperties}
+          />
+        ))}
+      </div>
+      <div className="hero-field-copy">
+        <span>Interaction layer</span>
+        <strong>Move through the work.</strong>
+        <p>Pointer and touch responsive</p>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [roleIndex, setRoleIndex] = useState(0);
@@ -400,6 +464,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("top");
   const [scrollProgress, setScrollProgress] = useState(0);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [themeTransitioning, setThemeTransitioning] = useState(false);
   const [activeProjectFilter, setActiveProjectFilter] = useState<(typeof projectFilters)[number]["id"]>("all");
   const [contactForm, setContactForm] = useState<ContactFormPayload>({ name: "", email: "", topic: "freelance", message: "" });
   const [contactStarted, setContactStarted] = useState(false);
@@ -414,6 +479,11 @@ export default function Home() {
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reducedMotion) {
+      setThemeTransitioning(true);
+      window.setTimeout(() => setThemeTransitioning(false), 700);
+    }
     setTheme(nextTheme);
     document.documentElement.dataset.theme = nextTheme;
     window.localStorage.setItem("portfolio-theme", nextTheme);
@@ -513,7 +583,7 @@ export default function Home() {
   };
 
   return (
-    <div className="site-shell">
+    <div className={`site-shell ${themeTransitioning ? "theme-transitioning" : ""}`}>
       <a className="skip-link" href="#top">Skip to main content</a>
       <Suspense fallback={null}><Analytics /></Suspense>
       <header className="site-nav">
@@ -538,7 +608,7 @@ export default function Home() {
           <div className="nav-actions">
             <span className="availability"><span className="status-dot" />Available for freelance work</span>
             <button
-              className="theme-toggle"
+              className={`theme-toggle ${themeTransitioning ? "is-transitioning" : ""}`}
               type="button"
               onClick={toggleTheme}
               aria-pressed={theme === "light"}
@@ -572,23 +642,26 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="profile-card reveal is-visible" aria-label="Tushar profile specification">
-              <div className="window-bar"><span className="window-dot" /><span className="window-dot" /><span className="window-dot" /><span className="window-title">Profile.json</span></div>
-              <div className="spec-list">
-                {[
-                  ["Role", "Freelance Web Developer"],
-                  ["Study", "B.Tech CSE — AI & ML"],
-                  ["Institute", "IEC College (AKTU)"],
-                  ["Grad Year", "2029"],
-                  ["Based In", "Khurja, UP, India"],
-                  ["Stack", "JS · React · Node · Firebase"],
-                  ["Status", "Open To Work"],
-                ].map(([label, value]) => (
-                  <div className="spec-row" key={label}>
-                    <span className="spec-label">{label}</span>
-                    <span className={`spec-value ${label === "Status" ? "highlight" : ""}`}>{value}</span>
-                  </div>
-                ))}
+            <div className="hero-visual reveal is-visible">
+              <HeroField />
+              <div className="profile-card" aria-label="Tushar profile specification">
+                <div className="window-bar"><span className="window-dot" /><span className="window-dot" /><span className="window-dot" /><span className="window-title">Profile.json</span></div>
+                <div className="spec-list">
+                  {[
+                    ["Role", "Freelance Web Developer"],
+                    ["Study", "B.Tech CSE — AI & ML"],
+                    ["Institute", "IEC College (AKTU)"],
+                    ["Grad Year", "2029"],
+                    ["Based In", "Khurja, UP, India"],
+                    ["Stack", "JS · React · Node · Firebase"],
+                    ["Status", "Open To Work"],
+                  ].map(([label, value]) => (
+                    <div className="spec-row" key={label}>
+                      <span className="spec-label">{label}</span>
+                      <span className={`spec-value ${label === "Status" ? "highlight" : ""}`}>{value}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
