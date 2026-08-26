@@ -27,3 +27,7 @@ The live Vercel portfolio now exposes the accessible theme control. On the publi
 The live project target, `https://ai-night-security.netlify.app`, was opened successfully in the connected browser. It presents the AI Night Security first-launch screen, which asks for a public HTTPS security-server URL and explicitly states that camera passwords, viewer tokens, and RTSP credentials are never entered in the dashboard. This supports the portfolio copy that the static dashboard is live while a persistent backend and camera relay await connection to an always-on self-hosted machine.
 
 The repository’s non-browser external-link checker received HTTP 401 for both `HEAD` and `GET` requests from the sandbox on the same URL. This does not match the authenticated browser verification and is recorded as an environment-specific automated-check limitation; it must not be presented as a public dashboard outage.
+
+## AI Night Security portfolio publication — 26 August 2026
+
+After publication, `https://tushar-portfolio-live.vercel.app` was opened in the connected browser. The Build Log displays the new **AI Night Security** card as the first entry, reports **“dashboard live · backend connection pending,”** and presents **“view live dashboard.”** The page also reflects the corresponding **13+ projects built** and **10 published projects** counts. The project card therefore links the published Netlify dashboard without overstating the unconnected self-hosted backend, RTSP relay, or camera-stream functionality.
