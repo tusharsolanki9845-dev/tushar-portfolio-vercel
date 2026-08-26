@@ -42,7 +42,7 @@ const roles = [
 ];
 
 const stats = [
-  { count: 12, label: "projects built" },
+  { count: 13, label: "projects built" },
   { count: 5, label: "Forage simulations" },
   { count: 2, label: "client builds shipped" },
   { count: 2029, label: "graduation year" },
@@ -71,6 +71,27 @@ const skillGroups = [
 ];
 
 export const projects: Project[] = [
+  {
+    slug: "ai-night-security",
+    releaseDate: "Aug 2026",
+    category: "web",
+    name: "AI Night Security",
+    tagline: "Multi-tenant CCTV security dashboard with protected camera-view access",
+    speciality: "Security operations — package-based camera capacity, per-camera credentials, and a token-gated HLS relay architecture designed to keep RTSP details out of the browser.",
+    description: "I built a security SaaS interface for account access, free camera packages, camera management, protected camera-ID/password viewing, and an Android-ready dashboard. The static customer dashboard is publicly deployed on Netlify; the persistent Docker backend, protected stream relay, and real camera connection require a user-owned always-on host and remain pending live verification.",
+    contribution: "I designed the customer dashboard and entitlement experience, implemented the security boundaries for protected camera viewing, prepared the NestJS, PostgreSQL, Redis, FFmpeg HLS, and Nginx deployment stack, and packaged an Android debug build for configured HTTPS server access.",
+    stack: ["React", "Vite", "NestJS", "PostgreSQL", "Redis", "FFmpeg HLS", "Netlify", "Capacitor"],
+    results: [
+      { title: "Published dashboard", detail: "The customer-facing static dashboard is publicly available on Netlify, including secure first-launch server configuration while no persistent API host is connected." },
+      { title: "Protected viewing design", detail: "Camera credentials and RTSP connection details are designed to remain server-side; an individual camera view requires a camera ID, viewer password, and short-lived access token." },
+      { title: "Clear deployment boundary", detail: "Real sign-in, database persistence, camera streaming, and HLS playback require the separately prepared always-on Docker backend and camera-network connection, which are not yet live." },
+    ],
+    status: "live",
+    statusLabel: "dashboard live · backend connection pending",
+    theme: "industrial",
+    link: "https://ai-night-security.netlify.app",
+    linkLabel: "view live dashboard",
+  },
   {
     slug: "webclient-hunter",
     releaseDate: "Aug 2026",
@@ -315,7 +336,7 @@ const credentials: Credential[] = [
   },
 ];
 
-const featuredProjectOrder = ["WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
+const featuredProjectOrder = ["AI Night Security", "WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
 
 const projectFilters = [
   { id: "all", label: "All releases" },
@@ -699,7 +720,7 @@ export default function Home() {
                 </div>
                 <p className="resume-summary">B.Tech CSE (AI & ML) student, AKTU, expected 2029 — building and shipping client and personal web projects throughout.</p>
                 <ul className="resume-highlights">
-                  <li>12 projects built, from solo builds to client-facing e-commerce stores</li>
+                  <li>13 projects built, from solo builds to client-facing e-commerce stores</li>
                   <li>Completed 5 professional simulations via Forage: EY, AIG, Tata, Mastercard, and Siemens</li>
                   <li>Comfortable owning a build end-to-end: frontend, backend, payments, and deployment</li>
                 </ul>

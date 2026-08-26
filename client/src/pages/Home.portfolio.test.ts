@@ -30,7 +30,7 @@ describe("Pizza Connect portfolio entry", () => {
 
 describe("recruiter-facing portfolio evidence", () => {
   it("puts verified original work and live demos ahead of unsupported score or API claims", () => {
-    expect(homeSource).toContain('const featuredProjectOrder = ["WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"]');
+    expect(homeSource).toContain('const featuredProjectOrder = ["AI Night Security", "WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"]');
     expect(homeSource).not.toContain('name: "CampusTrack"');
     expect(homeSource).toContain('visiblePortfolioProjects.map((project)');
     expect(homeSource).toContain('Integration experience');
@@ -43,11 +43,16 @@ describe("recruiter-facing portfolio evidence", () => {
   });
 
   it("keeps verified summary counters and the Campus Signal live entry accurate", () => {
-    expect(homeSource).toContain('{ count: 12, label: "projects built" }');
+    expect(homeSource).toContain('{ count: 13, label: "projects built" }');
+    expect(homeSource).toContain('name: "AI Night Security"');
+    expect(homeSource).toContain('statusLabel: "dashboard live · backend connection pending"');
+    expect(homeSource).toContain('link: "https://ai-night-security.netlify.app"');
+    expect(homeSource).toContain('linkLabel: "view live dashboard"');
+    expect(homeSource).toContain('remain pending live verification');
     expect(homeSource).toContain('{ count: 5, label: "Forage simulations" }');
     expect(homeSource).toContain('{ count: 2, label: "client builds shipped" }');
     expect(homeSource).toContain('{ count: 2029, label: "graduation year" }');
-    expect(homeSource).toContain('12 projects built, from solo builds to client-facing e-commerce stores');
+    expect(homeSource).toContain('13 projects built, from solo builds to client-facing e-commerce stores');
     expect(homeSource).toContain('name: "IEC College Campus Track"');
     expect(homeSource).toContain('statusLabel: "live · verified public information"');
     expect(homeSource).toContain('link: "https://campustrack-iec.vercel.app"');

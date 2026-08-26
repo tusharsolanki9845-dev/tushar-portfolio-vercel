@@ -15,3 +15,6 @@
 - [x] Add interactive Build Log filtering by project category.
 - [x] Add only publicly verified project source links to relevant cards.
 - [x] Serve the verified preview screenshots from the portfolio’s production static assets.
+- [x] Add an accurate AI Night Security project card that links to the published Netlify dashboard and clearly distinguishes the live static interface from the pending self-hosted backend and camera relay.
+- [x] Run portfolio tests, type checks, and the production build after the AI Night Security entry is added.
+- [ ] Publish and verify the portfolio release containing the AI Night Security entry.
