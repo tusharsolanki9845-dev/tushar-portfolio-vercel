@@ -22,4 +22,4 @@
 - [x] Produce an evidence-based, prioritized remediation report for the cross-project fresh-user audit.
 - [x] Enhance the portfolio with purposeful, accessible motion and stronger project-discovery interactions while preserving the evidence-first content hierarchy.
 - [x] Validate desktop and mobile motion behavior, reduced-motion fallbacks, tests, and production build after the enhancement.
-- [ ] Publish and verify the live portfolio interaction enhancement.
+- [x] Publish and verify the live portfolio interaction enhancement.

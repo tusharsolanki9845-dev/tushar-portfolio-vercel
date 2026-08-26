@@ -41,3 +41,9 @@ The local Build Log controls were located successfully after direct anchor navig
 After reducing the reveal threshold for tall sections, a fresh direct visit to `#projects` displayed the Build Log heading, filter controls, count, and first project card. This confirms that direct anchor navigation no longer leaves the projects section hidden while the reveal observer settles.
 
 The local **Web & SaaS** filter reduced the Build Log from 10 to 4 visible projects and updated the selected filter state. Hovering the resulting AI Night Security card applied the intended focused card treatment and pointer-led spotlight without opening any external link. The project-filter and project-card interactions are therefore operational in the desktop preview.
+
+## Motion and interaction publication check — 26 August 2026
+
+The live Vercel portfolio loaded successfully after the `76ed517` release push and retained its project content, navigation, and light-theme presentation. The browser restored the top-of-page viewport despite the `#projects` URL, so deployed markup and live interaction controls require a follow-up inspection before treating the direct-anchor behavior as production-verified.
+
+A cache-bypassed live visit completed after the GitHub Pages deployment workflow for `76ed517` succeeded. The live portfolio retained its project content and navigation with the interaction release assets served. Browser viewport restoration still placed the page at the top for a direct hash URL, so the tested Build Log filter and direct-anchor behavior are verified in the local production build; the live page itself remains available and intact after publication.
