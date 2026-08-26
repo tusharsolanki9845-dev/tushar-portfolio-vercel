@@ -21,6 +21,8 @@
   --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 :root[data-theme="light"] {
@@ -128,6 +130,26 @@ a:focus-visible {
   backdrop-filter: blur(18px);
 }
 
+.scroll-progress {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--border) 76%, transparent);
+}
+
+.scroll-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--accent), #f7cf8b);
+  transition: transform 90ms linear;
+}
+
 :root[data-theme="light"] .site-nav {
   border-bottom-color: rgba(215, 220, 229, 0.9);
   background: rgba(247, 245, 240, 0.9);
@@ -165,11 +187,33 @@ a:focus-visible {
 }
 
 .nav-links a {
+  position: relative;
   transition: color 180ms ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -9px;
+  left: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: var(--accent);
+  transition: transform 180ms var(--ease-out);
 }
 
 .nav-links a:hover {
   color: var(--accent);
+}
+
+.nav-links a.active {
+  color: var(--text);
+}
+
+.nav-links a.active::after {
+  transform: scaleX(1);
 }
 
 .nav-actions {
@@ -737,7 +781,7 @@ a:focus-visible {
   z-index: 0;
   pointer-events: none;
   opacity: 0;
-  background: radial-gradient(circle at 18% 0%, rgba(240, 177, 82, 0.14), transparent 36%);
+  background: radial-gradient(circle at var(--spotlight-x, 18%) var(--spotlight-y, 0%), rgba(240, 177, 82, 0.18), transparent 36%);
   transition: opacity 240ms ease;
 }
 
@@ -747,27 +791,32 @@ a:focus-visible {
 }
 
 @media (hover: hover) {
-  .project-card:hover {
+  .project-card:hover,
+  .project-card:focus-within {
     transform: translateY(-8px);
     border-color: rgba(240, 177, 82, 0.72);
     background: var(--panel-hover);
     box-shadow: 0 22px 44px rgba(0, 0, 0, 0.28);
   }
 
-  .project-card:hover::after {
+  .project-card:hover::after,
+  .project-card:focus-within::after {
     opacity: 1;
   }
 
-  .project-card:hover .project-mockup {
+  .project-card:hover .project-mockup,
+  .project-card:focus-within .project-mockup {
     transform: scale(1.018);
   }
 
-  .project-card:hover .mockup-window {
+  .project-card:hover .mockup-window,
+  .project-card:focus-within .mockup-window {
     transform: translateY(-5px);
     border-color: rgba(240, 177, 82, 0.4);
   }
 
-  .project-card:hover .project-link svg {
+  .project-card:hover .project-link svg,
+  .project-card:focus-within .project-link svg {
     transform: translate(2px, -2px);
   }
 }
@@ -1120,6 +1169,10 @@ a:focus-visible {
 .project-filter:active { transform: scale(0.97); }
 .project-filter.is-active { border-color: var(--accent); background: var(--accent); color: #12141b; font-weight: 700; }
 .project-filter-count { margin: 0; color: var(--text-faint); font: 500 10.5px var(--font-mono); white-space: nowrap; }
+
+.project-card-enter {
+  animation: project-card-enter 420ms var(--ease-out) both;
+}
 
 .project-github {
   color: var(--text-muted);
@@ -1523,6 +1576,11 @@ a:focus-visible {
   transform: translateY(0);
 }
 
+@keyframes project-card-enter {
+  from { opacity: 0; transform: translateY(18px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 @keyframes pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(79, 189, 166, 0.4); }
   50% { box-shadow: 0 0 0 5px rgba(79, 189, 166, 0); }
@@ -1598,6 +1656,13 @@ a:focus-visible {
   .nav-links a {
     width: 100%;
     padding: 12px 14px;
+  }
+
+  .nav-links a::after {
+    right: auto;
+    bottom: 6px;
+    left: 14px;
+    width: 28px;
   }
 
   .availability {

@@ -397,6 +397,8 @@ export default function Home() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [roleText, setRoleText] = useState("");
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
+  const [activeSection, setActiveSection] = useState("top");
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [activeProjectFilter, setActiveProjectFilter] = useState<(typeof projectFilters)[number]["id"]>("all");
   const [contactForm, setContactForm] = useState<ContactFormPayload>({ name: "", email: "", topic: "freelance", message: "" });
@@ -438,7 +440,7 @@ export default function Home() {
   }, [roleIndex]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
@@ -449,10 +451,47 @@ export default function Home() {
           });
         });
       },
-      { threshold: 0.12 },
+      { rootMargin: "0px 0px -12%", threshold: 0.01 },
     );
-    document.querySelectorAll("[data-reveal]").forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    document.querySelectorAll("[data-reveal]").forEach((element) => revealObserver.observe(element));
+
+    const navigationSections = new Set(["about", "skills", "credentials", "projects", "resume", "contact"]);
+    const navigationObserver = new IntersectionObserver(
+      (entries) => {
+        const current = entries.find((entry) => entry.isIntersecting && navigationSections.has(entry.target.id));
+        if (current) setActiveSection(current.target.id);
+      },
+      { rootMargin: "-28% 0px -58%", threshold: 0 },
+    );
+    navigationSections.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) navigationObserver.observe(section);
+    });
+
+    return () => {
+      revealObserver.disconnect();
+      navigationObserver.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    let frame = 0;
+    const updateScrollProgress = () => {
+      frame = 0;
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(scrollableHeight > 0 ? Math.min(window.scrollY / scrollableHeight, 1) : 0);
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateScrollProgress);
+    };
+    updateScrollProgress();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
@@ -478,6 +517,7 @@ export default function Home() {
       <a className="skip-link" href="#top">Skip to main content</a>
       <Suspense fallback={null}><Analytics /></Suspense>
       <header className="site-nav">
+        <div className="scroll-progress" aria-hidden="true"><span style={{ transform: `scaleX(${scrollProgress})` }} /></div>
         <div className="wrap nav-inner">
           <a className="brand" href="#top" onClick={closeMenu}>tushar<span className="brand-accent">.dev</span></a>
           <nav id="primary-navigation" className={`nav-links ${menuOpen ? "open" : ""}`} aria-label="Primary navigation">
@@ -488,9 +528,12 @@ export default function Home() {
               ["Build Log", "#projects"],
               ["Résumé", "#resume"],
               ["Let's Talk", "#contact"],
-            ].map(([label, href]) => (
-              <a key={href} href={href} onClick={closeMenu}>{label}</a>
-            ))}
+            ].map(([label, href]) => {
+              const sectionId = href.slice(1);
+              return (
+                <a key={href} className={activeSection === sectionId ? "active" : ""} href={href} onClick={closeMenu} aria-current={activeSection === sectionId ? "location" : undefined}>{label}</a>
+              );
+            })}
           </nav>
           <div className="nav-actions">
             <span className="availability"><span className="status-dot" />Available for freelance work</span>
@@ -551,13 +594,13 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="stats-strip" id="stats" data-reveal>
+        <section className={`stats-strip reveal ${visibleSections.has("stats") ? "is-visible" : ""}`} id="stats" data-reveal>
           <div className="wrap stats-grid">
             {stats.map((stat) => <AnimatedStat key={stat.label} {...stat} />)}
           </div>
         </section>
 
-        <section className="section" id="about" data-reveal>
+        <section className={`section reveal ${visibleSections.has("about") ? "is-visible" : ""}`} id="about" data-reveal>
           <div className="wrap">
             <div className="section-heading">
               <p className="eyebrow">About</p>
@@ -582,7 +625,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section section-alt" id="skills" data-reveal>
+        <section className={`section section-alt reveal ${visibleSections.has("skills") ? "is-visible" : ""}`} id="skills" data-reveal>
           <div className="wrap">
             <div className="section-heading">
               <p className="eyebrow">Skills</p>
@@ -600,7 +643,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section" id="integrations" data-reveal>
+        <section className={`section reveal ${visibleSections.has("integrations") ? "is-visible" : ""}`} id="integrations" data-reveal>
           <div className="wrap">
             <div className="section-heading">
               <p className="eyebrow">Integration experience</p>
@@ -613,7 +656,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section section-alt" id="credentials" data-reveal>
+        <section className={`section section-alt reveal ${visibleSections.has("credentials") ? "is-visible" : ""}`} id="credentials" data-reveal>
           <div className="wrap">
             <div className="section-heading">
               <p className="eyebrow">Credentials</p>
@@ -633,7 +676,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section" id="projects" data-reveal>
+        <section className={`section reveal ${visibleSections.has("projects") ? "is-visible" : ""}`} id="projects" data-reveal>
           <div className="wrap">
             <div className="section-heading">
               <p className="eyebrow">Projects</p>
@@ -647,8 +690,21 @@ export default function Home() {
               <p className="project-filter-count" aria-live="polite">{visiblePortfolioProjects.length} published projects</p>
             </div>
             <div className="project-list">
-              {visiblePortfolioProjects.map((project) => (
-                <article className="project-card" key={project.name}>
+              {visiblePortfolioProjects.map((project, index) => (
+                <article
+                  className="project-card project-card-enter"
+                  key={`${activeProjectFilter}-${project.name}`}
+                  style={{ animationDelay: `${index * 45}ms` }}
+                  onPointerMove={(event) => {
+                    const bounds = event.currentTarget.getBoundingClientRect();
+                    event.currentTarget.style.setProperty("--spotlight-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
+                    event.currentTarget.style.setProperty("--spotlight-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
+                  }}
+                  onPointerLeave={(event) => {
+                    event.currentTarget.style.removeProperty("--spotlight-x");
+                    event.currentTarget.style.removeProperty("--spotlight-y");
+                  }}
+                >
                   <ProjectMockup theme={project.theme} name={project.name} previewImage={project.previewImage} />
                   <div className="project-info">
                     <div className="project-topline"><span className={`project-status ${project.status}`}><span className="status-dot" />{project.statusLabel}</span><span className="project-meta"><span className="release-badge">release · {project.releaseDate}</span><span className="project-status">{project.theme}</span></span></div>
@@ -709,7 +765,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section section-alt" id="resume" data-reveal>
+        <section className={`section section-alt reveal ${visibleSections.has("resume") ? "is-visible" : ""}`} id="resume" data-reveal>
           <div className="wrap">
             <div className="resume-grid">
               <div>
@@ -736,7 +792,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section" id="contact" data-reveal>
+        <section className={`section reveal ${visibleSections.has("contact") ? "is-visible" : ""}`} id="contact" data-reveal>
           <div className="wrap">
             <div className="contact-panel">
               <div className="contact-intro">

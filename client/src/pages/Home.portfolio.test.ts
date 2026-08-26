@@ -32,7 +32,7 @@ describe("recruiter-facing portfolio evidence", () => {
   it("puts verified original work and live demos ahead of unsupported score or API claims", () => {
     expect(homeSource).toContain('const featuredProjectOrder = ["AI Night Security", "WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"]');
     expect(homeSource).not.toContain('name: "CampusTrack"');
-    expect(homeSource).toContain('visiblePortfolioProjects.map((project)');
+    expect(homeSource).toContain('visiblePortfolioProjects.map((project, index)');
     expect(homeSource).toContain('Integration experience');
     expect(homeSource).toContain('OpenStreetMap');
     expect(homeSource).toContain('Nominatim');
@@ -60,7 +60,7 @@ describe("recruiter-facing portfolio evidence", () => {
     expect(homeSource).toContain('href={`/projects/${project.slug}`}');
     expect(homeSource).toContain('releaseDate: "Aug 2026"');
     expect(homeSource).toContain('const projectFilters = [');
-    expect(homeSource).toContain('visiblePortfolioProjects.map((project)');
+    expect(homeSource).toContain('visiblePortfolioProjects.map((project, index)');
     expect(homeSource).toContain('previewImage: "/previews/webclient-hunter.webp"');
     expect(homeSource).toContain('github: "https://github.com/tusharsolanki9845-dev/Webclient-hunter-ai"');
     expect(cssSource).toContain('.project-filter-bar');
@@ -70,6 +70,18 @@ describe("recruiter-facing portfolio evidence", () => {
     expect(homeSource).toContain('statusLabel: "live · Open-Meteo"');
     expect(homeSource).toContain('link: "https://campus-signal-iec.vercel.app"');
     expect(homeSource).toContain('Campus Signal requires a student account before entry');
+  });
+
+  it("keeps portfolio motion purposeful, accessible, and connected to project exploration", () => {
+    expect(homeSource).toContain('const [activeSection, setActiveSection] = useState("top")');
+    expect(homeSource).toContain('const [scrollProgress, setScrollProgress] = useState(0)');
+    expect(homeSource).toContain('className="scroll-progress"');
+    expect(homeSource).toContain('onPointerMove={(event) => {');
+    expect(homeSource).toContain('project-card project-card-enter');
+    expect(cssSource).toContain('.nav-links a.active::after');
+    expect(cssSource).toContain('--spotlight-x');
+    expect(cssSource).toContain('.project-card-enter');
+    expect(cssSource).toContain('@media (prefers-reduced-motion: reduce)');
   });
 
   it("keeps analytics outside the critical rendering path", () => {

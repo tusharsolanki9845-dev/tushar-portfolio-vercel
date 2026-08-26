@@ -18,3 +18,8 @@
 - [x] Add an accurate AI Night Security project card that links to the published Netlify dashboard and clearly distinguishes the live static interface from the pending self-hosted backend and camera relay.
 - [x] Run portfolio tests, type checks, and the production build after the AI Night Security entry is added.
 - [x] Publish and verify the portfolio release containing the AI Night Security entry.
+- [x] Audit every public portfolio project as a new unauthenticated user, covering availability, first-visit clarity, primary public journeys, visible trust boundaries, and linked routes.
+- [x] Produce an evidence-based, prioritized remediation report for the cross-project fresh-user audit.
+- [x] Enhance the portfolio with purposeful, accessible motion and stronger project-discovery interactions while preserving the evidence-first content hierarchy.
+- [x] Validate desktop and mobile motion behavior, reduced-motion fallbacks, tests, and production build after the enhancement.
+- [ ] Publish and verify the live portfolio interaction enhancement.
