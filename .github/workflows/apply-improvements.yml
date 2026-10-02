@@ -10,13 +10,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Decode and commit improved files
+        with:
+          fetch-depth: 0
+      - name: Decode compressed payloads and apply
         run: |
           set -euo pipefail
           git config user.name "Tushar Solanki"
           git config user.email "tusharsolanki9845@gmail.com"
-          python3 scripts/decode_improved.py
+
+          python3 << 'PY'
+          import base64, zlib
+          from pathlib import Path
+
+          def reassemble(prefix: str) -> bytes:
+              files = sorted(Path(".restore-data").glob(f"{prefix}_*.txt"), key=lambda p: int(p.stem.split("_")[1]))
+              raw = "".join(f.read_text() for f in files)
+              return zlib.decompress(base64.b64decode(raw))
+
+          home = reassemble("home")
+          css = reassemble("css")
+          Path("client/src/pages/Home.tsx").write_bytes(home)
+          Path("client/src/index.css").write_bytes(css)
+          print("wrote Home.tsx", len(home), "index.css", len(css))
+          PY
+
           rm -rf .restore-data
-          git add -A
-          git commit -m "Next batch: pricing bands, case study, WhatsApp CTAs, fit/handoff"
+          git add client/src/pages/Home.tsx client/src/index.css
+          git status
+          git commit -m "Fix pricing bands (separate panel) and add WhatsApp CTAs across hero, nav, pricing, process" || echo "nothing to commit"
           git push origin HEAD:master
