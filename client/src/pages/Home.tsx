@@ -42,7 +42,7 @@ const roles = [
 ];
 
 const stats = [
-  { count: 13, label: "projects built" },
+  { count: 15, label: "projects built" },
   { count: 5, label: "Forage simulations" },
   { count: 2, label: "client builds shipped" },
   { count: 2029, label: "graduation year" },
@@ -71,6 +71,50 @@ const skillGroups = [
 ];
 
 export const projects: Project[] = [
+  {
+    slug: "ai-duniya",
+    releaseDate: "Oct 2026",
+    category: "web",
+    name: "AI Duniya",
+    tagline: "Learning and innovation studio for making AI easier to understand",
+    speciality: "AI learning experiences — practical courses, interactive labs, guided exams, and a focused site guide in one approachable platform.",
+    description: "I built a learning and innovation studio that turns AI concepts into approachable, interactive experiences. Visitors can explore guided lessons, run original browser-based labs, test their understanding, and move through the platform without relying on external AI APIs.",
+    contribution: "I shaped the product architecture, learning flows, interactive rover and neural-sandbox experiences, tokenizer and prompt-builder tools, exam runner, site-guide interaction, responsive visual system, and deployable web and Android-ready foundation.",
+    stack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Interactive Labs", "Capacitor"],
+    results: [
+      { title: "Learn by interacting", detail: "Original browser-based labs make abstract AI ideas tangible through visual experiments, simulations, and guided controls." },
+      { title: "Self-contained platform", detail: "The site guide uses a transparent rule-based matcher, so the public learning experience does not depend on hidden AI API calls." },
+      { title: "Ready for multiple surfaces", detail: "The same product foundation supports a responsive web release and an Android-ready Capacitor build." },
+    ],
+    status: "live",
+    statusLabel: "live · learning platform",
+    theme: "civic",
+    link: "https://ai-duniya-crocksy.vercel.app",
+    linkLabel: "view live site",
+    github: "https://github.com/tusharsolanki9845-dev/ai-duniya",
+  },
+  {
+    slug: "alphatech-solutions",
+    releaseDate: "Oct 2026",
+    category: "web",
+    name: "AlphaTech Solutions",
+    tagline: "Business website and Android-ready service platform for a technology studio",
+    speciality: "Client-facing service delivery — clear packages, quote handoffs, mobile-ready PWA behavior, and a native Android build path.",
+    description: "I built a polished service website for AlphaTech Solutions with focused sections for services, packages, process, FAQs, and contact. The experience is designed to turn a visitor's question into a direct quote conversation while remaining fast and installable on mobile.",
+    contribution: "I implemented the responsive interface, service and package presentation, accessible navigation and modal flows, WhatsApp quote handoffs, PWA shell, deployment configuration, TypeScript source build, and Capacitor Android packaging workflow.",
+    stack: ["TypeScript", "esbuild", "PWA", "Capacitor", "Android", "Vercel"],
+    results: [
+      { title: "Clear service journey", detail: "Visitors can move from services and packages to a prefilled quote conversation without a heavy backend or confusing checkout state." },
+      { title: "Mobile-ready delivery", detail: "The site includes installable PWA assets and a Capacitor Android path for a more native client experience." },
+      { title: "Automated build path", detail: "GitHub Actions builds and publishes a debug Android APK so the mobile release can be tested consistently." },
+    ],
+    status: "live",
+    statusLabel: "live · Android-ready",
+    theme: "industrial",
+    link: "https://alphatech-solutions.vercel.app",
+    linkLabel: "view live site",
+    github: "https://github.com/tusharsolanki9845-dev/alphatech-solutions",
+  },
   {
     slug: "ai-night-security",
     releaseDate: "Aug 2026",
@@ -336,7 +380,7 @@ const credentials: Credential[] = [
   },
 ];
 
-const featuredProjectOrder = ["AI Night Security", "WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
+const featuredProjectOrder = ["AI Duniya", "AlphaTech Solutions", "AI Night Security", "WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
 
 const projectFilters = [
   { id: "all", label: "All releases" },
@@ -353,7 +397,7 @@ const portfolioProjects = [...projects].sort((left, right) => {
 });
 
 const releaseSnapshot = [
-  { state: "verified live", title: "Public releases", detail: "Aeris, IEC College Campus Track, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
+  { state: "verified live", title: "Public releases", detail: "AI Duniya, AlphaTech Solutions, Aeris, IEC College Campus Track, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
   { state: "verified live", title: "Source-aware campus companion", detail: "IEC College Campus Track is now live. Its public IEC information is clearly separated from prototype-only schedule, attendance, and identity data until an authorised academic-data connection is available." },
   { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
   { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },
@@ -849,7 +893,7 @@ export default function Home() {
                 </div>
                 <p className="resume-summary">B.Tech CSE (AI & ML) student, AKTU, expected 2029 — building and shipping client and personal web projects throughout.</p>
                 <ul className="resume-highlights">
-                  <li>13 projects built, from solo builds to client-facing e-commerce stores</li>
+                  <li>15 projects built, from solo builds to client-facing e-commerce stores</li>
                   <li>Completed 5 professional simulations via Forage: EY, AIG, Tata, Mastercard, and Siemens</li>
                   <li>Comfortable owning a build end-to-end: frontend, backend, payments, and deployment</li>
                 </ul>
