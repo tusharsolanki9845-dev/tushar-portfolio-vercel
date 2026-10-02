@@ -12,8 +12,6 @@ def parts(prefix):
         raise SystemExit(f"No {prefix}_N.txt parts found")
     return "".join(p.read_text().strip() for p in files)
 
-home = zlib.decompress(base64.b64decode(parts("home")))
-css = zlib.decompress(base64.b64decode(parts("css")))
-Path("client/src/pages/Home.tsx").write_bytes(home)
-Path("client/src/index.css").write_bytes(css)
-print("Wrote", len(home), len(css))
+Path("client/src/pages/Home.tsx").write_bytes(zlib.decompress(base64.b64decode(parts("home"))))
+Path("client/src/index.css").write_bytes(zlib.decompress(base64.b64decode(parts("css"))))
+print("Wrote improved files")

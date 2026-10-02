@@ -18,5 +18,5 @@ jobs:
           python3 scripts/decode_improved.py
           rm -rf .restore-data
           git add -A
-          git commit -m "Implement client conversion improvements: process, FAQ, badges, outcomes, filter"
+          git commit -m "Next batch: pricing bands, case study, WhatsApp CTAs, fit/handoff"
           git push origin HEAD:master
