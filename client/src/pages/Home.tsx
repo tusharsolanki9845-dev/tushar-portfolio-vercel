@@ -25,6 +25,7 @@ export type Project = {
   link: string | null;
   linkLabel: string;
   github?: string;
+  isClient?: boolean;
 };
 
 type Credential = {
@@ -44,7 +45,7 @@ const roles = [
 const stats = [
   { count: 15, label: "projects built" },
   { count: 5, label: "Forage simulations" },
-  { count: 2, label: "client builds shipped" },
+  { count: 3, label: "client builds shipped" },
   { count: 2029, label: "graduation year" },
 ];
 
@@ -60,6 +61,79 @@ const focusPoints = [
   {
     title: "Own the whole build",
     description: "Frontend, backend, payments, admin panels, SEO — I'd rather learn the missing piece than hand it off.",
+  },
+];
+
+const howIWorkSteps = [
+  {
+    step: "01",
+    title: "Discovery call",
+    detail: "15–20 minutes to clarify goals, scope, constraints, and timeline. No commitment required.",
+  },
+  {
+    step: "02",
+    title: "Clear proposal",
+    detail: "Fixed or milestone-based quote with deliverables, timeline, and price. No surprise fees.",
+  },
+  {
+    step: "03",
+    title: "Build & review",
+    detail: "Regular updates and a live preview link so you can see progress and give feedback early.",
+  },
+  {
+    step: "04",
+    title: "Launch & handoff",
+    detail: "Domain, hosting, basic training, and 14–30 days of free support after go-live.",
+  },
+];
+
+const engagementNotes = [
+  { label: "Stack default", value: "Lean React or vanilla JS + Supabase/Firebase + Vercel so monthly costs stay near zero." },
+  { label: "Payment", value: "Usually 40% start / 60% on delivery, or milestones for larger work." },
+  { label: "Simple site", value: "5–10 days for a business or brochure site." },
+  { label: "Ordering PWA", value: "2–4 weeks for e-commerce or WhatsApp-first ordering." },
+  { label: "Admin + payments", value: "3–6 weeks when you need a custom admin and payment flows." },
+];
+
+const clientOutcomes = [
+  {
+    quote: "The ordering flow via WhatsApp works exactly how we needed — customers send the order, we confirm, and there are no monthly platform fees.",
+    context: "Local pizzeria & bakery · Pizza Connect",
+  },
+  {
+    quote: "We got a clean storefront and an admin path without locking into a heavy SaaS subscription.",
+    context: "Hardware manufacturer · IRONCLASP",
+  },
+  {
+    quote: "Service packages and quote handoffs are clear on mobile — visitors can reach us in one tap.",
+    context: "Technology studio · AlphaTech Solutions",
+  },
+];
+
+const faqs = [
+  {
+    q: "How much does a typical project cost?",
+    a: "It depends on scope. Simple business sites are usually in the lower range; full e-commerce or admin-backed products cost more. After a short discovery call I send a fixed or milestone quote so the number is clear before work starts.",
+  },
+  {
+    q: "Do you handle design, or do I need a designer?",
+    a: "I can own the full UI for practical product and storefront work. If you already have brand guidelines or a designer, I work from those. For complex brand systems, a dedicated designer is a good partner.",
+  },
+  {
+    q: "Can you work with my existing domain and hosting?",
+    a: "Yes. I can deploy to your domain on Vercel, Netlify, or similar, or hand off build files for your current host. Domain and DNS setup is part of launch support.",
+  },
+  {
+    q: "What happens after launch?",
+    a: "You get 14–30 days of free support for fixes and small adjustments. After that, optional maintenance or change requests are quoted separately so you only pay when you need more work.",
+  },
+  {
+    q: "Are you available for ongoing support or small changes?",
+    a: "Yes. Many clients come back for menu updates, new pages, or small feature tweaks. Reach out on WhatsApp or email with what you need and I will give a clear time and cost estimate.",
+  },
+  {
+    q: "What stack do you prefer for small businesses?",
+    a: "Lean by default: HTML/CSS/JS or React, free-tier backends (Supabase/Firebase), and Vercel or Netlify hosting. Payment often stays as COD / UPI / WhatsApp handoff so you avoid monthly platform fees until volume justifies them.",
   },
 ];
 
@@ -114,6 +188,7 @@ export const projects: Project[] = [
     link: "https://alphatech-solutions.vercel.app",
     linkLabel: "view live site",
     github: "https://github.com/tusharsolanki9845-dev/alphatech-solutions",
+    isClient: true,
   },
   {
     slug: "ai-night-security",
@@ -244,6 +319,7 @@ export const projects: Project[] = [
     theme: "industrial",
     link: "https://ironclasp-store-live.vercel.app",
     linkLabel: "view live site",
+    isClient: true,
   },
   {
     slug: "pizza-connect",
@@ -265,6 +341,7 @@ export const projects: Project[] = [
     theme: "warm",
     link: "https://pizza-connect-pwa-crocksy.vercel.app",
     linkLabel: "view live site",
+    isClient: true,
   },
   {
     slug: "tehsil-sahayak",
@@ -380,10 +457,11 @@ const credentials: Credential[] = [
   },
 ];
 
-const featuredProjectOrder = ["AI Duniya", "AlphaTech Solutions", "AI Night Security", "WebClient Hunter", "Aeris", "IEC College Campus Track", "Campus Signal by IEC", "IRONCLASP", "Pizza Connect", "Tehsil Sahayak"];
+const featuredProjectOrder = ["Pizza Connect", "IRONCLASP", "AlphaTech Solutions", "Crocksy", "AI Duniya", "Tehsil Sahayak", "WebClient Hunter", "IEC College Campus Track", "Campus Signal by IEC", "Aeris", "AI Night Security"];
 
 const projectFilters = [
   { id: "all", label: "All releases" },
+  { id: "client", label: "Client builds" },
   { id: "web", label: "Web & SaaS" },
   { id: "campus", label: "Campus" },
   { id: "commerce", label: "Commerce" },
@@ -569,7 +647,7 @@ export default function Home() {
     );
     document.querySelectorAll("[data-reveal]").forEach((element) => revealObserver.observe(element));
 
-    const navigationSections = new Set(["about", "skills", "credentials", "projects", "resume", "contact"]);
+    const navigationSections = new Set(["about", "process", "skills", "credentials", "projects", "faq", "resume", "contact"]);
     const navigationObserver = new IntersectionObserver(
       (entries) => {
         const current = entries.find((entry) => entry.isIntersecting && navigationSections.has(entry.target.id));
@@ -609,9 +687,11 @@ export default function Home() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
-  const visiblePortfolioProjects = activeProjectFilter === "all"
+    const visiblePortfolioProjects = activeProjectFilter === "all"
     ? portfolioProjects
-    : portfolioProjects.filter((project) => project.category === activeProjectFilter);
+    : activeProjectFilter === "client"
+      ? portfolioProjects.filter((project) => project.isClient)
+      : portfolioProjects.filter((project) => project.category === activeProjectFilter);
 
   const trackContactStart = () => {
     if (contactStarted) return;
@@ -637,9 +717,10 @@ export default function Home() {
           <nav id="primary-navigation" className={`nav-links ${menuOpen ? "open" : ""}`} aria-label="Primary navigation">
             {[
               ["About Me", "#about"],
+              ["Process", "#process"],
               ["Toolkit", "#skills"],
-              ["Credentials", "#credentials"],
               ["Build Log", "#projects"],
+              ["FAQ", "#faq"],
               ["Résumé", "#resume"],
               ["Let's Talk", "#contact"],
             ].map(([label, href]) => {
@@ -742,7 +823,48 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={`section section-alt reveal ${visibleSections.has("skills") ? "is-visible" : ""}`} id="skills" data-reveal>
+        <section className={`section section-alt reveal ${visibleSections.has("process") ? "is-visible" : ""}`} id="process" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">Process</p>
+              <h2 className="section-title">How I work with clients</h2>
+              <p className="section-sub">A simple path from first conversation to launch — so you always know what happens next.</p>
+            </div>
+            <div className="process-grid">
+              {howIWorkSteps.map((item) => (
+                <article className="process-card" key={item.step}>
+                  <span className="process-step">{item.step}</span>
+                  <h3 className="process-title">{item.title}</h3>
+                  <p className="process-detail">{item.detail}</p>
+                </article>
+              ))}
+            </div>
+            <div className="engagement-panel">
+              <h3 className="engagement-title">What to expect on scope and timing</h3>
+              <div className="engagement-grid">
+                {engagementNotes.map((note) => (
+                  <div className="engagement-item" key={note.label}>
+                    <span className="engagement-label">{note.label}</span>
+                    <p className="engagement-value">{note.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="outcomes-panel">
+              <h3 className="outcomes-title">What clients get in practice</h3>
+              <div className="outcomes-grid">
+                {clientOutcomes.map((item) => (
+                  <blockquote className="outcome-card" key={item.context}>
+                    <p className="outcome-quote">"{item.quote}"</p>
+                    <footer className="outcome-context">{item.context}</footer>
+                  </blockquote>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={`section reveal ${visibleSections.has("skills") ? "is-visible" : ""}`} id="skills" data-reveal>
           <div className="wrap">
             <div className="section-heading">
               <p className="eyebrow">Skills</p>
@@ -798,7 +920,7 @@ export default function Home() {
             <div className="section-heading">
               <p className="eyebrow">Projects</p>
               <h2 className="section-title">Build log</h2>
-              <p className="section-sub">A running log of what I've shipped — client work and personal builds alike.</p>
+              <p className="section-sub">A running log of what I've shipped — filter by Client builds to see paid work first.</p>
             </div>
             <div className="project-filter-bar" role="group" aria-label="Filter projects by category">
               <div className="project-filter-list">
@@ -824,7 +946,7 @@ export default function Home() {
                 >
                   <ProjectMockup theme={project.theme} name={project.name} previewImage={project.previewImage} />
                   <div className="project-info">
-                    <div className="project-topline"><span className={`project-status ${project.status}`}><span className="status-dot" />{project.statusLabel}</span><span className="project-meta"><span className="release-badge">release · {project.releaseDate}</span><span className="project-status">{project.theme}</span></span></div>
+                    <div className="project-topline"><span className={`project-status ${project.status}`}><span className="status-dot" />{project.statusLabel}</span><span className="project-meta">{project.isClient && <span className="client-badge">Client build</span>}<span className="release-badge">release · {project.releaseDate}</span><span className="project-status">{project.theme}</span></span></div>
                     <h3 className="project-name">{project.name}</h3>
                     <p className="project-tagline">{project.tagline}</p>
                     <div className="project-speciality"><span>Speciality</span><p>{project.speciality}</p></div>
@@ -905,6 +1027,24 @@ export default function Home() {
                 <p className="file-meta">Updated Aug 2026</p>
                 <a className="project-link" href="/Tushar_Solanki_Resume.pdf" target="_blank" rel="noopener noreferrer">Preview document <ArrowUpRight size={14} /></a>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={`section section-alt reveal ${visibleSections.has("faq") ? "is-visible" : ""}`} id="faq" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">FAQ</p>
+              <h2 className="section-title">What clients usually ask</h2>
+              <p className="section-sub">Straight answers so you can decide whether we are a fit before the first call.</p>
+            </div>
+            <div className="faq-list">
+              {faqs.map((item) => (
+                <details className="faq-item" key={item.q}>
+                  <summary className="faq-question">{item.q}</summary>
+                  <p className="faq-answer">{item.a}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>
