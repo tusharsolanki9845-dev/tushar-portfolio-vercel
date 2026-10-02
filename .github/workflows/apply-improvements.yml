@@ -1,6 +1,10 @@
 name: Apply portfolio improvements
+
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "scripts/TRIGGER_PATCH"
 
 permissions:
   contents: write
@@ -10,70 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Apply patch script
+      - name: Patch pricing bands and WhatsApp CTAs
         run: |
           set -euo pipefail
           git config user.name "Tushar Solanki"
           git config user.email "tusharsolanki9845@gmail.com"
           python3 scripts/patch_pricing_whatsapp.py
-          python3 - <<'PY'
-          from pathlib import Path
-          css = Path("client/src/index.css")
-          text = css.read_text()
-          marker = ".pricing-lead {"
-          if marker not in text:
-              text += """
-
-.pricing-lead {
-  margin: 0 0 18px;
-  font-size: 14.5px;
-  line-height: 1.65;
-  color: var(--text-muted);
-}
-.pricing-band-timeline {
-  display: block;
-  font-size: 12px;
-  font-family: var(--font-mono);
-  color: var(--text-faint);
-  margin-bottom: 8px;
-}
-.pricing-cta-row {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 18px;
-}
-.fit-panel {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px 28px;
-}
-.fit-col { min-width: 0; }
-.process-cta {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 18px;
-}
-.hero-cta-note {
-  margin: 12px 0 0;
-  font-size: 13px;
-  color: var(--text-muted);
-}
-@media (max-width: 720px) {
-  .fit-panel { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; }
-}
-"""
-              css.write_text(text)
-              print("css patched")
-          else:
-              print("css already has pricing-lead")
-          PY
+          python3 scripts/patch_pricing_css.py
           git add client/src/pages/Home.tsx client/src/index.css
           git status
           git commit -m "Fix pricing bands and add WhatsApp CTAs" || echo "nothing to commit"
