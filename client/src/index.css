@@ -2178,3 +2178,202 @@ a:focus-visible {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* —— Pricing bands —— */
+.pricing-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 26px 26px;
+  background: var(--panel);
+  margin-bottom: 24px;
+}
+
+.pricing-title {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.pricing-band {
+  margin: 0;
+  padding: 18px 18px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+
+.pricing-band-name {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  font-family: var(--font-mono);
+  margin-bottom: 6px;
+}
+
+.pricing-band-range {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.pricing-band-desc {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* —— Fit / Ideal client —— */
+.fit-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 26px 26px;
+  background: var(--panel);
+  margin-bottom: 24px;
+}
+
+.fit-title {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.fit-list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fit-list li {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+/* —— Case study highlight —— */
+.case-study-panel {
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+  border-radius: var(--radius);
+  padding: 24px 26px 26px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--panel));
+  margin-bottom: 24px;
+}
+
+.case-study-label {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  font-family: var(--font-mono);
+  margin-bottom: 8px;
+}
+
+.case-study-title {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.case-study-body {
+  margin: 0 0 14px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.case-study-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+/* —— Handoff / What you get —— */
+.handoff-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 26px 26px;
+  background: var(--panel);
+  margin-bottom: 24px;
+}
+
+.handoff-title {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.handoff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px 18px;
+}
+
+.handoff-item {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  padding-left: 14px;
+  position: relative;
+}
+
+.handoff-item::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* —— Hero WhatsApp CTA note —— */
+.hero-cta-note {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.hero-cta-note a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}

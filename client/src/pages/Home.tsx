@@ -90,10 +90,39 @@ const howIWorkSteps = [
 const engagementNotes = [
   { label: "Stack default", value: "Lean React or vanilla JS + Supabase/Firebase + Vercel so monthly costs stay near zero." },
   { label: "Payment", value: "Usually 40% start / 60% on delivery, or milestones for larger work." },
-  { label: "Simple site", value: "5–10 days for a business or brochure site." },
-  { label: "Ordering PWA", value: "2–4 weeks for e-commerce or WhatsApp-first ordering." },
-  { label: "Admin + payments", value: "3–6 weeks when you need a custom admin and payment flows." },
+  { label: "Brochure site", value: "About ₹8,000–20,000 · 5–10 days for a clear business or service site." },
+  { label: "Ordering / WhatsApp", value: "About ₹20,000–45,000 · 2–4 weeks for menu, cart, and WhatsApp handoff." },
+  { label: "Admin + payments", value: "About ₹40,000–80,000 · 3–6 weeks when you need admin and custom flows." },
 ];
+
+const fitFor = {
+  yes: [
+    "Local shops, restaurants, and service businesses that need a fast site or ordering flow",
+    "Owners who want WhatsApp / COD / UPI instead of heavy monthly platform fees",
+    "Projects where one developer can own design, build, and launch end-to-end",
+  ],
+  no: [
+    "Large enterprise rebuilds with big teams and long procurement cycles",
+    "Unpaid equity-only or speculative work without a clear scope",
+    "Fully custom design systems that need a dedicated brand studio",
+  ],
+};
+
+const handoffChecklist = [
+  "Live site on your domain (or a staging URL until DNS is ready)",
+  "Source code access and a short handoff note for updates",
+  "Basic training on how to change content or take orders",
+  "14–30 days of free support for fixes and small adjustments",
+];
+
+const featuredCaseStudy = {
+  name: "Pizza Connect",
+  client: "Local pizzeria & bakery · Khurja",
+  link: "https://pizza-connect-pwa-crocksy.vercel.app",
+  problem: "The outlet needed mobile ordering without paying monthly fees to a big delivery platform. Customers had to call or message ad-hoc, and the menu was hard to browse on a phone.",
+  built: "A production ordering PWA with a 54-item vegetarian menu, persistent cart, COD and UPI options, WhatsApp confirmation handoff, and offline-ready install support.",
+  result: "Customers pick items, send the order on WhatsApp, and the outlet confirms — no monthly SaaS bill. The same pattern now informs how I scope other local commerce builds.",
+};
 
 const clientOutcomes = [
   {
@@ -113,7 +142,7 @@ const clientOutcomes = [
 const faqs = [
   {
     q: "How much does a typical project cost?",
-    a: "It depends on scope. Simple business sites are usually in the lower range; full e-commerce or admin-backed products cost more. After a short discovery call I send a fixed or milestone quote so the number is clear before work starts.",
+    a: "Ballpark for most work I take: brochure or business sites about ₹8,000–20,000; WhatsApp-first ordering or small commerce about ₹20,000–45,000; admin and custom payment flows about ₹40,000–80,000. After a short discovery call I send a fixed or milestone quote so the number is clear before work starts.",
   },
   {
     q: "Do you handle design, or do I need a designer?",
@@ -761,10 +790,19 @@ export default function Home() {
               <div className="rotating-line" aria-live="polite">{roleText}<span aria-hidden="true">_</span></div>
               <p className="hero-lede">Early-career Computer Science student and web developer building practical e-commerce, civic-tech, and SaaS products with <b>JavaScript, React, Node.js, Firebase, and responsive PWA patterns.</b></p>
               <div className="hero-actions">
-                <a className="btn btn-primary" href="#projects">View projects <ArrowUpRight className="btn-icon" size={15} /></a>
+                <a
+                  className="btn btn-primary"
+                  href="https://wa.me/916396015608?text=Hi%20Tushar%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20project."
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => track("contact_whatsapp", { location: "hero" })}
+                >
+                  Chat on WhatsApp <MessageCircle className="btn-icon" size={15} />
+                </a>
+                <a className="btn" href="#projects">View projects <ArrowUpRight className="btn-icon" size={15} /></a>
                 <a className="btn" href="/Tushar_Solanki_Resume.pdf" download>Download résumé <Download className="btn-icon" size={15} /></a>
-                <a className="btn" href="#contact">Say hello</a>
               </div>
+              <p className="hero-cta-note">Usually replies within a day · Fixed quote after a short discovery call</p>
             </div>
 
             <div className="hero-visual reveal is-visible">
@@ -850,8 +888,66 @@ export default function Home() {
                 ))}
               </div>
             </div>
+            <div className="pricing-panel">
+              <h3 className="engagement-title">Pricing bands (India)</h3>
+              <p className="pricing-lead">Indicative ranges so you can budget before the call. Final quote is fixed or milestone-based after discovery — no surprise fees.</p>
+              <div className="engagement-grid">
+                {engagementNotes.filter((n) => ["Brochure site", "Ordering / WhatsApp", "Admin + payments"].includes(n.label)).map((note) => (
+                  <div className="engagement-item" key={note.label}>
+                    <span className="engagement-label">{note.label}</span>
+                    <p className="engagement-value">{note.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="fit-panel">
+              <div className="fit-col">
+                <h3 className="engagement-title">A good fit if you are</h3>
+                <ul className="fit-list fit-yes">
+                  {fitFor.yes.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="fit-col">
+                <h3 className="engagement-title">Probably not a fit if you need</h3>
+                <ul className="fit-list fit-no">
+                  {fitFor.no.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <article className="case-study-panel">
+              <div className="case-study-header">
+                <p className="eyebrow">Case study</p>
+                <h3 className="case-study-title">{featuredCaseStudy.name}</h3>
+                <p className="case-study-client">{featuredCaseStudy.client}</p>
+              </div>
+              <div className="case-study-grid">
+                <div className="case-study-block">
+                  <span className="engagement-label">Problem</span>
+                  <p>{featuredCaseStudy.problem}</p>
+                </div>
+                <div className="case-study-block">
+                  <span className="engagement-label">What I built</span>
+                  <p>{featuredCaseStudy.built}</p>
+                </div>
+                <div className="case-study-block">
+                  <span className="engagement-label">Result</span>
+                  <p>{featuredCaseStudy.result}</p>
+                </div>
+              </div>
+              <a className="btn btn-primary case-study-link" href={featuredCaseStudy.link} target="_blank" rel="noreferrer">
+                View live site <ArrowUpRight className="btn-icon" size={15} />
+              </a>
+            </article>
+
             <div className="outcomes-panel">
-              <h3 className="outcomes-title">What clients get in practice</h3>
+              <h3 className="outcomes-title">Typical outcomes from client work</h3>
+              <p className="pricing-lead">Representative results from shipped client builds — not third-party testimonials.</p>
               <div className="outcomes-grid">
                 {clientOutcomes.map((item) => (
                   <blockquote className="outcome-card" key={item.context}>
@@ -859,6 +955,27 @@ export default function Home() {
                     <footer className="outcome-context">{item.context}</footer>
                   </blockquote>
                 ))}
+              </div>
+            </div>
+
+            <div className="handoff-panel">
+              <h3 className="engagement-title">What you get at handoff</h3>
+              <ul className="fit-list fit-yes">
+                {handoffChecklist.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+              <div className="process-cta">
+                <a
+                  className="btn btn-primary"
+                  href="https://wa.me/916396015608?text=Hi%20Tushar%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20project."
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => track("contact_whatsapp", { location: "process" })}
+                >
+                  Start on WhatsApp <MessageCircle className="btn-icon" size={15} />
+                </a>
+                <p className="hero-cta-note">15–20 min discovery · Usually replies within a day</p>
               </div>
             </div>
           </div>
