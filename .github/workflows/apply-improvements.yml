@@ -1,6 +1,9 @@
 name: Apply portfolio improvements
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.restore-data/**'
 
 permissions:
   contents: write
@@ -10,25 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Restore originals and apply improvements from good commit base
+      - name: Assemble improved files from base64 parts
         run: |
           set -euo pipefail
           git config user.name "Tushar Solanki"
           git config user.email "tusharsolanki9845@gmail.com"
 
-          # Restore from last good commit first
-          git checkout 94b210a2ae21441d354cc6b6d541c5b3e5399bb6 -- client/src/pages/Home.tsx client/src/index.css
-
-          # If chunks exist, assemble improved files over the restore
-          if [ -d .restore-chunks ]; then
-            cat .restore-chunks/chunk-home-*.b64 | tr -d '\n' | base64 -d > client/src/pages/Home.tsx
-            cat .restore-chunks/chunk-css-*.b64 | tr -d '\n' | base64 -d > client/src/index.css
+          if [ -d .restore-data ]; then
+            cat .restore-data/home_b64_part*.txt | tr -d '\n' | base64 -d > client/src/pages/Home.tsx
+            cat .restore-data/css_b64_part*.txt | tr -d '\n' | base64 -d > client/src/index.css
+            rm -rf .restore-data
+            # clean leftover chunks if any
             rm -rf .restore-chunks
+            git add -A
+            git status
+            git commit -m "Implement client conversion improvements: process, FAQ, badges, outcomes, filter"
+            git push origin HEAD:master
+          else
+            echo "No .restore-data found; nothing to apply"
           fi
-
-          git add -A
-          git status
-          git commit -m "Implement client conversion improvements: process, FAQ, badges, outcomes, filter" || echo "nothing to commit"
-          git push origin HEAD:master
