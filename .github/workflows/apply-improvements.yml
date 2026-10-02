@@ -1,11 +1,6 @@
 name: Apply portfolio improvements
-
 on:
-  push:
-    paths:
-      - "scripts/patch_pricing_whatsapp.py"
-      - "scripts/TRIGGER_PATCH"
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,14 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Patch Home and CSS
+        with:
+          fetch-depth: 0
+      - name: Apply patch script
         run: |
           set -euo pipefail
           git config user.name "Tushar Solanki"
           git config user.email "tusharsolanki9845@gmail.com"
           python3 scripts/patch_pricing_whatsapp.py
-          cat >> client/src/index.css << 'CSSEOF'
+          python3 - <<'PY'
+          from pathlib import Path
+          css = Path("client/src/index.css")
+          text = css.read_text()
+          marker = ".pricing-lead {"
+          if marker not in text:
+              text += """
 
 .pricing-lead {
   margin: 0 0 18px;
@@ -66,7 +68,13 @@ jobs:
   .fit-panel { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: 1fr; }
 }
-CSSEOF
+"""
+              css.write_text(text)
+              print("css patched")
+          else:
+              print("css already has pricing-lead")
+          PY
           git add client/src/pages/Home.tsx client/src/index.css
-          git commit -m "Fix pricing bands and add WhatsApp CTAs" || echo nothing
+          git status
+          git commit -m "Fix pricing bands and add WhatsApp CTAs" || echo "nothing to commit"
           git push origin HEAD:master
