@@ -1,6 +1,10 @@
 name: Apply portfolio improvements
 
 on:
+  push:
+    paths:
+      - "scripts/patch_pricing_whatsapp.py"
+      - "scripts/TRIGGER_PATCH"
   workflow_dispatch: {}
 
 permissions:
