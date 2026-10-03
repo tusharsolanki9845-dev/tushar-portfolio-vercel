@@ -1,0 +1,31 @@
+name: Subtle natural 3D
+
+on:
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "scripts/subtle_3d.py"
+      - "scripts/TRIGGER_SUBTLE_3D"
+      - ".github/workflows/subtle-3d.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Soften 3D
+        run: |
+          set -euo pipefail
+          python3 scripts/subtle_3d.py
+          git config user.name "Tushar Solanki"
+          git config user.email "tusharsolanki9845@gmail.com"
+          git add client/src/pages/Home.tsx client/src/index.css
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Soften project 3D: subtler tilt, lighter shadows, natural motion"
+            git push origin HEAD:master
+          fi
