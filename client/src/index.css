@@ -2502,45 +2502,45 @@ body::before {
   transition: color 220ms ease;
 }
 
-.process-steps > *,
+.process-grid > *,
 .skill-grid > *,
 .fit-panel > *,
-.pricing-bands > *,
-.project-grid > * {
+.pricing-grid > *,
+.project-list > * {
   opacity: 0;
   transform: translateY(18px);
   transition: opacity 560ms cubic-bezier(0.22, 1, 0.36, 1), transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.reveal.is-visible .process-steps > *,
+.reveal.is-visible .process-grid > *,
 .reveal.is-visible .skill-grid > *,
 .reveal.is-visible .fit-panel > *,
-.reveal.is-visible .pricing-bands > *,
-.reveal.is-visible .project-grid > *,
-.section.reveal.is-visible .process-steps > *,
+.reveal.is-visible .pricing-grid > *,
+.reveal.is-visible .project-list > *,
+.section.reveal.is-visible .process-grid > *,
 .section.reveal.is-visible .skill-grid > *,
-.section.reveal.is-visible .project-grid > * {
+.section.reveal.is-visible .project-list > * {
   opacity: 1;
   transform: translateY(0);
 }
 
-.reveal.is-visible .process-steps > *:nth-child(1),
+.reveal.is-visible .process-grid > *:nth-child(1),
 .reveal.is-visible .skill-grid > *:nth-child(1),
-.reveal.is-visible .project-grid > *:nth-child(1) { transition-delay: 40ms; }
-.reveal.is-visible .process-steps > *:nth-child(2),
+.reveal.is-visible .project-list > *:nth-child(1) { transition-delay: 40ms; }
+.reveal.is-visible .process-grid > *:nth-child(2),
 .reveal.is-visible .skill-grid > *:nth-child(2),
-.reveal.is-visible .project-grid > *:nth-child(2) { transition-delay: 100ms; }
-.reveal.is-visible .process-steps > *:nth-child(3),
+.reveal.is-visible .project-list > *:nth-child(2) { transition-delay: 100ms; }
+.reveal.is-visible .process-grid > *:nth-child(3),
 .reveal.is-visible .skill-grid > *:nth-child(3),
-.reveal.is-visible .project-grid > *:nth-child(3) { transition-delay: 160ms; }
-.reveal.is-visible .process-steps > *:nth-child(4),
+.reveal.is-visible .project-list > *:nth-child(3) { transition-delay: 160ms; }
+.reveal.is-visible .process-grid > *:nth-child(4),
 .reveal.is-visible .skill-grid > *:nth-child(4),
-.reveal.is-visible .project-grid > *:nth-child(4) { transition-delay: 220ms; }
+.reveal.is-visible .project-list > *:nth-child(4) { transition-delay: 220ms; }
 .reveal.is-visible .skill-grid > *:nth-child(5),
-.reveal.is-visible .project-grid > *:nth-child(5) { transition-delay: 280ms; }
-.reveal.is-visible .project-grid > *:nth-child(6) { transition-delay: 340ms; }
-.reveal.is-visible .project-grid > *:nth-child(7) { transition-delay: 400ms; }
-.reveal.is-visible .project-grid > *:nth-child(8) { transition-delay: 460ms; }
+.reveal.is-visible .project-list > *:nth-child(5) { transition-delay: 280ms; }
+.reveal.is-visible .project-list > *:nth-child(6) { transition-delay: 340ms; }
+.reveal.is-visible .project-list > *:nth-child(7) { transition-delay: 400ms; }
+.reveal.is-visible .project-list > *:nth-child(8) { transition-delay: 460ms; }
 
 .btn {
   position: relative;
@@ -2574,11 +2574,11 @@ body::before {
     animation: none !important;
   }
 
-  .process-steps > *,
+  .process-grid > *,
   .skill-grid > *,
   .fit-panel > *,
-  .pricing-bands > *,
-  .project-grid > * {
+  .pricing-grid > *,
+  .project-list > * {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
