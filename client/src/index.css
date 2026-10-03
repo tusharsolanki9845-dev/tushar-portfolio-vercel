@@ -2614,3 +2614,126 @@ body::before {
     transform: none !important;
   }
 }
+
+/* —— 3D project stage look —— */
+.project-list {
+  perspective: 1400px;
+}
+
+.project-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --tilt-scale: 1;
+  overflow: visible;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(var(--tilt-scale));
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), border-color 240ms ease, background 240ms ease, box-shadow 240ms ease;
+}
+
+.project-card.is-tilting {
+  transition: transform 50ms linear, border-color 200ms ease, box-shadow 200ms ease;
+  z-index: 2;
+}
+
+.project-stage {
+  position: relative;
+  min-height: 280px;
+  transform-style: preserve-3d;
+  transform: translateZ(28px);
+}
+
+.project-stage-shadow {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -18px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.45), transparent 70%);
+  filter: blur(8px);
+  opacity: 0.55;
+  transform: translateZ(-20px) scale(0.92);
+  transition: opacity 220ms ease, transform 220ms ease;
+  pointer-events: none;
+}
+
+.project-card.is-tilting .project-stage-shadow,
+.project-card:hover .project-stage-shadow {
+  opacity: 0.85;
+  transform: translateZ(-24px) scale(1.02);
+}
+
+.project-mockup {
+  transform-style: preserve-3d;
+  transform: rotateY(-6deg) rotateX(4deg);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.28),
+    0 2px 0 rgba(255, 255, 255, 0.06) inset,
+    -12px 16px 32px rgba(0, 0, 0, 0.22);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, rgba(255, 255, 255, 0.18));
+  transition: transform 280ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 280ms ease;
+}
+
+.project-card.is-tilting .project-mockup,
+.project-card:hover .project-mockup {
+  transform: rotateY(-2deg) rotateX(2deg) translateZ(12px) scale(1.02);
+  box-shadow:
+    0 28px 56px rgba(0, 0, 0, 0.36),
+    0 2px 0 rgba(255, 255, 255, 0.08) inset,
+    -16px 22px 40px rgba(0, 0, 0, 0.28);
+}
+
+.project-mockup-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.14) 42%,
+    transparent 58%
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
+  transform: translateZ(2px);
+}
+
+.project-info {
+  transform: translateZ(18px);
+  transform-style: preserve-3d;
+}
+
+.mockup-window {
+  transform: translateZ(8px);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+
+@media (max-width: 900px) {
+  .project-mockup {
+    transform: none;
+  }
+  .project-card.is-tilting .project-mockup,
+  .project-card:hover .project-mockup {
+    transform: none;
+  }
+  .project-stage {
+    transform: none;
+  }
+  .project-info {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-card.is-tilting,
+  .project-mockup,
+  .project-stage,
+  .project-info {
+    transform: none !important;
+  }
+  .project-stage-shadow {
+    display: none;
+  }
+}

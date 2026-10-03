@@ -569,21 +569,29 @@ function AnimatedStat({ count, label }: { count: number; label: string }) {
 function ProjectMockup({ theme, name, previewImage }: { theme: Project["theme"]; name: string; previewImage?: string }) {
   if (previewImage) {
     return (
-      <div className={`project-mockup project-preview ${theme}`} role="img" aria-label={`${name} live project preview`}>
-        <img src={previewImage} alt={`${name} live website preview`} loading="lazy" />
-        <span className="project-preview-label">live interface</span>
+      <div className="project-stage" aria-hidden="false">
+        <div className="project-stage-shadow" aria-hidden="true" />
+        <div className={`project-mockup project-preview ${theme}`} role="img" aria-label={`${name} live project preview`}>
+          <div className="project-mockup-glare" aria-hidden="true" />
+          <img src={previewImage} alt={`${name} live website preview`} loading="lazy" />
+          <span className="project-preview-label">live interface</span>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className={`project-mockup ${theme}`} role="img" aria-label={`${name} project preview`}>
-      <div className="mockup-window">
-        <div className="mockup-top"><span /><span /><span /></div>
-        <div className="mockup-content">
-          <div className="mockup-kicker">{name} / build-preview</div>
-          <div className="mockup-heading">A working product, not a mockup.</div>
-          <div className="mockup-lines"><i /><i /><i /></div>
+    <div className="project-stage" aria-hidden="false">
+      <div className="project-stage-shadow" aria-hidden="true" />
+      <div className={`project-mockup ${theme}`} role="img" aria-label={`${name} project preview`}>
+        <div className="project-mockup-glare" aria-hidden="true" />
+        <div className="mockup-window">
+          <div className="mockup-top"><span /><span /><span /></div>
+          <div className="mockup-content">
+            <div className="mockup-kicker">{name} / build-preview</div>
+            <div className="mockup-heading">A working product, not a mockup.</div>
+            <div className="mockup-lines"><i /><i /><i /></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1125,8 +1133,8 @@ export default function Home() {
                     const bounds = event.currentTarget.getBoundingClientRect();
                     const px = (event.clientX - bounds.left) / bounds.width;
                     const py = (event.clientY - bounds.top) / bounds.height;
-                    const tiltX = (0.5 - py) * 10;
-                    const tiltY = (px - 0.5) * 12;
+                    const tiltX = (0.5 - py) * 14;
+                    const tiltY = (px - 0.5) * 16;
                     event.currentTarget.style.setProperty("--spotlight-x", `${px * 100}%`);
                     event.currentTarget.style.setProperty("--spotlight-y", `${py * 100}%`);
                     event.currentTarget.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
