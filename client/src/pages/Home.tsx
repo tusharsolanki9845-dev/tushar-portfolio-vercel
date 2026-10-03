@@ -823,8 +823,9 @@ export default function Home() {
 
             <div className="hero-visual reveal is-visible">
               <HeroField />
-              <div className="profile-card" aria-label="Tushar profile specification">
+              <div className="profile-card" aria-label="Profile specification">
                 <div className="window-bar"><span className="window-dot" /><span className="window-dot" /><span className="window-dot" /><span className="window-title">Profile.json</span></div>
+                <div className="profile-photo-wrap"><img className="profile-photo" src="/piyush-rastogi.jpg" alt="Profile portrait" width="400" height="400" loading="lazy" /></div>
                 <div className="spec-list">
                   {[
                     ["Role", "Freelance Web Developer"],
