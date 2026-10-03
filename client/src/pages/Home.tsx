@@ -515,9 +515,52 @@ const releaseSnapshot = [
 ];
 
 function AnimatedStat({ count, label }: { count: number; label: string }) {
+  const [display, setDisplay] = useState(0);
+  const [started, setStarted] = useState(false);
+  const nodeRef = useState(() => ({ current: null as HTMLDivElement | null }))[0];
+
+  useEffect(() => {
+    const node = nodeRef.current;
+    if (!node) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplay(count);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [count, nodeRef]);
+
+  useEffect(() => {
+    if (!started) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplay(count);
+      return;
+    }
+    const duration = 1200;
+    const start = performance.now();
+    let frame = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setDisplay(Math.round(count * eased));
+      if (t < 1) frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [started, count]);
+
   return (
-    <div className="stat">
-      <div className="stat-number">{count}{count < 2029 ? "+" : ""}</div>
+    <div className="stat" ref={(node) => { nodeRef.current = node; }}>
+      <div className="stat-number">{display}{count < 2029 ? "+" : ""}</div>
       <div className="stat-label">{label}</div>
     </div>
   );
