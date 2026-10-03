@@ -1,0 +1,31 @@
+name: Realistic 3D project effect
+
+on:
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "scripts/realistic_3d_tilt.py"
+      - "scripts/TRIGGER_REALISTIC_3D"
+      - ".github/workflows/realistic-3d.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply realistic 3D
+        run: |
+          set -euo pipefail
+          python3 scripts/realistic_3d_tilt.py
+          git config user.name "Tushar Solanki"
+          git config user.email "tusharsolanki9845@gmail.com"
+          git add client/src/pages/Home.tsx client/src/index.css
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "More realistic 3D: directional light, shadow, specular, spring easing"
+            git push origin HEAD:master
+          fi
