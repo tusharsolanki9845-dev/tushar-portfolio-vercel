@@ -1,0 +1,31 @@
+name: Restore Home + student pricing
+
+on:
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "scripts/TRIGGER_RESTORE"
+      - "scripts/restore_home_student_pricing.py"
+      - ".github/workflows/restore-home-pricing.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore Home.tsx and apply student-friendly pricing
+        run: |
+          set -euo pipefail
+          python3 scripts/restore_home_student_pricing.py
+          git config user.name "Tushar Solanki"
+          git config user.email "tusharsolanki9845@gmail.com"
+          git add client/src/pages/Home.tsx
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Restore Home.tsx with student-friendly pricing (₹5–15k / ₹15–35k / ₹30–60k)"
+            git push origin HEAD:master
+          fi
