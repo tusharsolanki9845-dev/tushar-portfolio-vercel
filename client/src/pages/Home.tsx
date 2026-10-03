@@ -1120,13 +1120,27 @@ export default function Home() {
                   key={`${activeProjectFilter}-${project.name}`}
                   style={{ animationDelay: `${index * 45}ms` }}
                   onPointerMove={(event) => {
+                    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+                    if (window.matchMedia("(hover: none)").matches) return;
                     const bounds = event.currentTarget.getBoundingClientRect();
-                    event.currentTarget.style.setProperty("--spotlight-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
-                    event.currentTarget.style.setProperty("--spotlight-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
+                    const px = (event.clientX - bounds.left) / bounds.width;
+                    const py = (event.clientY - bounds.top) / bounds.height;
+                    const tiltX = (0.5 - py) * 10;
+                    const tiltY = (px - 0.5) * 12;
+                    event.currentTarget.style.setProperty("--spotlight-x", `${px * 100}%`);
+                    event.currentTarget.style.setProperty("--spotlight-y", `${py * 100}%`);
+                    event.currentTarget.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+                    event.currentTarget.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+                    event.currentTarget.style.setProperty("--tilt-scale", "1.015");
+                    event.currentTarget.classList.add("is-tilting");
                   }}
                   onPointerLeave={(event) => {
                     event.currentTarget.style.removeProperty("--spotlight-x");
                     event.currentTarget.style.removeProperty("--spotlight-y");
+                    event.currentTarget.style.setProperty("--tilt-x", "0deg");
+                    event.currentTarget.style.setProperty("--tilt-y", "0deg");
+                    event.currentTarget.style.setProperty("--tilt-scale", "1");
+                    event.currentTarget.classList.remove("is-tilting");
                   }}
                 >
                   <ProjectMockup theme={project.theme} name={project.name} previewImage={project.previewImage} />

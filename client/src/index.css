@@ -772,9 +772,13 @@ a:focus-visible {
 .project-list {
   display: grid;
   gap: 20px;
+  perspective: 1200px;
 }
 
 .project-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --tilt-scale: 1;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -786,7 +790,18 @@ a:focus-visible {
   border-radius: var(--radius);
   background: var(--panel);
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
-  transition: transform 240ms cubic-bezier(0.23, 1, 0.32, 1), border-color 240ms ease, background 240ms ease, box-shadow 240ms ease;
+  transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(var(--tilt-scale)) translateY(0);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), border-color 240ms ease, background 240ms ease, box-shadow 240ms ease;
+}
+
+.project-card.is-tilting {
+  transition: transform 60ms linear, border-color 240ms ease, background 240ms ease, box-shadow 240ms ease;
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.28),
+    0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 .project-card::after {
@@ -808,10 +823,14 @@ a:focus-visible {
 @media (hover: hover) {
   .project-card:hover,
   .project-card:focus-within {
-    transform: translateY(-8px);
     border-color: rgba(240, 177, 82, 0.72);
     background: var(--panel-hover);
     box-shadow: 0 22px 44px rgba(0, 0, 0, 0.28);
+  }
+
+  .project-card:hover:not(.is-tilting),
+  .project-card:focus-within:not(.is-tilting) {
+    transform: perspective(900px) rotateX(0deg) rotateY(0deg) scale(1) translateY(-8px);
   }
 
   .project-card:hover::after,
@@ -2582,5 +2601,16 @@ body::before {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+
+/* project-card 3d tilt */
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-card.is-tilting,
+  .project-card:hover,
+  .project-card:focus-within {
+    transform: none !important;
   }
 }
