@@ -1137,8 +1137,8 @@ export default function Home() {
                     // Center-weighted: stronger near edges, smooth near middle
                     const nx = (px - 0.5) * 2;
                     const ny = (py - 0.5) * 2;
-                    const tiltX = (-ny * 11).toFixed(2);
-                    const tiltY = (nx * 13).toFixed(2);
+                    const tiltX = (-ny * 5).toFixed(2);
+                    const tiltY = (nx * 6).toFixed(2);
                     // Shadow moves opposite the high side of the card
                     const shadowX = (nx * 18).toFixed(1);
                     const shadowY = (14 + ny * 10).toFixed(1);
@@ -1147,7 +1147,7 @@ export default function Home() {
                     el.style.setProperty("--spotlight-y", `${py * 100}%`);
                     el.style.setProperty("--tilt-x", `${tiltX}deg`);
                     el.style.setProperty("--tilt-y", `${tiltY}deg`);
-                    el.style.setProperty("--tilt-scale", "1.02");
+                    el.style.setProperty("--tilt-scale", "1.006");
                     el.style.setProperty("--shadow-x", `${shadowX}px`);
                     el.style.setProperty("--shadow-y", `${shadowY}px`);
                     el.style.setProperty("--glare-x", `${px * 100}%`);

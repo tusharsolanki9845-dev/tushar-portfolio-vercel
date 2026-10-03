@@ -797,7 +797,7 @@ a:focus-visible {
 }
 
 .project-card.is-tilting {
-  transition: transform 60ms linear, border-color 240ms ease, background 240ms ease, box-shadow 240ms ease;
+  transition: transform 120ms ease-out, border-color 240ms ease, background 240ms ease, box-shadow 240ms ease;
   border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
   box-shadow:
     0 24px 48px rgba(0, 0, 0, 0.28),
@@ -2457,7 +2457,7 @@ a:focus-visible {
 
 /* —— Dynamic motion enhancements —— */
 @keyframes ambient-shift {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.55; }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.35; }
   50% { transform: translate3d(2%, -1.5%, 0) scale(1.04); opacity: 0.75; }
 }
 
@@ -2467,7 +2467,7 @@ a:focus-visible {
 }
 
 @keyframes particle-drift {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.55; }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.35; }
   50% { transform: translate3d(6px, -10px, 0) scale(1.35); opacity: 1; }
 }
 
@@ -2631,7 +2631,7 @@ body::before {
 }
 
 .project-card.is-tilting {
-  transition: transform 50ms linear, border-color 200ms ease, box-shadow 200ms ease;
+  transition: transform 120ms ease-out, border-color 200ms ease, box-shadow 200ms ease;
   z-index: 2;
 }
 
@@ -2639,7 +2639,7 @@ body::before {
   position: relative;
   min-height: 280px;
   transform-style: preserve-3d;
-  transform: translateZ(28px);
+  transform: translateZ(16px);
 }
 
 .project-stage-shadow {
@@ -2651,7 +2651,7 @@ body::before {
   border-radius: 50%;
   background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.45), transparent 70%);
   filter: blur(8px);
-  opacity: 0.55;
+  opacity: 0.35;
   transform: translateZ(-20px) scale(0.92);
   transition: opacity 220ms ease, transform 220ms ease;
   pointer-events: none;
@@ -2659,28 +2659,28 @@ body::before {
 
 .project-card.is-tilting .project-stage-shadow,
 .project-card:hover .project-stage-shadow {
-  opacity: 0.85;
+  opacity: 0.55;
   transform: translateZ(-24px) scale(1.02);
 }
 
 .project-mockup {
   transform-style: preserve-3d;
-  transform: rotateY(-6deg) rotateX(4deg);
+  transform: rotateY(-2deg) rotateX(1.5deg);
   box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.28),
-    0 2px 0 rgba(255, 255, 255, 0.06) inset,
-    -12px 16px 32px rgba(0, 0, 0, 0.22);
+    0 12px 28px rgba(0, 0, 0, 0.16),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    -6px 10px 20px rgba(0, 0, 0, 0.12);
   border: 1px solid color-mix(in srgb, var(--border) 70%, rgba(255, 255, 255, 0.18));
   transition: transform 280ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 280ms ease;
 }
 
 .project-card.is-tilting .project-mockup,
 .project-card:hover .project-mockup {
-  transform: rotateY(-2deg) rotateX(2deg) translateZ(12px) scale(1.02);
+  transform: rotateY(-1deg) rotateX(1deg) translateZ(6px) scale(1.01);
   box-shadow:
-    0 28px 56px rgba(0, 0, 0, 0.36),
-    0 2px 0 rgba(255, 255, 255, 0.08) inset,
-    -16px 22px 40px rgba(0, 0, 0, 0.28);
+    0 16px 36px rgba(0, 0, 0, 0.2),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    -8px 12px 24px rgba(0, 0, 0, 0.14);
 }
 
 .project-mockup-glare {
@@ -2691,21 +2691,21 @@ body::before {
   background: linear-gradient(
     115deg,
     transparent 20%,
-    rgba(255, 255, 255, 0.14) 42%,
+    rgba(255, 255, 255, 0.08) 42%,
     transparent 58%
   );
   mix-blend-mode: soft-light;
-  opacity: 0.55;
+  opacity: 0.35;
   transform: translateZ(2px);
 }
 
 .project-info {
-  transform: translateZ(18px);
+  transform: translateZ(4px);
   transform-style: preserve-3d;
 }
 
 .mockup-window {
-  transform: translateZ(8px);
+  transform: translateZ(4px);
   box-shadow: 0 20px 36px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
 }
 
@@ -2773,7 +2773,7 @@ body::before {
 .project-card.is-tilting {
   /* near-instant tracking while pointer is down on the surface */
   transition:
-    transform 80ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 140ms ease-out,
     box-shadow 80ms ease,
     border-color 200ms ease;
   z-index: 3;
@@ -2809,7 +2809,7 @@ body::before {
   position: relative;
   min-height: 280px;
   transform-style: preserve-3d;
-  transform: translateZ(36px);
+  transform: translateZ(16px);
 }
 
 .project-stage-shadow {
@@ -2826,21 +2826,21 @@ body::before {
     transparent 72%
   );
   filter: blur(10px);
-  opacity: 0.5;
+  opacity: 0.35;
   transform: translate3d(calc(var(--shadow-x) * 0.35), 0, -28px) scale(0.9);
   transition: opacity 320ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
 }
 
 .project-card.is-tilting .project-stage-shadow {
-  opacity: 0.9;
+  opacity: 0.55;
   transform: translate3d(calc(var(--shadow-x) * 0.55), 4px, -32px) scale(1.05);
 }
 
 .project-mockup {
   transform-style: preserve-3d;
   /* Rest pose: slight isometric product angle */
-  transform: rotateY(-5deg) rotateX(3.5deg) translateZ(0);
+  transform: rotateY(-2deg) rotateX(1.5deg) translateZ(0);
   box-shadow:
     10px 18px 36px rgba(0, 0, 0, 0.3),
     -6px 12px 24px rgba(0, 0, 0, 0.18),
@@ -2851,12 +2851,12 @@ body::before {
 
 .project-card.is-tilting .project-mockup {
   /* Align mockup with card plane while lifting slightly */
-  transform: rotateY(-1deg) rotateX(1deg) translateZ(16px) scale(1.025);
+  transform: rotateY(-1deg) rotateX(1deg) translateZ(6px) scale(1.01);
   box-shadow:
     calc(var(--shadow-x) * 0.4) calc(var(--shadow-y) * 0.7) 44px rgba(0, 0, 0, 0.38),
     -8px 14px 28px rgba(0, 0, 0, 0.2),
     0 1px 0 rgba(255, 255, 255, 0.1) inset;
-  transition: transform 90ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 90ms ease;
+  transition: transform 140ms ease-out, box-shadow 90ms ease;
 }
 
 /* Specular highlight tracks the pointer */
@@ -2889,12 +2889,12 @@ body::before {
 }
 
 .project-info {
-  transform: translateZ(22px);
+  transform: translateZ(4px);
   transform-style: preserve-3d;
 }
 
 .mockup-window {
-  transform: translateZ(10px);
+  transform: translateZ(4px);
   box-shadow:
     0 22px 40px rgba(0, 0, 0, 0.38),
     0 1px 0 rgba(255, 255, 255, 0.1) inset;
@@ -2923,6 +2923,89 @@ body::before {
   }
   .project-mockup-glare,
   .project-card::before {
+    display: none;
+  }
+}
+
+/* subtle natural 3D overrides */
+.project-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --tilt-scale: 1;
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(var(--tilt-scale));
+  transition: transform 380ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 280ms ease, box-shadow 380ms ease;
+}
+
+.project-card.is-tilting {
+  transition: transform 140ms ease-out, border-color 200ms ease, box-shadow 200ms ease;
+  z-index: 2;
+}
+
+.project-stage {
+  transform: translateZ(14px);
+}
+
+.project-stage-shadow {
+  opacity: 0.32;
+  filter: blur(12px);
+  bottom: -14px;
+  height: 24px;
+}
+
+.project-card.is-tilting .project-stage-shadow,
+.project-card:hover .project-stage-shadow {
+  opacity: 0.48;
+}
+
+.project-mockup {
+  transform: rotateY(-2deg) rotateX(1.25deg);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.14),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+
+.project-card.is-tilting .project-mockup,
+.project-card:hover .project-mockup {
+  transform: rotateY(-0.5deg) rotateX(0.5deg) translateZ(4px) scale(1.008);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+
+.project-mockup-glare {
+  opacity: 0.28;
+  background: linear-gradient(
+    120deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.07) 48%,
+    transparent 64%
+  );
+}
+
+.project-info {
+  transform: translateZ(8px);
+}
+
+@media (max-width: 900px) {
+  .project-mockup,
+  .project-card.is-tilting .project-mockup,
+  .project-card:hover .project-mockup,
+  .project-stage,
+  .project-info {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-card.is-tilting,
+  .project-mockup,
+  .project-stage,
+  .project-info {
+    transform: none !important;
+  }
+  .project-stage-shadow,
+  .project-mockup-glare {
     display: none;
   }
 }
