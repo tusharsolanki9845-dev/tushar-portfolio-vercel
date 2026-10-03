@@ -1,0 +1,31 @@
+name: Add project 3D tilt
+
+on:
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "scripts/add_project_tilt.py"
+      - "scripts/TRIGGER_TILT"
+      - ".github/workflows/add-project-tilt.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  tilt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply 3D tilt
+        run: |
+          set -euo pipefail
+          python3 scripts/add_project_tilt.py
+          git config user.name "Tushar Solanki"
+          git config user.email "tusharsolanki9845@gmail.com"
+          git add client/src/pages/Home.tsx client/src/index.css
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Add 3D pointer tilt to project cards"
+            git push origin HEAD:master
+          fi
