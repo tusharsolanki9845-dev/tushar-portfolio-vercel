@@ -1130,25 +1130,44 @@ export default function Home() {
                   onPointerMove={(event) => {
                     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
                     if (window.matchMedia("(hover: none)").matches) return;
-                    const bounds = event.currentTarget.getBoundingClientRect();
-                    const px = (event.clientX - bounds.left) / bounds.width;
-                    const py = (event.clientY - bounds.top) / bounds.height;
-                    const tiltX = (0.5 - py) * 14;
-                    const tiltY = (px - 0.5) * 16;
-                    event.currentTarget.style.setProperty("--spotlight-x", `${px * 100}%`);
-                    event.currentTarget.style.setProperty("--spotlight-y", `${py * 100}%`);
-                    event.currentTarget.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
-                    event.currentTarget.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
-                    event.currentTarget.style.setProperty("--tilt-scale", "1.015");
-                    event.currentTarget.classList.add("is-tilting");
+                    const el = event.currentTarget;
+                    const bounds = el.getBoundingClientRect();
+                    const px = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
+                    const py = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height));
+                    // Center-weighted: stronger near edges, smooth near middle
+                    const nx = (px - 0.5) * 2;
+                    const ny = (py - 0.5) * 2;
+                    const tiltX = (-ny * 11).toFixed(2);
+                    const tiltY = (nx * 13).toFixed(2);
+                    // Shadow moves opposite the high side of the card
+                    const shadowX = (nx * 18).toFixed(1);
+                    const shadowY = (14 + ny * 10).toFixed(1);
+                    // Specular sits slightly above the pointer
+                    el.style.setProperty("--spotlight-x", `${px * 100}%`);
+                    el.style.setProperty("--spotlight-y", `${py * 100}%`);
+                    el.style.setProperty("--tilt-x", `${tiltX}deg`);
+                    el.style.setProperty("--tilt-y", `${tiltY}deg`);
+                    el.style.setProperty("--tilt-scale", "1.02");
+                    el.style.setProperty("--shadow-x", `${shadowX}px`);
+                    el.style.setProperty("--shadow-y", `${shadowY}px`);
+                    el.style.setProperty("--glare-x", `${px * 100}%`);
+                    el.style.setProperty("--glare-y", `${py * 100}%`);
+                    el.style.setProperty("--light-intensity", `${(0.35 + (1 - Math.hypot(nx, ny) * 0.25)).toFixed(2)}`);
+                    el.classList.add("is-tilting");
                   }}
                   onPointerLeave={(event) => {
-                    event.currentTarget.style.removeProperty("--spotlight-x");
-                    event.currentTarget.style.removeProperty("--spotlight-y");
-                    event.currentTarget.style.setProperty("--tilt-x", "0deg");
-                    event.currentTarget.style.setProperty("--tilt-y", "0deg");
-                    event.currentTarget.style.setProperty("--tilt-scale", "1");
-                    event.currentTarget.classList.remove("is-tilting");
+                    const el = event.currentTarget;
+                    el.style.removeProperty("--spotlight-x");
+                    el.style.removeProperty("--spotlight-y");
+                    el.style.setProperty("--tilt-x", "0deg");
+                    el.style.setProperty("--tilt-y", "0deg");
+                    el.style.setProperty("--tilt-scale", "1");
+                    el.style.setProperty("--shadow-x", "0px");
+                    el.style.setProperty("--shadow-y", "18px");
+                    el.style.setProperty("--glare-x", "30%");
+                    el.style.setProperty("--glare-y", "20%");
+                    el.style.setProperty("--light-intensity", "0.4");
+                    el.classList.remove("is-tilting");
                   }}
                 >
                   <ProjectMockup theme={project.theme} name={project.name} previewImage={project.previewImage} />
