@@ -1,1 +1,1233 @@
-LOADING
+import { ArrowUpRight, Download, FileText, Github, Linkedin, Mail, Menu, MessageCircle, Moon, Phone, Send, Sun, X } from "lucide-react";
+import { track } from "@vercel/analytics";
+import { lazy, Suspense, useEffect, useState, type CSSProperties, type FormEvent, type PointerEvent as ReactPointerEvent } from "react";
+import { buildContactEmailUrl, type ContactFormPayload } from "@/lib/contact";
+
+/* Design: Reference-led dark build log with editorial data panels, amber status accents, and responsive reveal motion. Campus Signal follows this evidence-first portfolio language. */
+
+const Analytics = lazy(() => import("@vercel/analytics/react").then(({ Analytics: AnalyticsComponent }) => ({ default: AnalyticsComponent })));
+
+export type Project = {
+  slug: string;
+  releaseDate: string;
+  category: "web" | "campus" | "commerce" | "civic";
+  previewImage?: string;
+  name: string;
+  tagline: string;
+  speciality: string;
+  description: string;
+  contribution: string;
+  stack: string[];
+  results?: { title: string; detail: string }[];
+  status: "live" | "shipped" | "wip";
+  statusLabel: string;
+  theme: "luxury" | "industrial" | "warm" | "civic";
+  link: string | null;
+  linkLabel: string;
+  github?: string;
+  isClient?: boolean;
+};
+
+type Credential = {
+  title: string;
+  issuer: string;
+  completed: string;
+  focus: string;
+};
+
+const roles = [
+  "Building web products that ship",
+  "Studying AI & ML at IEC College, AKTU",
+  "Freelancing on real client projects",
+  "Shipping on a zero-budget stack",
+];
+
+const stats = [
+  { count: 15, label: "projects built" },
+  { count: 5, label: "Forage simulations" },
+  { count: 3, label: "client builds shipped" },
+  { count: 2029, label: "graduation year" },
+];
+
+const focusPoints = [
+  {
+    title: "Build for real users",
+    description: "Every project on this page is either live for a client or fully functional end-to-end — not a tutorial clone.",
+  },
+  {
+    title: "Keep the stack lean",
+    description: "Static-first, free-tier backends, and an upgrade path — not infrastructure for infrastructure's sake.",
+  },
+  {
+    title: "Own the whole build",
+    description: "Frontend, backend, payments, admin panels, SEO — I'd rather learn the missing piece than hand it off.",
+  },
+];
+
+const howIWorkSteps = [
+  {
+    step: "01",
+    title: "Discovery call",
+    detail: "15–20 minutes to clarify goals, scope, constraints, and timeline. No commitment required.",
+  },
+  {
+    step: "02",
+    title: "Clear proposal",
+    detail: "Fixed or milestone-based quote with deliverables, timeline, and price. No surprise fees.",
+  },
+  {
+    step: "03",
+    title: "Build & review",
+    detail: "Regular updates and a live preview link so you can see progress and give feedback early.",
+  },
+  {
+    step: "04",
+    title: "Launch & handoff",
+    detail: "Domain, hosting, basic training, and 14–30 days of free support after go-live.",
+  },
+];
+
+const engagementNotes = [
+  { label: "Stack default", value: "Lean React or vanilla JS + Supabase/Firebase + Vercel so monthly costs stay near zero." },
+  { label: "Payment", value: "Usually 40% start / 60% on delivery, or milestones for larger work." },
+  { label: "Support window", value: "14–30 days of free fixes and small adjustments after launch." },
+];
+
+const pricingBands = [
+  { name: "Brochure / business site", range: "₹5,000 – 15,000", timeline: "5–10 days", detail: "Clear service or shop presence — pages, contact, mobile-first layout." },
+  { name: "Ordering / WhatsApp flow", range: "₹15,000 – 35,000", timeline: "2–4 weeks", detail: "Menu, cart, COD/UPI, and WhatsApp handoff without monthly platform fees." },
+  { name: "Admin + payments", range: "₹30,000 – 60,000", timeline: "3–6 weeks", detail: "Custom admin, order tracking, and payment flows when you outgrow a simple storefront." },
+];
+
+const fitFor = {
+  yes: [
+    "Local shops, restaurants, and service businesses that need a fast site or ordering flow",
+    "Owners who want WhatsApp / COD / UPI instead of heavy monthly platform fees",
+    "Projects where one developer can own design, build, and launch end-to-end",
+  ],
+  no: [
+    "Large enterprise rebuilds with big teams and long procurement cycles",
+    "Unpaid equity-only or speculative work without a clear scope",
+    "Fully custom design systems that need a dedicated brand studio",
+  ],
+};
+
+const handoffChecklist = [
+  "Live site on your domain (or a staging URL until DNS is ready)",
+  "Source code access and a short handoff note for updates",
+  "Basic training on how to change content or take orders",
+  "14–30 days of free support for fixes and small adjustments",
+];
+
+const featuredCaseStudy = {
+  name: "Pizza Connect",
+  client: "Local pizzeria & bakery · Khurja",
+  link: "https://pizza-connect-pwa-crocksy.vercel.app",
+  problem: "The outlet needed mobile ordering without paying monthly fees to a big delivery platform. Customers had to call or message ad-hoc, and the menu was hard to browse on a phone.",
+  built: "A production ordering PWA with a 54-item vegetarian menu, persistent cart, COD and UPI options, WhatsApp confirmation handoff, and offline-ready install support.",
+  result: "Customers pick items, send the order on WhatsApp, and the outlet confirms — no monthly SaaS bill. The same pattern now informs how I scope other local commerce builds.",
+};
+
+const clientOutcomes = [
+  {
+    quote: "The ordering flow via WhatsApp works exactly how we needed — customers send the order, we confirm, and there are no monthly platform fees.",
+    context: "Local pizzeria & bakery · Pizza Connect",
+  },
+  {
+    quote: "We got a clean storefront and an admin path without locking into a heavy SaaS subscription.",
+    context: "Hardware manufacturer · IRONCLASP",
+  },
+  {
+    quote: "Service packages and quote handoffs are clear on mobile — visitors can reach us in one tap.",
+    context: "Technology studio · AlphaTech Solutions",
+  },
+];
+
+const faqs = [
+  {
+    q: "How much does a typical project cost?",
+    a: "Ballpark for most work I take: brochure or business sites about ₹5,000–15,000; WhatsApp-first ordering or small commerce about ₹15,000–35,000; admin and custom payment flows about ₹30,000–60,000. After a short discovery call I send a fixed or milestone quote so the number is clear before work starts.",
+  },
+  {
+    q: "Do you handle design, or do I need a designer?",
+    a: "I can own the full UI for practical product and storefront work. If you already have brand guidelines or a designer, I work from those. For complex brand systems, a dedicated designer is a good partner.",
+  },
+  {
+    q: "Can you work with my existing domain and hosting?",
+    a: "Yes. I can deploy to your domain on Vercel, Netlify, or similar, or hand off build files for your current host. Domain and DNS setup is part of launch support.",
+  },
+  {
+    q: "What happens after launch?",
+    a: "You get 14–30 days of free support for fixes and small adjustments. After that, optional maintenance or change requests are quoted separately so you only pay when you need more work.",
+  },
+  {
+    q: "Are you available for ongoing support or small changes?",
+    a: "Yes. Many clients come back for menu updates, new pages, or small feature tweaks. Reach out on WhatsApp or email with what you need and I will give a clear time and cost estimate.",
+  },
+  {
+    q: "What stack do you prefer for small businesses?",
+    a: "Lean by default: HTML/CSS/JS or React, free-tier backends (Supabase/Firebase), and Vercel or Netlify hosting. Payment often stays as COD / UPI / WhatsApp handoff so you avoid monthly platform fees until volume justifies them.",
+  },
+];
+
+const skillGroups = [
+  { name: "Frontend", items: ["HTML5", "CSS3", "JavaScript", "Responsive Design", "Accessibility"] },
+  { name: "Backend & Data", items: ["Node.js", "Express", "Supabase", "PostgreSQL", "SQLite"] },
+  { name: "Payments & Deploy", items: ["COD / UPI Handoff", "Vercel", "Netlify", "GitHub Pages"] },
+  { name: "AI & Automation", items: ["Prompt Engineering", "GPT-4o-mini API", "Claude API", "Make.com"] },
+];
+
+export const projects: Project[] = [
+  {
+    slug: "ai-duniya",
+    releaseDate: "Oct 2026",
+    category: "web",
+    name: "AI Duniya",
+    tagline: "Learning and innovation studio for making AI easier to understand",
+    speciality: "AI learning experiences — practical courses, interactive labs, guided exams, and a focused site guide in one approachable platform.",
+    description: "I built a learning and innovation studio that turns AI concepts into approachable, interactive experiences. Visitors can explore guided lessons, run original browser-based labs, test their understanding, and move through the platform without relying on external AI APIs.",
+    contribution: "I shaped the product architecture, learning flows, interactive rover and neural-sandbox experiences, tokenizer and prompt-builder tools, exam runner, site-guide interaction, responsive visual system, and deployable web and Android-ready foundation.",
+    stack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Interactive Labs", "Capacitor"],
+    results: [
+      { title: "Learn by interacting", detail: "Original browser-based labs make abstract AI ideas tangible through visual experiments, simulations, and guided controls." },
+      { title: "Self-contained platform", detail: "The site guide uses a transparent rule-based matcher, so the public learning experience does not depend on hidden AI API calls." },
+      { title: "Ready for multiple surfaces", detail: "The same product foundation supports a responsive web release and an Android-ready Capacitor build." },
+    ],
+    status: "live",
+    statusLabel: "live · learning platform",
+    theme: "civic",
+    link: "https://ai-duniya-crocksy.vercel.app",
+    linkLabel: "view live site",
+    github: "https://github.com/tusharsolanki9845-dev/ai-duniya",
+  },
+  {
+    slug: "alphatech-solutions",
+    releaseDate: "Oct 2026",
+    category: "web",
+    name: "AlphaTech Solutions",
+    tagline: "Business website and Android-ready service platform for a technology studio",
+    speciality: "Client-facing service delivery — clear packages, quote handoffs, mobile-ready PWA behavior, and a native Android build path.",
+    description: "I built a polished service website for AlphaTech Solutions with focused sections for services, packages, process, FAQs, and contact. The experience is designed to turn a visitor's question into a direct quote conversation while remaining fast and installable on mobile.",
+    contribution: "I implemented the responsive interface, service and package presentation, accessible navigation and modal flows, WhatsApp quote handoffs, PWA shell, deployment configuration, TypeScript source build, and Capacitor Android packaging workflow.",
+    stack: ["TypeScript", "esbuild", "PWA", "Capacitor", "Android", "Vercel"],
+    results: [
+      { title: "Clear service journey", detail: "Visitors can move from services and packages to a prefilled quote conversation without a heavy backend or confusing checkout state." },
+      { title: "Mobile-ready delivery", detail: "The site includes installable PWA assets and a Capacitor Android path for a more native client experience." },
+      { title: "Automated build path", detail: "GitHub Actions builds and publishes a debug Android APK so the mobile release can be tested consistently." },
+    ],
+    status: "live",
+    statusLabel: "live · Android-ready",
+    theme: "industrial",
+    link: "https://alphatech-solutions.vercel.app",
+    linkLabel: "view live site",
+    github: "https://github.com/tusharsolanki9845-dev/alphatech-solutions",
+    isClient: true,
+  },
+  {
+    slug: "ai-night-security",
+    releaseDate: "Aug 2026",
+    category: "web",
+    name: "AI Night Security",
+    tagline: "Multi-tenant CCTV security dashboard with protected camera-view access",
+    speciality: "Security operations — package-based camera capacity, per-camera credentials, and a token-gated HLS relay architecture designed to keep RTSP details out of the browser.",
+    description: "I built a security SaaS interface for account access, free camera packages, camera management, protected camera-ID/password viewing, and an Android-ready dashboard. The static customer dashboard is publicly deployed on Netlify; the persistent Docker backend, protected stream relay, and real camera connection require a user-owned always-on host and remain pending live verification.",
+    contribution: "I designed the customer dashboard and entitlement experience, implemented the security boundaries for protected camera viewing, prepared the NestJS, PostgreSQL, Redis, FFmpeg HLS, and Nginx deployment stack, and packaged an Android debug build for configured HTTPS server access.",
+    stack: ["React", "Vite", "NestJS", "PostgreSQL", "Redis", "FFmpeg HLS", "Netlify", "Capacitor"],
+    results: [
+      { title: "Published dashboard", detail: "The customer-facing static dashboard is publicly available on Netlify, including secure first-launch server configuration while no persistent API host is connected." },
+      { title: "Protected viewing design", detail: "Camera credentials and RTSP connection details are designed to remain server-side; an individual camera view requires a camera ID, viewer password, and short-lived access token." },
+      { title: "Clear deployment boundary", detail: "Real sign-in, database persistence, camera streaming, and HLS playback require the separately prepared always-on Docker backend and camera-network connection, which are not yet live." },
+    ],
+    status: "live",
+    statusLabel: "dashboard live · backend connection pending",
+    theme: "industrial",
+    link: "https://ai-night-security.netlify.app",
+    linkLabel: "view live dashboard",
+  },
+  {
+    slug: "webclient-hunter",
+    releaseDate: "Aug 2026",
+    category: "web",
+    previewImage: "/previews/webclient-hunter.webp",
+    name: "WebClient Hunter",
+    tagline: "Evidence-first web prospect research for freelancers and local businesses",
+    speciality: "Research boundaries — source-labelled OpenStreetMap discovery, explicit heuristic checks, and a protected performance-audit route.",
+    description: "I built a SaaS-style prospect-research workspace that keeps discovery evidence separate from website heuristics and labels sample dashboard content as sample-only rather than presenting it as customer activity.",
+    contribution: "I designed the evidence-first interface, public discovery boundaries, protected PageSpeed route, production health checks, and truthful demo disclosures.",
+    stack: ["JavaScript", "OpenStreetMap", "Nominatim", "Protected PageSpeed Route", "Vercel"],
+    results: [
+      { title: "Evidence-labelled discovery", detail: "Public discovery and website signals are presented as separate, bounded checks rather than invented lead intelligence." },
+      { title: "Protected audit boundary", detail: "The live backend health endpoint responds, while the protected PageSpeed route returns 401 before an unauthenticated request can process a URL." },
+      { title: "Honest demo state", detail: "Sample dashboard records are visibly labelled so visitors do not mistake them for customer activity or measured outcomes." },
+    ],
+    status: "live",
+    statusLabel: "frontend live · protected route verified",
+    theme: "civic",
+    link: "https://webclient-hunter-ai.vercel.app",
+    linkLabel: "view live demo",
+    github: "https://github.com/tusharsolanki9845-dev/Webclient-hunter-ai",
+  },
+  {
+    slug: "iec-college-campus-track",
+    releaseDate: "Aug 2026",
+    category: "campus",
+    previewImage: "/previews/iec-campus-track.webp",
+    name: "IEC College Campus Track",
+    tagline: "Source-aware student companion for IEC College across web and Android-ready delivery",
+    speciality: "Responsible campus information — verified public notices, local-first student interactions, and explicit boundaries for records that require authorised academic access.",
+    description: "I built a responsive student companion for IEC College that keeps public college information distinct from demonstration-only attendance, schedule, and profile data. The product surfaces official orientation and academic-calendar information, lets students save public updates locally, and carries the same product experience across web and Android-ready interfaces.",
+    contribution: "I developed the original Campus Track identity, responsive Expo/React Native interface, local persistence layer, public-source links, fresh-user reset flow, animation system, deterministic attendance tests, and verification boundaries.",
+    stack: ["Expo", "React Native", "TypeScript", "Expo Router", "AsyncStorage", "Responsive Web"],
+    results: [
+      { title: "Verified public information", detail: "Official IEC public notices, campus details, programme examples, and helpline information are clearly identified and linked back to source pages for confirmation." },
+      { title: "Honest academic-data boundary", detail: "Schedules, attendance, and identity details are visibly demonstrative until IEC authorises a secure ERP or API connection." },
+      { title: "Tested local experience", detail: "The fresh-user flow supports reset, saved public updates, preference changes, and cross-screen state reflection; TypeScript and deterministic attendance tests passed." },
+    ],
+    status: "live",
+    statusLabel: "live · verified public information",
+    theme: "civic",
+    link: "https://campustrack-iec.vercel.app",
+    linkLabel: "view live website",
+  },
+  {
+    slug: "campus-signal-iec",
+    releaseDate: "Aug 2026",
+    category: "campus",
+    previewImage: "/previews/campus-signal.webp",
+    name: "Campus Signal by IEC",
+    tagline: "College event management for discovery, registration, coordination, and student follow-through",
+    speciality: "Event operations — Firebase-ready student and coordinator workflows, final certificate approval gates, and clear preview boundaries when institutional data is not connected.",
+    description: "I built a responsive event-management platform for IEC Group of Institutions, Greater Noida. It brings together event discovery, search and filters, registration feedback, galleries, attendance-aware certificates, academic-calendar access, and Google Calendar handoffs in a single student-facing experience.",
+    contribution: "I created the Campus Signal design system, accessible system-theme support, student and coordinator workspaces, Firebase-ready data and media flows, certificate PDF generation, live-role safeguards, and deployment configuration for Vercel and Netlify.",
+    stack: ["React", "TypeScript", "Firebase", "Firestore", "Firebase Storage", "jsPDF", "Vite"],
+    results: [
+      { title: "Guarded coordinator workflow", detail: "Live coordinator access requires a trusted Firebase custom admin claim, while the non-production coordinator path is explicitly labelled as a preview." },
+      { title: "Certificate-ready student journey", detail: "Attendance and final coordinator approval control certificate availability before the student can generate a personalised participation PDF." },
+      { title: "Connected operational handoffs", detail: "Gallery, feedback, calendar-document, and Google Calendar template flows are prepared for real Firebase records instead of presenting sample activity as institutional data." },
+    ],
+    status: "live",
+    statusLabel: "live · access-gated Firebase",
+    theme: "civic",
+    link: "https://campus-signal-iec.vercel.app",
+    linkLabel: "view live app",
+  },
+  {
+    slug: "crocksy",
+    releaseDate: "Aug 2026",
+    category: "commerce",
+    name: "Crocksy",
+    tagline: "Full-stack luxury crockery e-commerce platform",
+    speciality: "Commerce operations — authentication, cart, wishlist, checkout, and admin control in one storefront.",
+    description: "I built and deployed a responsive e-commerce platform with authentication, cart, wishlist, checkout, and an owner administration flow, then moved its customer data path to Firebase.",
+    contribution: "I owned the storefront UX, account flows, cart state, protected data migration, and production fixes.",
+    stack: ["HTML/CSS/JS", "Firebase Auth", "Firestore", "Vercel"],
+    results: [
+      { title: "Customer account flow", detail: "Email/password and Google entry points, with mobile-sized password controls tested for clear touch targets." },
+      { title: "Commerce workflow", detail: "Catalog, account-scoped cart and wishlist behavior, plus COD or manual UPI confirmation through WhatsApp." },
+      { title: "Trust-first storefront", detail: "Public ratings and testimonials were removed rather than invented; customer data stays behind Firebase controls." },
+    ],
+    status: "live",
+    statusLabel: "live",
+    theme: "luxury",
+    link: "https://crocksy.vercel.app",
+    linkLabel: "view project",
+  },
+  {
+    slug: "ironclasp",
+    releaseDate: "Aug 2026",
+    category: "commerce",
+    name: "IRONCLASP",
+    tagline: "E-commerce store for a hardware manufacturer client",
+    speciality: "Hardware commerce operations — Firestore-backed catalog and orders, protected admin access, manual phone-confirmation handoff, and free-tier deployment design.",
+    description: "I migrated this hardware-store product from local files to Firestore, then deployed its Node/Express storefront on a no-cost Vercel runtime with server-only Firebase credentials. The current public checkout submits a request for WhatsApp phone confirmation; it does not show a live card or UPI payment selector.",
+    contribution: "I rebuilt persistence, protected admin and order routes, disabled unsafe free-tier uploads, and verified the deployed catalog, checkout-state, and health boundaries.",
+    stack: ["Vanilla JS", "Node.js", "Express", "Firestore", "WhatsApp Confirmation", "PWA", "Vercel"],
+    results: [
+      { title: "Firestore-backed state", detail: "Products, orders, stock changes, and backup metadata moved from local JSON into transactional Firestore operations." },
+      { title: "Protected operations", detail: "Admin sessions are signed; unauthenticated order-record access is rejected by the deployed service." },
+      { title: "Truthful request state", detail: "The public flow submits a request only; the store must confirm the customer phone number, availability, and payment details on WhatsApp before accepting any order." },
+    ],
+    status: "live",
+    statusLabel: "live · Firestore-backed",
+    theme: "industrial",
+    link: "https://ironclasp-store-live.vercel.app",
+    linkLabel: "view live site",
+    isClient: true,
+  },
+  {
+    slug: "pizza-connect",
+    releaseDate: "Aug 2026",
+    category: "commerce",
+    name: "Pizza Connect",
+    tagline: "Production ordering PWA for a local pizzeria & bakery in Khurja",
+    speciality: "WhatsApp-first ordering — a 54-item menu, cart, payment intent, and direct outlet confirmation.",
+    description: "I built a mobile-first ordering PWA for a Khurja outlet with a 54-item vegetarian menu, persistent cart, COD and UPI options, a WhatsApp confirmation handoff, and offline support.",
+    contribution: "I implemented the menu experience, cart and payment-intent flow, offline-ready PWA support, and production typography refinements.",
+    stack: ["HTML/CSS/JS", "PWA", "COD / UPI", "WhatsApp Ordering", "Vercel"],
+    results: [
+      { title: "Offline-ready storefront", detail: "Install-ready assets and a resilient cache keep the core menu experience available when connectivity is intermittent." },
+      { title: "Clear WhatsApp handoff", detail: "The cart turns selected items and customer details into one order request for outlet confirmation before preparation." },
+      { title: "Flexible payment intent", detail: "COD and UPI choices are captured before the order request, making the intended payment method clear to the outlet." },
+    ],
+    status: "live",
+    statusLabel: "live",
+    theme: "warm",
+    link: "https://pizza-connect-pwa-crocksy.vercel.app",
+    linkLabel: "view live site",
+    isClient: true,
+  },
+  {
+    slug: "tehsil-sahayak",
+    releaseDate: "Aug 2026",
+    category: "civic",
+    name: "Tehsil Sahayak",
+    tagline: "Bilingual civic-services guidance PWA for Uttar Pradesh residents",
+    speciality: "Civic navigation — 20,160 source-traceable Hindi/English search phrasings linked to official service routes for certificates, land records, and grievances.",
+    description: "I built a bilingual civic-service PWA that helps Uttar Pradesh residents search for the correct official route before visiting a tehsil office, with 20,160 labelled query phrasings that retrieve cited service cards rather than unsupported policy answers.",
+    contribution: "I structured the plain-language service flows, bilingual retrieval index, source disclosures, responsive PWA shell, and official-link handoffs.",
+    stack: ["JavaScript", "Bilingual UX", "PWA", "Source-traceable Search", "Official Service Links"],
+    results: [
+      { title: "20,160 search routes", detail: "Labelled Hindi and English search phrasings guide visitors to source-linked service cards without claiming to provide 20,160 official answers." },
+      { title: "Official-route evidence", detail: "Each indexed phrasing maps to an existing service record with an official government URL and a displayed source-review date." },
+      { title: "Privacy-first civic guidance", detail: "The product collects no application data, processes no payments, and directs visitors to confirm current requirements with the responsible authority." },
+    ],
+    status: "live",
+    statusLabel: "live",
+    theme: "civic",
+    link: "https://tehsil-sahayak.vercel.app",
+    linkLabel: "view live site",
+  },
+  {
+    slug: "nestnavi",
+    releaseDate: "Aug 2026",
+    category: "web",
+    name: "NestNavi",
+    tagline: "Trust-first hostel, PG & co-living finder for students and working professionals",
+    speciality: "Verified listing operations — Firebase-backed public records, a device-only shortlist, and an authorised administrator workspace without fake bookings or sample properties.",
+    description: "I built a browser-first hostel and PG finder whose public cards now load only from Firestore records marked as published. Until an authorised administrator reviews a genuine record, the live site presents an honest empty state instead of invented properties.",
+    contribution: "I designed the transparent discovery and shortlist flows, owner-review handoff, Google-authenticated administrator workspace, Firestore access controls, and cache-safe PWA delivery.",
+    stack: ["JavaScript", "Firebase", "Firestore", "Google Sign-In", "PWA", "Vercel"],
+    results: [
+      { title: "Genuine public inventory", detail: "The public finder queries only Firestore listings approved for publication; the live empty state is shown when no verified record is available." },
+      { title: "Protected listing controls", detail: "A Google-authenticated workspace is restricted to the authorised owner account for creating, editing, publishing, unpublishing, or removing listing records." },
+      { title: "Cache-safe release", detail: "The service worker now uses versioned network-first navigation, preventing a returning browser from continuing to receive retired sample-listing code." },
+    ],
+    status: "live",
+    statusLabel: "live · Firestore-backed",
+    theme: "civic",
+    link: "https://nestnavi-hostel-pg-finder.vercel.app",
+    linkLabel: "view live site",
+  },
+  {
+    slug: "aeris",
+    releaseDate: "Aug 2026",
+    category: "web",
+    previewImage: "/previews/aeris.webp",
+    name: "Aeris",
+    tagline: "Location-first live weather desk for everyday decisions",
+    speciality: "Weather at a glance — local forecast discovery, flexible units, and a calm, focused interface.",
+    description: "Aeris turns local weather into a clear daily view, helping people start with their current location or choose a city instead.",
+    contribution: "I shaped the location-first experience, live forecast presentation, unit switching, and calm weather-focused visual system.",
+    stack: ["Live Weather", "Location-first UX", "Open-Meteo"],
+    results: [
+      { title: "Start with place", detail: "Use device location for a local forecast or choose a city when you want a different view." },
+      { title: "Read it quickly", detail: "A focused interface keeps the weather signal clear without overwhelming the first visit." },
+      { title: "Choose your units", detail: "Switch between Celsius and Fahrenheit to match personal preference." },
+    ],
+    status: "live",
+    statusLabel: "live · Open-Meteo",
+    theme: "civic",
+    link: "https://weathernow-zmvf3inw.manus.space",
+    linkLabel: "view live site",
+  },
+];
+
+const moreProjects = [
+  { name: "WebClient Hunter", status: "shipped", speciality: "Evidence-first prospect research", description: "A source-labelled prospect-research workspace with bounded OpenStreetMap discovery, separate heuristic website checks, and a clearly marked sample-data demo. The protected PageSpeed API source is released; its separately hosted production route remains under verification." },
+  { name: "Build Before You're Ready", status: "shipped", speciality: "Beginner-first developer roadmap", description: "Self-published ebook guiding beginner developers from first line of code to junior-ready." },
+  { name: "Birthday Surprise Site", status: "live", speciality: "Emotional interaction design", description: "A single-file interactive site built for my brother — animations, sound effects, and SVG art." },
+];
+
+const integrationExperience = [
+  { name: "OpenStreetMap", detail: "Source-labelled public discovery and location-map foundations." },
+  { name: "Nominatim", detail: "Policy-aware fixed-address geocoding and place-search handoffs." },
+  { name: "Firebase", detail: "Authentication, Firestore access rules, and protected administrator workflows." },
+  { name: "EmailJS", detail: "Owner-configured, client-side email notices with explicit recipient validation and bounded resend behaviour." },
+  { name: "PageSpeed route", detail: "A server-protected audit boundary that rejects unauthenticated requests before analysis." },
+  { name: "WhatsApp handoff", detail: "Human-confirmed local ordering and enquiry workflows without claiming automatic acceptance." },
+];
+
+const credentials: Credential[] = [
+  {
+    title: "Shields Up: Cybersecurity Job Simulation",
+    issuer: "Forage",
+    completed: "Completed June 2026",
+    focus: "Practical work in zero-day vulnerability response and technical ransomware bypass.",
+  },
+  {
+    title: "Cybersecurity Analyst Job Simulation",
+    issuer: "Forage",
+    completed: "Completed June 2026",
+    focus: "Identity and access management fundamentals, strategy assessment, solution design, and platform integration.",
+  },
+  {
+    title: "Project Manager Job Simulation",
+    issuer: "Forage",
+    completed: "Completed June 2026",
+    focus: "Developing key performance indicators and managing project dashboards.",
+  },
+  {
+    title: "Cybersecurity Job Simulation",
+    issuer: "Forage",
+    completed: "Completed June 2026",
+    focus: "Designing phishing email simulations and interpreting simulation results.",
+  },
+  {
+    title: "EY Technology Risk Virtual Job Simulation",
+    issuer: "Forage",
+    completed: "Completed July 2026",
+    focus: "Technology-risk fundamentals, business interaction, probing questions, teamwork, and conclusion planning.",
+  },
+];
+
+const featuredProjectOrder = ["Pizza Connect", "IRONCLASP", "AlphaTech Solutions", "Crocksy", "AI Duniya", "Tehsil Sahayak", "WebClient Hunter", "IEC College Campus Track", "Campus Signal by IEC", "Aeris", "AI Night Security"];
+
+const projectFilters = [
+  { id: "all", label: "All releases" },
+  { id: "client", label: "Client builds" },
+  { id: "web", label: "Web & SaaS" },
+  { id: "campus", label: "Campus" },
+  { id: "commerce", label: "Commerce" },
+  { id: "civic", label: "Civic" },
+] as const;
+
+const portfolioProjects = [...projects].sort((left, right) => {
+  const leftPosition = featuredProjectOrder.indexOf(left.name);
+  const rightPosition = featuredProjectOrder.indexOf(right.name);
+  return (leftPosition === -1 ? 999 : leftPosition) - (rightPosition === -1 ? 999 : rightPosition);
+});
+
+const releaseSnapshot = [
+  { state: "verified live", title: "Public releases", detail: "AI Duniya, AlphaTech Solutions, Aeris, IEC College Campus Track, Campus Signal, Pizza Connect, Tehsil Sahayak, NestNavi, IRONCLASP, Crocksy, the portfolio, and the WebClient Hunter frontend are available through their published public URLs. Campus Signal requires a student account before entry; its reviewed Firestore policy remains pending publication." },
+  { state: "verified live", title: "Source-aware campus companion", detail: "IEC College Campus Track is now live. Its public IEC information is clearly separated from prototype-only schedule, attendance, and identity data until an authorised academic-data connection is available." },
+  { state: "protected by design", title: "Private workspace boundary", detail: "WebClient Hunter keeps saved records and its protected audit route behind authentication, while the evidence-first public workspace remains available for exploration." },
+  { state: "intentional human handoff", title: "Core product boundaries", detail: "Pizza Connect uses WhatsApp for custom-cake consultation, Crocksy uses COD or manual UPI confirmation, and NestNavi shows only authorised published listings without placeholder properties or public owner contacts." },
+];
+
+function AnimatedStat({ count, label }: { count: number; label: string }) {
+  return (
+    <div className="stat">
+      <div className="stat-number">{count}{count < 2029 ? "+" : ""}</div>
+      <div className="stat-label">{label}</div>
+    </div>
+  );
+}
+
+function ProjectMockup({ theme, name, previewImage }: { theme: Project["theme"]; name: string; previewImage?: string }) {
+  if (previewImage) {
+    return (
+      <div className={`project-mockup project-preview ${theme}`} role="img" aria-label={`${name} live project preview`}>
+        <img src={previewImage} alt={`${name} live website preview`} loading="lazy" />
+        <span className="project-preview-label">live interface</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`project-mockup ${theme}`} role="img" aria-label={`${name} project preview`}>
+      <div className="mockup-window">
+        <div className="mockup-top"><span /><span /><span /></div>
+        <div className="mockup-content">
+          <div className="mockup-kicker">{name} / build-preview</div>
+          <div className="mockup-heading">A working product, not a mockup.</div>
+          <div className="mockup-lines"><i /><i /><i /></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HeroField() {
+  const [field, setField] = useState({ x: 50, y: 50, pressed: false });
+
+  const updateField = (event: ReactPointerEvent<HTMLDivElement>, pressed = field.pressed) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    setField({
+      x: Math.max(0, Math.min(100, ((event.clientX - bounds.left) / bounds.width) * 100)),
+      y: Math.max(0, Math.min(100, ((event.clientY - bounds.top) / bounds.height) * 100)),
+      pressed,
+    });
+  };
+
+  return (
+    <div
+      className={`hero-field ${field.pressed ? "is-pressed" : ""}`}
+      style={{
+        "--hero-x": `${field.x}%`,
+        "--hero-y": `${field.y}%`,
+        "--hero-shift-x": `${(field.x - 50) * 0.16}px`,
+        "--hero-shift-y": `${(field.y - 50) * 0.16}px`,
+        "--hero-shift-x-reverse": `${(field.x - 50) * -0.1}px`,
+        "--hero-shift-y-reverse": `${(field.y - 50) * -0.1}px`,
+        "--hero-rotate-x": `${(field.y - 50) * -0.28}deg`,
+        "--hero-rotate-y": `${(field.x - 50) * 0.28}deg`,
+      } as CSSProperties}
+      onPointerMove={(event) => updateField(event, event.currentTarget.hasPointerCapture(event.pointerId))}
+      onPointerDown={(event) => {
+        event.currentTarget.setPointerCapture(event.pointerId);
+        updateField(event, true);
+      }}
+      onPointerUp={(event) => {
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+        updateField(event, false);
+      }}
+      onPointerCancel={() => setField({ x: 50, y: 50, pressed: false })}
+      onPointerLeave={() => setField({ x: 50, y: 50, pressed: false })}
+      aria-label="Interactive portfolio signal field. Move a pointer or drag to shift the visual layers."
+      role="img"
+    >
+      <div className="hero-field-grid" aria-hidden="true" />
+      <div className="hero-field-orbit hero-field-orbit-one" aria-hidden="true" />
+      <div className="hero-field-orbit hero-field-orbit-two" aria-hidden="true" />
+      <div className="hero-field-core" aria-hidden="true" />
+      <div className="hero-field-particles" aria-hidden="true">
+        {Array.from({ length: 14 }, (_, index) => (
+          <span
+            key={index}
+            style={{
+              "--particle-x": `${7 + ((index * 37) % 84)}%`,
+              "--particle-y": `${14 + ((index * 23) % 72)}%`,
+              "--particle-size": `${3 + ((index % 3) * 2)}px`,
+            } as CSSProperties}
+          />
+        ))}
+      </div>
+      <div className="hero-field-copy">
+        <span>Interaction layer</span>
+        <strong>Move through the work.</strong>
+        <p>Pointer and touch responsive</p>
+      </div>
+    </div>
+  );
+}
+
+export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [roleText, setRoleText] = useState("");
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
+  const [activeSection, setActiveSection] = useState("top");
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [themeTransitioning, setThemeTransitioning] = useState(false);
+  const [activeProjectFilter, setActiveProjectFilter] = useState<(typeof projectFilters)[number]["id"]>("all");
+  const [contactForm, setContactForm] = useState<ContactFormPayload>({ name: "", email: "", topic: "freelance", message: "" });
+  const [contactStarted, setContactStarted] = useState(false);
+  const [contactStatus, setContactStatus] = useState("");
+
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem("portfolio-theme");
+    const nextTheme = savedTheme === "light" ? "light" : "dark";
+    setTheme(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reducedMotion) {
+      setThemeTransitioning(true);
+      window.setTimeout(() => setThemeTransitioning(false), 700);
+    }
+    setTheme(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
+    window.localStorage.setItem("portfolio-theme", nextTheme);
+  };
+
+  useEffect(() => {
+    let timer: number | undefined;
+    const role = roles[roleIndex];
+    let position = 0;
+    setRoleText("");
+    const type = () => {
+      position += 1;
+      setRoleText(role.slice(0, position));
+      if (position < role.length) {
+        timer = window.setTimeout(type, 38);
+      } else {
+        timer = window.setTimeout(() => setRoleIndex((index) => (index + 1) % roles.length), 2100);
+      }
+    };
+    timer = window.setTimeout(type, 240);
+    return () => {
+      if (timer) window.clearTimeout(timer);
+    };
+  }, [roleIndex]);
+
+  useEffect(() => {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          setVisibleSections((previous) => {
+            const next = new Set(previous);
+            next.add(entry.target.id);
+            return next;
+          });
+        });
+      },
+      { rootMargin: "0px 0px -12%", threshold: 0.01 },
+    );
+    document.querySelectorAll("[data-reveal]").forEach((element) => revealObserver.observe(element));
+
+    const navigationSections = new Set(["about", "process", "skills", "credentials", "projects", "faq", "resume", "contact"]);
+    const navigationObserver = new IntersectionObserver(
+      (entries) => {
+        const current = entries.find((entry) => entry.isIntersecting && navigationSections.has(entry.target.id));
+        if (current) setActiveSection(current.target.id);
+      },
+      { rootMargin: "-28% 0px -58%", threshold: 0 },
+    );
+    navigationSections.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) navigationObserver.observe(section);
+    });
+
+    return () => {
+      revealObserver.disconnect();
+      navigationObserver.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    let frame = 0;
+    const updateScrollProgress = () => {
+      frame = 0;
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(scrollableHeight > 0 ? Math.min(window.scrollY / scrollableHeight, 1) : 0);
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateScrollProgress);
+    };
+    updateScrollProgress();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  const closeMenu = () => setMenuOpen(false);
+    const visiblePortfolioProjects = activeProjectFilter === "all"
+    ? portfolioProjects
+    : activeProjectFilter === "client"
+      ? portfolioProjects.filter((project) => project.isClient)
+      : portfolioProjects.filter((project) => project.category === activeProjectFilter);
+
+  const trackContactStart = () => {
+    if (contactStarted) return;
+    setContactStarted(true);
+    track("contact_form_started", { placement: "portfolio" });
+  };
+
+  const submitContactForm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    track("contact_form_submitted", { placement: "portfolio", topic: contactForm.topic, handoff: "email_draft" });
+    setContactStatus("Opening your email draft. Your message is not stored on this website.");
+    window.location.href = buildContactEmailUrl(contactForm);
+  };
+
+  return (
+    <div className={`site-shell ${themeTransitioning ? "theme-transitioning" : ""}`}>
+      <a className="skip-link" href="#top">Skip to main content</a>
+      <Suspense fallback={null}><Analytics /></Suspense>
+      <header className="site-nav">
+        <div className="scroll-progress" aria-hidden="true"><span style={{ transform: `scaleX(${scrollProgress})` }} /></div>
+        <div className="wrap nav-inner">
+          <a className="brand" href="#top" onClick={closeMenu}>tushar<span className="brand-accent">.dev</span></a>
+          <nav id="primary-navigation" className={`nav-links ${menuOpen ? "open" : ""}`} aria-label="Primary navigation">
+            {[
+              ["About Me", "#about"],
+              ["Process", "#process"],
+              ["Toolkit", "#skills"],
+              ["Build Log", "#projects"],
+              ["FAQ", "#faq"],
+              ["Résumé", "#resume"],
+              ["WhatsApp", "https://wa.me/916396015608?text=Hi%20Tushar%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20project."],
+            ].map(([label, href]) => {
+              const isExternal = href.startsWith("http");
+              const sectionId = isExternal ? "" : href.slice(1);
+              return (
+                <a
+                  key={href}
+                  className={!isExternal && activeSection === sectionId ? "active" : ""}
+                  href={href}
+                  onClick={() => {
+                    closeMenu();
+                    if (isExternal) track("contact_whatsapp", { location: "nav" });
+                  }}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noreferrer" : undefined}
+                  aria-current={!isExternal && activeSection === sectionId ? "location" : undefined}
+                >{label}</a>
+              );
+            })}
+          </nav>
+          <div className="nav-actions">
+            <span className="availability"><span className="status-dot" />Available for freelance work</span>
+            <button
+              className={`theme-toggle ${themeTransitioning ? "is-transitioning" : ""}`}
+              type="button"
+              onClick={toggleTheme}
+              aria-pressed={theme === "light"}
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            >
+              <Sun className="theme-icon theme-icon-sun" size={15} aria-hidden="true" />
+              <span className="theme-track" aria-hidden="true"><span className="theme-thumb" /></span>
+              <Moon className="theme-icon theme-icon-moon" size={14} aria-hidden="true" />
+              <span className="sr-only">Current theme: {theme}. Toggle color theme.</span>
+            </button>
+            <button className="menu-button" type="button" onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-controls="primary-navigation" aria-label="Toggle navigation">
+              {menuOpen ? <X size={16} /> : <Menu size={16} />}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main id="top" tabIndex={-1}>
+        <section className="hero">
+          <div className="wrap hero-grid">
+            <div className="reveal is-visible">
+              <p className="eyebrow">Currently building · Khurja, UP, India</p>
+              <h1>Tushar Solanki builds<br /><em>web products that work.</em></h1>
+              <div className="rotating-line" aria-live="polite">{roleText}<span aria-hidden="true">_</span></div>
+              <p className="hero-lede">Early-career Computer Science student and web developer building practical e-commerce, civic-tech, and SaaS products with <b>JavaScript, React, Node.js, Firebase, and responsive PWA patterns.</b></p>
+              <div className="hero-actions">
+                <a
+                  className="btn btn-primary"
+                  href="https://wa.me/916396015608?text=Hi%20Tushar%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20project."
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => track("contact_whatsapp", { location: "hero" })}
+                >
+                  Chat on WhatsApp <MessageCircle className="btn-icon" size={15} />
+                </a>
+                <a className="btn" href="#projects">View projects <ArrowUpRight className="btn-icon" size={15} /></a>
+                <a className="btn" href="/Tushar_Solanki_Resume.pdf" download>Download résumé <Download className="btn-icon" size={15} /></a>
+              </div>
+              <p className="hero-cta-note">Usually replies within a day · Fixed quote after a short discovery call</p>
+            </div>
+
+            <div className="hero-visual reveal is-visible">
+              <HeroField />
+              <div className="profile-card" aria-label="Profile specification">
+                <div className="window-bar"><span className="window-dot" /><span className="window-dot" /><span className="window-dot" /><span className="window-title">Profile.json</span></div>
+                <div className="profile-photo-wrap"><img className="profile-photo" src="/piyush-rastogi.jpg" alt="Profile portrait" width="400" height="400" loading="lazy" /></div>
+                <div className="spec-list">
+                  {[
+                    ["Role", "Freelance Web Developer"],
+                    ["Study", "B.Tech CSE — AI & ML"],
+                    ["Institute", "IEC College (AKTU)"],
+                    ["Grad Year", "2029"],
+                    ["Based In", "Khurja, UP, India"],
+                    ["Stack", "JS · React · Node · Firebase"],
+                    ["Status", "Open To Work"],
+                  ].map(([label, value]) => (
+                    <div className="spec-row" key={label}>
+                      <span className="spec-label">{label}</span>
+                      <span className={`spec-value ${label === "Status" ? "highlight" : ""}`}>{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={`stats-strip reveal ${visibleSections.has("stats") ? "is-visible" : ""}`} id="stats" data-reveal>
+          <div className="wrap stats-grid">
+            {stats.map((stat) => <AnimatedStat key={stat.label} {...stat} />)}
+          </div>
+        </section>
+
+        <section className={`section reveal ${visibleSections.has("about") ? "is-visible" : ""}`} id="about" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">About</p>
+              <h2 className="section-title">From coursework to client deploys</h2>
+              <p className="section-sub">The short version of how I got here, and what I actually spend my time on.</p>
+            </div>
+            <div className="about-grid">
+              <div className="about-copy">
+                <p>I'm a Computer Science student specializing in <b>AI & ML</b>, but most of my hands-on hours go into building and shipping <b>web products</b> — often for small, real businesses that just need something that works and doesn't cost them a monthly platform fee.</p>
+                <p>That means I default to <b>lean, low-cost architectures</b>: vanilla HTML/CSS/JS, free-tier backends like Supabase, and hosting on Vercel or Netlify — with a deliberate upgrade path once a project actually needs one. I'd rather ship a fast, honest static site than an over-engineered one.</p>
+                <p>Outside of client work, I run my own side projects — from a SaaS lead-gen tool for freelancers to a self-published developer ebook — as a way to practice product thinking, not just code.</p>
+              </div>
+              <div className="focus-list">
+                {focusPoints.map((point, index) => (
+                  <div className="focus-item" key={point.title}>
+                    <span className="focus-index">0{index + 1}</span>
+                    <div><h3 className="focus-title">{point.title}</h3><p className="focus-description">{point.description}</p></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={`section section-alt reveal ${visibleSections.has("process") ? "is-visible" : ""}`} id="process" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">Process</p>
+              <h2 className="section-title">How I work with clients</h2>
+              <p className="section-sub">A simple path from first conversation to launch — so you always know what happens next.</p>
+            </div>
+            <div className="process-grid">
+              {howIWorkSteps.map((item) => (
+                <article className="process-card" key={item.step}>
+                  <span className="process-step">{item.step}</span>
+                  <h3 className="process-title">{item.title}</h3>
+                  <p className="process-detail">{item.detail}</p>
+                </article>
+              ))}
+            </div>
+            <div className="engagement-panel">
+              <h3 className="engagement-title">What to expect on scope and timing</h3>
+              <div className="engagement-grid">
+                {engagementNotes.map((note) => (
+                  <div className="engagement-item" key={note.label}>
+                    <span className="engagement-label">{note.label}</span>
+                    <p className="engagement-value">{note.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="pricing-panel">
+              <h3 className="engagement-title">Pricing bands (India)</h3>
+              <p className="pricing-lead">Indicative ranges so you can budget before the call. Final quote is fixed or milestone-based after a short discovery — no surprise fees.</p>
+              <div className="pricing-grid">
+                {pricingBands.map((band) => (
+                  <article className="pricing-band" key={band.name}>
+                    <span className="pricing-band-name">{band.name}</span>
+                    <span className="pricing-band-range">{band.range}</span>
+                    <span className="pricing-band-timeline">{band.timeline}</span>
+                    <p className="pricing-band-desc">{band.detail}</p>
+                  </article>
+                ))}
+              </div>
+              <div className="pricing-cta-row">
+                <a className="btn btn-primary" href="https://wa.me/916396015608?text=Hi%20Tushar%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" rel="noreferrer" onClick={() => track("contact_whatsapp", { location: "pricing" })}>
+                  Get a fixed quote on WhatsApp <MessageCircle className="btn-icon" size={15} />
+                </a>
+                <p className="hero-cta-note">Usually replies within a day</p>
+              </div>
+            </div>
+
+            <div className="fit-panel">
+              <div className="fit-col">
+                <h3 className="engagement-title">A good fit if you are</h3>
+                <ul className="fit-list fit-yes">
+                  {fitFor.yes.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="fit-col">
+                <h3 className="engagement-title">Probably not a fit if you need</h3>
+                <ul className="fit-list fit-no">
+                  {fitFor.no.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <article className="case-study-panel">
+              <div className="case-study-header">
+                <p className="eyebrow">Case study</p>
+                <h3 className="case-study-title">{featuredCaseStudy.name}</h3>
+                <p className="case-study-client">{featuredCaseStudy.client}</p>
+              </div>
+              <div className="case-study-grid">
+                <div className="case-study-block">
+                  <span className="engagement-label">Problem</span>
+                  <p>{featuredCaseStudy.problem}</p>
+                </div>
+                <div className="case-study-block">
+                  <span className="engagement-label">What I built</span>
+                  <p>{featuredCaseStudy.built}</p>
+                </div>
+                <div className="case-study-block">
+                  <span className="engagement-label">Result</span>
+                  <p>{featuredCaseStudy.result}</p>
+                </div>
+              </div>
+              <a className="btn btn-primary case-study-link" href={featuredCaseStudy.link} target="_blank" rel="noreferrer">
+                View live site <ArrowUpRight className="btn-icon" size={15} />
+              </a>
+            </article>
+
+            <div className="outcomes-panel">
+              <h3 className="outcomes-title">Typical outcomes from client work</h3>
+              <p className="pricing-lead">Representative results from shipped client builds — not third-party testimonials.</p>
+              <div className="outcomes-grid">
+                {clientOutcomes.map((item) => (
+                  <blockquote className="outcome-card" key={item.context}>
+                    <p className="outcome-quote">"{item.quote}"</p>
+                    <footer className="outcome-context">{item.context}</footer>
+                  </blockquote>
+                ))}
+              </div>
+            </div>
+
+            <div className="handoff-panel">
+              <h3 className="engagement-title">What you get at handoff</h3>
+              <ul className="fit-list fit-yes">
+                {handoffChecklist.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+              <div className="process-cta">
+                <a
+                  className="btn btn-primary"
+                  href="https://wa.me/916396015608?text=Hi%20Tushar%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20project."
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => track("contact_whatsapp", { location: "process" })}
+                >
+                  Start on WhatsApp <MessageCircle className="btn-icon" size={15} />
+                </a>
+                <p className="hero-cta-note">15–20 min discovery · Usually replies within a day</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={`section reveal ${visibleSections.has("skills") ? "is-visible" : ""}`} id="skills" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">Skills</p>
+              <h2 className="section-title">What I actually build with</h2>
+              <p className="section-sub">Tools I reach for by default, grouped by what they're for.</p>
+            </div>
+            <div className="skill-grid">
+              {skillGroups.map((group) => (
+                <article className="skill-card" key={group.name}>
+                  <h3 className="skill-name">{group.name}</h3>
+                  <div className="skill-chips">{group.items.map((item) => <span className="chip" key={item}>{item}</span>)}</div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={`section reveal ${visibleSections.has("integrations") ? "is-visible" : ""}`} id="integrations" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">Integration experience</p>
+              <h2 className="section-title">Practical data and service boundaries</h2>
+              <p className="section-sub">I use public data and third-party services with visible source, privacy, and verification boundaries rather than treating every integration as an unqualified API claim.</p>
+            </div>
+            <div className="integration-grid">
+              {integrationExperience.map((item) => <article className="integration-card" key={item.name}><h3>{item.name}</h3><p>{item.detail}</p></article>)}
+            </div>
+          </div>
+        </section>
+
+        <section className={`section section-alt reveal ${visibleSections.has("credentials") ? "is-visible" : ""}`} id="credentials" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">Credentials</p>
+              <h2 className="section-title">Applied learning, documented</h2>
+              <p className="section-sub">Five completed virtual job simulations, presented with their issuer, completion period, and practical focus.</p>
+            </div>
+            <div className="more-grid">
+              {credentials.map((credential) => (
+                <article className="more-card" key={credential.title}>
+                  <span className="more-status"><span className="status-dot" />{credential.completed}</span>
+                  <h4>{credential.title}</h4>
+                  <p className="more-speciality">Issued by {credential.issuer}</p>
+                  <p>{credential.focus}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={`section reveal ${visibleSections.has("projects") ? "is-visible" : ""}`} id="projects" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">Projects</p>
+              <h2 className="section-title">Build log</h2>
+              <p className="section-sub">A running log of what I've shipped — filter by Client builds to see paid work first.</p>
+            </div>
+            <div className="project-filter-bar" role="group" aria-label="Filter projects by category">
+              <div className="project-filter-list">
+                {projectFilters.map((filter) => <button key={filter.id} type="button" className={`project-filter ${activeProjectFilter === filter.id ? "is-active" : ""}`} onClick={() => setActiveProjectFilter(filter.id)} aria-pressed={activeProjectFilter === filter.id}>{filter.label}</button>)}
+              </div>
+              <p className="project-filter-count" aria-live="polite">{visiblePortfolioProjects.length} published projects</p>
+            </div>
+            <div className="project-list">
+              {visiblePortfolioProjects.map((project, index) => (
+                <article
+                  className="project-card project-card-enter"
+                  key={`${activeProjectFilter}-${project.name}`}
+                  style={{ animationDelay: `${index * 45}ms` }}
+                  onPointerMove={(event) => {
+                    const bounds = event.currentTarget.getBoundingClientRect();
+                    event.currentTarget.style.setProperty("--spotlight-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
+                    event.currentTarget.style.setProperty("--spotlight-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
+                  }}
+                  onPointerLeave={(event) => {
+                    event.currentTarget.style.removeProperty("--spotlight-x");
+                    event.currentTarget.style.removeProperty("--spotlight-y");
+                  }}
+                >
+                  <ProjectMockup theme={project.theme} name={project.name} previewImage={project.previewImage} />
+                  <div className="project-info">
+                    <div className="project-topline"><span className={`project-status ${project.status}`}><span className="status-dot" />{project.statusLabel}</span><span className="project-meta">{project.isClient && <span className="client-badge">Client build</span>}<span className="release-badge">release · {project.releaseDate}</span><span className="project-status">{project.theme}</span></span></div>
+                    <h3 className="project-name">{project.name}</h3>
+                    <p className="project-tagline">{project.tagline}</p>
+                    <div className="project-speciality"><span>Speciality</span><p>{project.speciality}</p></div>
+                    <p className="project-description">{project.description}</p>
+                    <p className="project-contribution"><b>My contribution:</b> {project.contribution}</p>
+                    {project.results && (
+                      <section className="project-results" aria-label={`${project.name} project results`}>
+                        <p className="project-results-label">Project results</p>
+                        <div className="project-results-grid">
+                          {project.results.map((result) => (
+                            <div className="project-result" key={result.title}>
+                              <h4>{result.title}</h4>
+                              <p>{result.detail}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+                    )}
+                    <div className="project-stack">{project.stack.map((item) => <span className="chip" key={item}>{item}</span>)}</div>
+                    <div className="project-evidence-links">
+                      <a className="project-link" href={`/projects/${project.slug}`}>view case study <ArrowUpRight size={14} /></a>
+                      {project.link ? <a className="project-link project-link-primary" href={project.link} target="_blank" rel="noopener noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a> : <span className="project-link">{project.linkLabel}</span>}
+                      {project.github && <a className="project-link project-github" href={project.github} target="_blank" rel="noopener noreferrer"><Github size={14} /> view source</a>}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="more-grid">
+              {moreProjects.map((project) => (
+                <article className="more-card" key={project.name}>
+                  <span className="more-status"><span className="status-dot" />{project.status}</span>
+                  <h4>{project.name}</h4>
+                  <p className="more-speciality">Speciality: {project.speciality}</p>
+                  <p>{project.description}</p>
+                </article>
+              ))}
+            </div>
+            <section className="section" aria-labelledby="release-snapshot-title">
+              <div className="section-heading">
+                <p className="eyebrow">Release snapshot · August 2026</p>
+                <h3 className="section-title" id="release-snapshot-title">What is live, and what still needs a real-world check</h3>
+                <p className="section-sub">This snapshot separates verified public releases from source-verified work and tasks that legitimately require owner data, a separate customer account, or a provider test session.</p>
+              </div>
+              <div className="more-grid">
+                {releaseSnapshot.map((item) => (
+                  <article className="more-card" key={item.title}>
+                    <span className="more-status"><span className="status-dot" />{item.state}</span>
+                    <h4>{item.title}</h4>
+                    <p>{item.detail}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section className={`section section-alt reveal ${visibleSections.has("resume") ? "is-visible" : ""}`} id="resume" data-reveal>
+          <div className="wrap">
+            <div className="resume-grid">
+              <div>
+                <div className="section-heading">
+                  <p className="eyebrow">Résumé</p>
+                  <h2 className="section-title">The one-page version</h2>
+                  <p className="section-sub">For the full breakdown — education, project details, and simulations completed.</p>
+                </div>
+                <p className="resume-summary">B.Tech CSE (AI & ML) student, AKTU, expected 2029 — building and shipping client and personal web projects throughout.</p>
+                <ul className="resume-highlights">
+                  <li>15 projects built, from solo builds to client-facing e-commerce stores</li>
+                  <li>Completed 5 professional simulations via Forage: EY, AIG, Tata, Mastercard, and Siemens</li>
+                  <li>Comfortable owning a build end-to-end: frontend, backend, payments, and deployment</li>
+                </ul>
+                <a className="btn btn-primary" href="/Tushar_Solanki_Resume.pdf" download>Download résumé <FileText size={15} /></a>
+              </div>
+              <div className="resume-file">
+                <div className="file-head"><span className="file-type"><FileText size={16} /> PDF</span><span className="file-size">24 KB</span></div>
+                <h3 className="file-name">Tushar_Solanki_Resume.pdf</h3>
+                <p className="file-meta">Updated Aug 2026</p>
+                <a className="project-link" href="/Tushar_Solanki_Resume.pdf" target="_blank" rel="noopener noreferrer">Preview document <ArrowUpRight size={14} /></a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={`section section-alt reveal ${visibleSections.has("faq") ? "is-visible" : ""}`} id="faq" data-reveal>
+          <div className="wrap">
+            <div className="section-heading">
+              <p className="eyebrow">FAQ</p>
+              <h2 className="section-title">What clients usually ask</h2>
+              <p className="section-sub">Straight answers so you can decide whether we are a fit before the first call.</p>
+            </div>
+            <div className="faq-list">
+              {faqs.map((item) => (
+                <details className="faq-item" key={item.q}>
+                  <summary className="faq-question">{item.q}</summary>
+                  <p className="faq-answer">{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={`section reveal ${visibleSections.has("contact") ? "is-visible" : ""}`} id="contact" data-reveal>
+          <div className="wrap">
+            <div className="contact-panel">
+              <div className="contact-intro">
+                <p className="eyebrow">Contact</p>
+                <h2 className="contact-title">Let's build something.</h2>
+                <p className="contact-subtitle">Open to freelance projects, internships, and anything interesting in between.</p>
+                <p className="contact-privacy">Use the form to prepare an email in your own mail app. This site does not store your contact details or message.</p>
+              </div>
+              <form className="contact-form" onSubmit={submitContactForm} onFocus={trackContactStart}>
+                <div className="contact-form-grid">
+                  <label>Your name<input required maxLength={80} autoComplete="name" value={contactForm.name} onChange={(event) => setContactForm((form) => ({ ...form, name: event.target.value }))} placeholder="Your name" /></label>
+                  <label>Email address<input required type="email" maxLength={120} autoComplete="email" value={contactForm.email} onChange={(event) => setContactForm((form) => ({ ...form, email: event.target.value }))} placeholder="you@example.com" /></label>
+                  <label className="contact-form-full">I'm reaching out about<select value={contactForm.topic} onChange={(event) => setContactForm((form) => ({ ...form, topic: event.target.value as ContactFormPayload["topic"] }))}><option value="freelance">A freelance project</option><option value="internship">An internship opportunity</option><option value="collaboration">A collaboration</option><option value="other">Something else</option></select></label>
+                  <label className="contact-form-full">Message<textarea required maxLength={1000} rows={5} value={contactForm.message} onChange={(event) => setContactForm((form) => ({ ...form, message: event.target.value }))} placeholder="A few details about what you have in mind." /></label>
+                </div>
+                <div className="contact-form-footer"><button className="btn btn-primary" type="submit">Create email draft <Send size={15} /></button><p className="contact-status" aria-live="polite">{contactStatus}</p></div>
+              </form>
+              <div className="contact-actions" aria-label="Other ways to contact Tushar">
+                <a className="contact-action" href="mailto:tusharsolanki9845@gmail.com"><span><Mail size={14} /> &nbsp;Email me</span><span>↗</span></a>
+                <a className="contact-action" href="https://wa.me/916396015608?text=Hi%20Tushar%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noopener noreferrer"><span><MessageCircle size={14} /> &nbsp;Chat on WhatsApp</span><span>usually replies within a day ↗</span></a>
+                <a className="contact-action" href="tel:+916396015608"><span><Phone size={14} /> &nbsp;+91 63960 15608</span><span>↗</span></a>
+                <a className="contact-action" href="https://github.com/tusharsolanki9845-dev" target="_blank" rel="noopener noreferrer"><span><Github size={14} /> &nbsp;@tusharsolanki9845-dev</span><span>↗</span></a>
+                <a className="contact-action" href="https://www.linkedin.com/in/tushar-solanki-915048370" target="_blank" rel="noopener noreferrer"><span><Linkedin size={14} /> &nbsp;/in/tushar-solanki-915048370</span><span>↗</span></a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="footer">
+        <div className="wrap footer-inner">
+          <span>© 2026 Tushar Solanki</span>
+          <span className="footer-tagline">Built with HTML, CSS & JS.</span>
+          <span>Available for freelance work · Khurja, UP</span>
+        </div>
+      </footer>
+    </div>
+  );
+}
