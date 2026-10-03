@@ -1,0 +1,31 @@
+name: Enhance 3D project look
+
+on:
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "scripts/enhance_3d_project_look.py"
+      - "scripts/TRIGGER_3D"
+      - ".github/workflows/enhance-3d-project.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  enhance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply 3D project look
+        run: |
+          set -euo pipefail
+          python3 scripts/enhance_3d_project_look.py
+          git config user.name "Tushar Solanki"
+          git config user.email "tusharsolanki9845@gmail.com"
+          git add client/src/pages/Home.tsx client/src/index.css
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Deepen 3D project cards: stage, shadow, glare, stronger tilt"
+            git push origin HEAD:master
+          fi
